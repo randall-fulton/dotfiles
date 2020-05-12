@@ -1,6 +1,18 @@
 CONFIG_DIR=$HOME/.config
 DIR=$(dirname "$(readlink -f $0)")
 
+# copy <step> <src> <dest>
+copy() {
+	MSG="$1: $3"
+	if [ -L "$3" ]; then
+		skip "$MSG"
+	elif [ -f "$3" ]; then
+		error "$MSG"
+	else
+		ln -s $2 $3
+	fi
+}
+
 error() {
 	echo "FAIL: $1. File already exists."
 }
@@ -16,16 +28,9 @@ skip() {
 
 SRC=$DIR/nvim
 DEST=$CONFIG_DIR/nvim
-MSG="Create NeoVim symlink"
-
 for f in $SRC/*; do
-	SUB_SRC=$SRC/$f
-	SUB_DEST=$DEST/$f
-	if [ -L "$SUB_DEST" ]; then
-		skip "$MSG"
-	elif [ -f "$SUB_DEST" ]; then
-		error "$MSG"
-	else
-		ln -s $SUB_SRC $SUB_DEST
-	fi
+	SUB_DEST="$DEST/$(basename $f)"
+	copy "Create nvim symlinks" $f $SUB_DEST
 done
+
+copy "Create .zshrc" $DIR/.zshrc $HOME/.zshrc
