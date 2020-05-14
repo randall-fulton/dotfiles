@@ -111,6 +111,10 @@ export FZF_DEFAULT_COMMAND='find -type f -not -path "./node_modules/*"'
 
 alias refresh="source ~/.zshrc"
 
+auth() {
+	$(aws-okta env $AWS_ACCOUNT_NAME)
+}
+
 vpn() {
 	case "$1" in
 	"-d")	# spin up connection in background

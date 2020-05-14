@@ -19,7 +19,11 @@ Plugin 'christoomey/vim-tmux-navigator'
 " Workflow - {{{
 Plugin 'junegunn/fzf'
 Plugin 'mileszs/ack.vim'
-Plugin 'valloric/youcompleteme'
+Plugin 'sebdah/vim-delve'
+Plugin 'shougo/deoplete.nvim'
+Plugin 'shougo/neosnippet.vim'
+Plugin 'shougo/neosnippet-snippets'
+Plugin 'zchee/deoplete-go'
 " }}}
 " Language support - {{{
 " linter
@@ -50,21 +54,31 @@ endif
 " ALE -{{{
 let g:ale_fixers = {
       \ 'javascript': ['eslint'],
-      \ 'go': ['golangci-lint'],
       \}
-let g:ale_sign_error = '❌'
-let g:ale_sign_warning = '⚠️'
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
 let g:ale_fix_on_save = 1
+let g:airline#extensions#ale#enabled = 1
 " }}}
 " Airline - {{{
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#formatter='unique_tail'
+" }}}
+" deoplete {{{
+if has('nvim')
+	let g:deoplete#enable_at_startup=1
+endif
 " }}}
 " FZF -{{{
 nnoremap <C-p> :FZF<CR>
 " }}}
 " NERDTree - {{{
 command! Nt NERDTree
+" }}}
+" Neosnippet {{{
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
 " }}}
 " VIM Indent Guides {{{
 let g:indent_guides_auto_colors = 0
@@ -84,12 +98,20 @@ nnoremap <leader>gr :GoRename!<CR>
 " }}}
 " Editor {{{
 let mapleader=','
-set t_Co=256 " support 256 color
 set relativenumber
 set clipboard=unnamedplus
 set colorcolumn=120
 set background=dark
 set mouse=a
+
+set termguicolors
+set t_Co=256 " force 256 colors
+" Enable true color
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 
 " Tmux {{{
 nnoremap <leader>vp :VimuxPromptCommand<CR>
