@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/randall/.oh-my-zsh"
+export ZSH="/Users/randallfulton/.oh-my-zsh"
 
 # load env from profile
 source ~/.profile
@@ -107,7 +107,8 @@ export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
     vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
     -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
     -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
-export FZF_DEFAULT_COMMAND='find -type f -not -path "./node_modules/*"'
+export FZF_DEFAULT_COMMAND='find . -path ./cache -prune -o -path ./node_modules -prune -o -path ./ios/Pods -prune -o -print' # OSX version
+# export FZF_DEFAULT_COMMAND='find -type f -not -path "./node_modules/*"' # GNU version
 
 alias refresh="source ~/.zshrc"
 
@@ -135,11 +136,24 @@ vpn() {
 # 	done
 # }
 
-alias tmux="TERM=screen-256color-bce tmux"
-alias vim="nvim"
+alias tmux="TERM=xterm-256color tmux"
+# alias vim="nvim"
 
-export NPM_PACKAGES="/home/randall/.npm-packages"
+export NPM_PACKAGES="/Users/randallfulton/.npm-packages"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
 export PATH="$NPM_PACKAGES/bin:$PATH"
 unset MANPATH
 export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+
+export JAVA_HOME=$(/usr/libexec/java_home)
+export ANDROID_HOME="/Users/randallfulton/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+
+mov2gif() {
+  ffmpeg -i $1 -r 10 -pix_fmt yuv420p -f gif $2
+}
+
+alias debug_android="adb shell input keyevent 82"
+
+eval "$(rbenv init -)"
+alias vim='nvim'

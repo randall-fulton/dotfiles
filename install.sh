@@ -28,6 +28,7 @@ skip() {
 
 SRC=$DIR/nvim
 DEST=$CONFIG_DIR/nvim
+mkdir -p $DEST
 for f in $SRC/*; do
 	SUB_DEST="$DEST/$(basename $f)"
 	copy "Create nvim symlinks" $f $SUB_DEST
