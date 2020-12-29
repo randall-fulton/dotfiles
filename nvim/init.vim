@@ -5,14 +5,31 @@ set rtp+=~/.config/nvim/bundle/Vundle.vim
 call vundle#begin('~/.config/nvim/bundle')	" required
 Plugin 'VundleVim/Vundle.vim'			" required
 
+if has('nvim')
+  Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+endif
+
+Plugin 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'windows' : 'tools\\update-dll-mingw',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make -f make_mac.mak',
+\     'linux' : 'make',
+\     'unix' : 'gmake',
+\    },
+\ }
+
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'eslint/eslint'
 Plugin 'joshdick/onedark.vim'
 Plugin 'junegunn/fzf'
 Plugin 'mileszs/ack.vim'
-Plugin 'neoclide/coc.nvim'
+Plugin 'Quramy/tsuquyomi'
+Plugin 'prettier/vim-prettier'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
 
@@ -29,7 +46,7 @@ set clipboard=unnamed
 set colorcolumn=120
 set background=dark
 set mouse=a
-set backspace=2
+" set backspace=2 " allows holding backspace
 set expandtab
 set shiftwidth=2
 set tabstop=2
@@ -47,7 +64,13 @@ nnoremap <C-p> :FZF<CR>
 nnoremap <leader>h :bprevious<CR>
 nnoremap <leader>l :bnext<CR>
 nnoremap <leader>q :exec "bp\|bd #"<CR>
-nnoremap <leader>r *Nciw
+"nnoremap <leader>r *Nciw
+" nmap <silent>K <Plug>(lcn-hover)
+nmap <silent>gd <Plug>(coc-definition)
+nmap <silent>gr <Plug>(coc-references)
+nmap <silent><leader>r <Plug>(coc-rename)
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><expr> <c-space> coc#refresh()
 
 " Commands
 command! Nt NERDTree
@@ -77,6 +100,26 @@ endif
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#formatter='unique_tail'
 
+let g:coc_global_extensions = [ 'coc-tsserver' ]
+
 " reset $PAGER env var when using :man
 " see https://vim.fandom.com/wiki/Using_vim_as_a_man-page_viewer_under_Unix for more info
-let $PAGER=''
+" let $PAGER=''
+
+" Go Test
+function! GoTestCurrentFunction()
+  let l:cursor_line = line('.')
+  let l:cursor_col = col('.')
+
+  let l:line = getline(search('func', 'b'))
+  let match = matchlist(l:line, 'Test[^(]*')
+  if len(match) > 0
+    execute "!go test -v -run ".match[0]." ".expand('%:p:h')
+  end
+
+  exec "normal ".l:cursor_line."G"
+  exec "normal ".l:cursor_col."|"
+endfunction
+
+autocmd FileType go nnoremap <leader>t :call GoTestCurrentFunction()<CR>
+

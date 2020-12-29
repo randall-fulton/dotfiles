@@ -6,6 +6,7 @@ export ZSH="/Users/randallfulton/.oh-my-zsh"
 
 # load env from profile
 source ~/.profile
+export PATH=/usr/local/bin:$PATH
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -103,10 +104,10 @@ source $ZSH/oh-my-zsh.sh
 
 # Use Vim as man-page viewer
 # Solution taken from https://vim.fandom.com/wiki/Using_vim_as_a_man-page_viewer_under_Unix
-export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
-    vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
-    -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
-    -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+# export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
+#     vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
+#     -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
+#     -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
 export FZF_DEFAULT_COMMAND='find . -path ./cache -prune -o -path ./node_modules -prune -o -path ./ios/Pods -prune -o -print' # OSX version
 # export FZF_DEFAULT_COMMAND='find -type f -not -path "./node_modules/*"' # GNU version
 
@@ -137,7 +138,7 @@ vpn() {
 # }
 
 alias tmux="TERM=xterm-256color tmux"
-# alias vim="nvim"
+alias vim="nvim"
 
 export NPM_PACKAGES="/Users/randallfulton/.npm-packages"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
@@ -149,11 +150,51 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 export ANDROID_HOME="/Users/randallfulton/Library/Android/sdk"
 export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
 
+export GOPATH="$HOME/go"
+export GOPRIVATE="github.com/shipt"
+
+# ncurses-go setup
+# export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/Cellar/ncurses/6.2/lib/pkgconfig/"
+
+git-clean() {
+  git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
+}
+
 mov2gif() {
   ffmpeg -i $1 -r 10 -pix_fmt yuv420p -f gif $2
 }
 
 alias debug_android="adb shell input keyevent 82"
 
+kenv() {
+  config=$(
+    platformctl config get shipt-aviator \
+      --target k8s \
+      --group app \
+      --environment staging \
+      --role webserver \
+      --region us-east-1
+  )
+  export $(echo $config | grep KAFKA_BROKERS)
+  export $(echo $config | grep KAFKA_SECRET)
+  export $(echo $config | grep KAFKA_KEY)
+  export $(echo $config | grep KAFKA_TOPIC_CRUD_ORDER)
+}
+
+kcat() {
+  kafkacat -b $KAFKA_BROKERS -X security.protocol=SASL_SSL -X sasl.mechanisms=PLAIN -X sasl.username=$KAFKA_KEY -X sasl.password=$KAFKA_SECRET -X api.version.request=true "$@"
+}
+
+aws_flat_env() {
+  creds=$(aws-okta env $1)
+  echo $creds | sed 's/export //g' | tr '\n' ';'
+}
+
+eval "$(pyenv init -)"
 eval "$(rbenv init -)"
 alias vim='nvim'
+
+export PATH="$HOME/.poetry/bin:$PATH"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
