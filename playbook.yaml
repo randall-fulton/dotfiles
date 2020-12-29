@@ -1,0 +1,27 @@
+---
+- hosts: all
+  vars:
+    home: /Users/randallfulton
+  tasks:
+    - name: Install libraries with Homebrew
+      homebrew: name={{ item }} state=present
+      with_items:
+        - kafkacat
+        - neovim
+        - node
+        - openssl
+        - pyenv
+        - redis
+        - tmux
+        - wget
+        - yarn
+    - name: Symlink dotfiles
+      file: path={{ home }}/.{{ item }} src={{ playbook_dir }}/{{ item }} state=link
+      with_items:
+        - config
+        - gemrc
+        - gitconfig
+        - npmrc
+        - platformctl.yaml
+        - tmux.conf
+        - zshrc

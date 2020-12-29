@@ -3,4 +3,5 @@
 *.swo
 *.log
 
-nvim/bundle/*
+**/bundle/*
+**/node_modules
