@@ -13,3 +13,8 @@ The following are required for automated environment setup:
 
 ## Setup
 
+Once repo is cloned and dependencies are installed:
+
+```sh
+ansible-playbook playbook.yaml -i hosts.yaml
+```
