@@ -3,6 +3,7 @@
     "coc-elixir": ">=0.6.1",
     "coc-go": ">=0.12.1",
     "coc-json": ">=1.2.6",
+    "coc-python": ">=1.2.13",
     "coc-tsserver": ">=1.6.4"
   }
 }
