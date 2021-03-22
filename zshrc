@@ -2,11 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/randallfulton/.oh-my-zsh"
-
-# load env from profile
-source ~/.profile
-export PATH=/usr/local/bin:$PATH
+# export ZSH="/Users/randallfulton/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -102,15 +98,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Use Vim as man-page viewer
-# Solution taken from https://vim.fandom.com/wiki/Using_vim_as_a_man-page_viewer_under_Unix
-# export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
-#     vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
-#     -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
-#     -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
-export FZF_DEFAULT_COMMAND='find . -path ./cache -prune -o -path ./node_modules -prune -o -path ./ios/Pods -prune -o -print' # OSX version
-# export FZF_DEFAULT_COMMAND='find -type f -not -path "./node_modules/*"' # GNU version
-
 alias refresh="source ~/.zshrc"
 
 auth() {
@@ -140,22 +127,6 @@ vpn() {
 alias tmux="TERM=xterm-256color tmux"
 alias vim="nvim"
 
-export NPM_PACKAGES="/Users/randallfulton/.npm-packages"
-export NODE_PATH="$NPM_PACKAGES/lib/node_modules${NODE_PATH:+:$NODE_PATH}"
-export PATH="$NPM_PACKAGES/bin:$PATH"
-unset MANPATH
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-
-export JAVA_HOME=$(/usr/libexec/java_home)
-export ANDROID_HOME="/Users/randallfulton/Library/Android/sdk"
-export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
-
-export GOPATH="$HOME/go"
-export GOPRIVATE="github.com/shipt"
-
-# ncurses-go setup
-# export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/Cellar/ncurses/6.2/lib/pkgconfig/"
-
 git-clean() {
   git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
 }
@@ -167,18 +138,15 @@ mov2gif() {
 alias debug_android="adb shell input keyevent 82"
 
 kenv() {
-  config=$(
-    platformctl config get shipt-aviator \
-      --target k8s \
-      --group app \
-      --environment staging \
-      --role webserver \
-      --region us-east-1
+  $(platformctl console exec feature-flags \
+      -c "printenv | grep KAFKA" \
+      -e staging \
+      -r webserver \
+      -g app |
+    tail -n 5 |
+    head -n 4 |
+    sed 's/^/export /g'
   )
-  export $(echo $config | grep KAFKA_BROKERS)
-  export $(echo $config | grep KAFKA_SECRET)
-  export $(echo $config | grep KAFKA_KEY)
-  export $(echo $config | grep KAFKA_TOPIC_CRUD_ORDER)
 }
 
 kcat() {
@@ -194,7 +162,6 @@ eval "$(pyenv init -)"
 eval "$(rbenv init -)"
 alias vim='nvim'
 
-export PATH="$HOME/.poetry/bin:$PATH"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

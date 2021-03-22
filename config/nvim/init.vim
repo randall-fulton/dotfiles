@@ -46,6 +46,7 @@ set clipboard=unnamed
 set colorcolumn=120
 set background=dark
 set mouse=a
+set noswapfile
 " set backspace=2 " allows holding backspace
 set expandtab
 set shiftwidth=2

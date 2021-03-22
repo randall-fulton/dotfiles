@@ -6,6 +6,7 @@
     - name: Install libraries with Homebrew
       homebrew: name={{ item }} state=present
       with_items:
+        - fzf
         - kafkacat
         - neovim
         - node
@@ -25,3 +26,5 @@
         - platformctl.yaml
         - tmux.conf
         - zshrc
+    - name: Setup FZF completion
+      ansible.builtin.shell: $(brew --prefix)/opt/fzf/install --all

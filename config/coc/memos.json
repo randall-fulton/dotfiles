@@ -25,7 +25,7 @@
         "sysPrefix": "/System/Library/Frameworks/Python.framework/Versions/2.7",
         "fileHash": "c17bd5e35b0255908ad2515a1763cc02fb3cdcd7e1388b194c8f88929c62fd4d786a653e9d3bbe97b5bb9215e886895b3b6bdfb6cb94d9303af1a68742f76726"
       },
-      "expiry": 1609424350599
+      "expiry": 1613153882197
     },
     "/usr/bin/python2.7.v3": {
       "data": {
@@ -50,7 +50,7 @@
         "sysPrefix": "/System/Library/Frameworks/Python.framework/Versions/2.7",
         "fileHash": "a868ef87fdba82ffe9be05cf8396b24f7282869f307e55aee10dfdddca2cf69d85c74016b5739c25b9fd64c4bf444bb141a11bf5cc65fdbb25ef3893f2f828b1"
       },
-      "expiry": 1609424350612
+      "expiry": 1613153882196
     },
     "/usr/local/bin/python3.9.v3": {
       "data": {
@@ -75,7 +75,7 @@
         "sysPrefix": "/usr/local/Cellar/python@3.9/3.9.1_3/Frameworks/Python.framework/Versions/3.9",
         "fileHash": "9e3f82a97e2311905819d90c0eb2feefc6f4232d8f1574d166722341e5674a088f05bfa6a5c84537f636730c81deabae67ce9836adea1dd75be1634dfed93949"
       },
-      "expiry": 1609424350611
+      "expiry": 1613153882204
     },
     "/usr/local/bin/python3.v3": {
       "data": {
@@ -100,7 +100,7 @@
         "sysPrefix": "/usr/local/Cellar/python@3.9/3.9.1_3/Frameworks/Python.framework/Versions/3.9",
         "fileHash": "7f0b3bd44b4a743eb0bdf1ae61950c05db81f323b0166d55d2138866ac816873f18ec974873b35341f9fcd7086c2918312b8abf8aaf8be82a43145fd9f4fc0ee"
       },
-      "expiry": 1609424350609
+      "expiry": 1613153882202
     },
     "/usr/bin/python.v3": {
       "data": {
@@ -125,7 +125,7 @@
         "sysPrefix": "/System/Library/Frameworks/Python.framework/Versions/2.7",
         "fileHash": "20f121c1a390b54ea731463cf93e9e6341c587a5ead6173c99a0cf5f2b3ad56864f100e63c9e1bb2e7822108edfdb0418095a4f3751040c79ece8d051b753152"
       },
-      "expiry": 1609424350610
+      "expiry": 1613153882199
     },
     "/Users/randallfulton/.pyenv/shims/python.v3": {
       "data": {
@@ -150,7 +150,7 @@
         "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.7.7",
         "fileHash": "f648526b4de8dc4a3bcc5e81d7e9bc75c1f978db05a18e55cc70c1c86b0342a85c42771aa997671a56d307fb48f5dc9cb5fe775437002150ede74f34d5e876ba"
       },
-      "expiry": 1609424350704
+      "expiry": 1613153882225
     },
     "/Users/randallfulton/.pyenv/versions/3.7.7/bin/python.v3": {
       "data": {
@@ -175,7 +175,7 @@
         "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.7.7",
         "fileHash": "ef8f2282dbace44ce6c8d5086b2bc20bc8b91b475b5e52e643bfd3de7fa0d4119250f2e2da49d2802c7c3571f7ff9f988ce8e071738c3fe8bf00ca86e4bf2169"
       },
-      "expiry": 1609424350800
+      "expiry": 1613153882220
     },
     "/System/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python.v3": {
       "data": {
@@ -200,7 +200,7 @@
         "sysPrefix": "/System/Library/Frameworks/Python.framework/Versions/2.7",
         "fileHash": "b84b933538c58cb79c3b632605db731e1da5ea497e8def9fa2bc640f292965f8c89dae5c0f678f4bbe2f412c8903701136bbd04e18a8ce8aed505d0617774c93"
       },
-      "expiry": 1609424350700
+      "expiry": 1613153882221
     },
     "/Users/randallfulton/.pyenv/versions/3.7.7/bin/python3.v3": {
       "data": {
@@ -225,7 +225,7 @@
         "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.7.7",
         "fileHash": "05827f9414869ab96c509b5f91f8e647ec14605bcf89a56ca5af83403806ef21fc7ead1b7e4483d6cae15ae1fdc3ac29bfef457d257d7a99e67cd41dce09b1aa"
       },
-      "expiry": 1609424350808
+      "expiry": 1613153882222
     },
     "/Users/randallfulton/.pyenv/versions/3.7.7/bin/python3.7.v3": {
       "data": {
@@ -250,7 +250,7 @@
         "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.7.7",
         "fileHash": "3dd36f18e2d2902f949493b6c17b334a138f2207b70c85930aecf6b22d8687192edcbc3a9122c0a78bf4e0e4df06afbc54d89f7c37f9d2fd04cae022ad7e3821"
       },
-      "expiry": 1609424350816
+      "expiry": 1613153882260
     },
     "/Users/randallfulton/.pyenv/shims/python3.7.v3": {
       "data": {
@@ -275,7 +275,7 @@
         "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.7.7",
         "fileHash": "adcea8e6276c8c50fbfb40a9f4e65ffea8874368dfcc637012a08e0687f0e8373dc61dc6eaa76d9e1b700f601bfb8cd69e8894d63212463640343ccbe0333b55"
       },
-      "expiry": 1609424350705
+      "expiry": 1613153882226
     },
     "/Users/randallfulton/.pyenv/shims/python3.v3": {
       "data": {
@@ -300,7 +300,7 @@
         "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.7.7",
         "fileHash": "3c4dcfbfe28c2e5fab259fd3b37f5407f971cdff2ee32a448a0b8cb85d4fcad0cfbe556c394be9b8acc2035f510b92b50312a33f633cbc14f0ee0df4e5c8ea0a"
       },
-      "expiry": 1609424350705
+      "expiry": 1613153882225
     },
     "INTERPRETERS_CACHE_v3_CurrentPathService": [
       {
@@ -444,26 +444,28 @@
     },
     "preferredGlobalPyInterpreter": {
       "architecture": 3,
-      "path": "/Users/randallfulton/.pyenv/versions/3.7.7/bin/python",
+      "path": "/usr/local/bin/python3",
       "version": {
         "options": {
           "loose": false,
           "includePrerelease": false
         },
         "loose": false,
-        "raw": "3.7.7-final",
+        "raw": "3.9.1-final",
         "major": 3,
-        "minor": 7,
-        "patch": 7,
+        "minor": 9,
+        "patch": 1,
         "prerelease": [
           "final"
         ],
         "build": [],
-        "version": "3.7.7-final"
+        "version": "3.9.1-final"
       },
-      "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.7.7",
-      "fileHash": "ef8f2282dbace44ce6c8d5086b2bc20bc8b91b475b5e52e643bfd3de7fa0d4119250f2e2da49d2802c7c3571f7ff9f988ce8e071738c3fe8bf00ca86e4bf2169",
-      "type": "Unknown"
+      "sysPrefix": "/usr/local/Cellar/python@3.9/3.9.1_3/Frameworks/Python.framework/Versions/3.9",
+      "fileHash": "7f0b3bd44b4a743eb0bdf1ae61950c05db81f323b0166d55d2138866ac816873f18ec974873b35341f9fcd7086c2918312b8abf8aaf8be82a43145fd9f4fc0ee",
+      "type": "Unknown",
+      "cachedEntry": true,
+      "displayName": "Python 3.9.1 64-bit"
     },
     "/Users/randallfulton/.pyenv/versions/3.7.7/bin/python.interpreter.Details.v7": {
       "data": {
@@ -491,11 +493,10 @@
           "fileHash": "ef8f2282dbace44ce6c8d5086b2bc20bc8b91b475b5e52e643bfd3de7fa0d4119250f2e2da49d2802c7c3571f7ff9f988ce8e071738c3fe8bf00ca86e4bf2169",
           "envName": "3.7.7",
           "type": "Pyenv",
-          "displayName": "Python 3.7.7 64-bit ('3.7.7': pyenv)",
-          "__store": true
+          "displayName": "Python 3.7.7 64-bit ('3.7.7': pyenv)"
         }
       },
-      "expiry": 1609424354044
+      "expiry": 1613153882392
     },
     "/Users/randallfulton/.pyenv/versions/3.8.2/bin/python3.8.v3": {
       "data": {
@@ -520,7 +521,7 @@
         "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.8.2",
         "fileHash": "8f4f93b1c2fc0e785f4d341404b75a19cb1e0f5750ae4b512b56a3707fad770df3d42b6a7d75c8bb2bf586c7657e05966f2b2d266d08cb39a9502a0038b457dd"
       },
-      "expiry": 1609424350814
+      "expiry": 1613153882257
     },
     "/Users/randallfulton/.pyenv/versions/3.8.2/bin/python.v3": {
       "data": {
@@ -545,7 +546,7 @@
         "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.8.2",
         "fileHash": "1794b1f8f41867cfb0ee2b988981612bcfde429e955dd33ed6fc8aef0ea4075c9084713001925ed6dd901aa231bfe00a03102722f5c76fdf08f96a4d297da260"
       },
-      "expiry": 1609424350815
+      "expiry": 1613153882258
     },
     "/Users/randallfulton/.pyenv/versions/3.8.2/bin/python3.v3": {
       "data": {
@@ -570,7 +571,7 @@
         "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.8.2",
         "fileHash": "c6faab3dcb481b35669482a223dcf5ae5f1c427a31976fd94e7cef4fcc80374ab6dedba5c0a2f6e71883acec06fd42f68f79acda84b5f470e0814099257e639a"
       },
-      "expiry": 1609424350815
+      "expiry": 1613153882259
     },
     "INTERPRETERS_CACHE_v3_VirtualEnvService": [
       {
@@ -721,9 +722,9 @@
     "/Users/randallfulton/.pyenv/versions/3.7.7/bin/python.interpreter.displayName.v7": {
       "data": {
         "displayName": "Python 3.7.7 64-bit ('3.7.7': pyenv)",
-        "hash": "ef8f2282dbace44ce6c8d5086b2bc20bc8b91b475b5e52e643bfd3de7fa0d4119250f2e2da49d2802c7c3571f7ff9f988ce8e071738c3fe8bf00ca86e4bf2169-245356d8dfb7221cf39ad3b3ea9a6af4"
+        "hash": "ef8f2282dbace44ce6c8d5086b2bc20bc8b91b475b5e52e643bfd3de7fa0d4119250f2e2da49d2802c7c3571f7ff9f988ce8e071738c3fe8bf00ca86e4bf2169-5be7b567330ad4a3513bd9ea84d77ee5"
       },
-      "expiry": 1609424354042
+      "expiry": 1613153882384
     },
     "/usr/bin/python3.v3": {
       "data": {
@@ -748,7 +749,7 @@
         "sysPrefix": "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8",
         "fileHash": "be0f85b28685c608993747e3c36847b4f7a313015096e281b947ebf2a824c14908012f28778adf3d3721c17ceafa345ea560e83077957a5a59fa96739261f3fa"
       },
-      "expiry": 1609424353917
+      "expiry": 1613153884762
     },
     "INTERPRETERS_CACHE_v3_KnownPathsService": [
       {
@@ -1006,75 +1007,6 @@
       },
       {
         "architecture": 3,
-        "path": "/Users/randallfulton/.pyenv/shims/python",
-        "version": {
-          "options": {
-            "loose": false,
-            "includePrerelease": false
-          },
-          "loose": false,
-          "raw": "3.7.7-final",
-          "major": 3,
-          "minor": 7,
-          "patch": 7,
-          "prerelease": [
-            "final"
-          ],
-          "build": [],
-          "version": "3.7.7-final"
-        },
-        "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.7.7",
-        "fileHash": "f648526b4de8dc4a3bcc5e81d7e9bc75c1f978db05a18e55cc70c1c86b0342a85c42771aa997671a56d307fb48f5dc9cb5fe775437002150ede74f34d5e876ba",
-        "type": "Unknown"
-      },
-      {
-        "architecture": 3,
-        "path": "/Users/randallfulton/.pyenv/shims/python3",
-        "version": {
-          "options": {
-            "loose": false,
-            "includePrerelease": false
-          },
-          "loose": false,
-          "raw": "3.7.7-final",
-          "major": 3,
-          "minor": 7,
-          "patch": 7,
-          "prerelease": [
-            "final"
-          ],
-          "build": [],
-          "version": "3.7.7-final"
-        },
-        "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.7.7",
-        "fileHash": "3c4dcfbfe28c2e5fab259fd3b37f5407f971cdff2ee32a448a0b8cb85d4fcad0cfbe556c394be9b8acc2035f510b92b50312a33f633cbc14f0ee0df4e5c8ea0a",
-        "type": "Unknown"
-      },
-      {
-        "architecture": 3,
-        "path": "/Users/randallfulton/.pyenv/shims/python3.7",
-        "version": {
-          "options": {
-            "loose": false,
-            "includePrerelease": false
-          },
-          "loose": false,
-          "raw": "3.7.7-final",
-          "major": 3,
-          "minor": 7,
-          "patch": 7,
-          "prerelease": [
-            "final"
-          ],
-          "build": [],
-          "version": "3.7.7-final"
-        },
-        "sysPrefix": "/Users/randallfulton/.pyenv/versions/3.7.7",
-        "fileHash": "adcea8e6276c8c50fbfb40a9f4e65ffea8874368dfcc637012a08e0687f0e8373dc61dc6eaa76d9e1b700f601bfb8cd69e8894d63212463640343ccbe0333b55",
-        "type": "Unknown"
-      },
-      {
-        "architecture": 3,
         "path": "/usr/local/bin/python3",
         "version": {
           "options": {
@@ -1218,7 +1150,7 @@
         "displayName": "Python 3.8.2 64-bit ('3.8.2': pyenv)",
         "hash": "1794b1f8f41867cfb0ee2b988981612bcfde429e955dd33ed6fc8aef0ea4075c9084713001925ed6dd901aa231bfe00a03102722f5c76fdf08f96a4d297da260-ee5396dc472ac290f34778622eb7141f"
       },
-      "expiry": 1609424353974
+      "expiry": 1613153882385
     },
     "/Users/randallfulton/.pyenv/shims/python.interpreter.displayName.v7": {
       "data": {
@@ -1232,7 +1164,7 @@
         "displayName": "Python 3.9.1 64-bit",
         "hash": "7f0b3bd44b4a743eb0bdf1ae61950c05db81f323b0166d55d2138866ac816873f18ec974873b35341f9fcd7086c2918312b8abf8aaf8be82a43145fd9f4fc0ee-2d4a55b5f2b3b70202390e3481c066e9"
       },
-      "expiry": 1609424353976
+      "expiry": 1613153882285
     },
     "/usr/bin/python.interpreter.displayName.v7": {
       "data": {
@@ -1253,7 +1185,7 @@
         "displayName": "Python 2.7.16 64-bit",
         "hash": "b84b933538c58cb79c3b632605db731e1da5ea497e8def9fa2bc640f292965f8c89dae5c0f678f4bbe2f412c8903701136bbd04e18a8ce8aed505d0617774c93-128e24bf59dbae9037a51fe14a4b6ae7"
       },
-      "expiry": 1609424353983
+      "expiry": 1613153882268
     },
     "InterpreterAutoSeletionRule-system": {
       "architecture": 3,
@@ -1277,6 +1209,7 @@
       "sysPrefix": "/usr/local/Cellar/python@3.9/3.9.1_3/Frameworks/Python.framework/Versions/3.9",
       "fileHash": "7f0b3bd44b4a743eb0bdf1ae61950c05db81f323b0166d55d2138866ac816873f18ec974873b35341f9fcd7086c2918312b8abf8aaf8be82a43145fd9f4fc0ee",
       "type": "Unknown",
+      "cachedEntry": true,
       "displayName": "Python 3.9.1 64-bit"
     },
     "/Users/randallfulton/.pyenv/versions/3.8.2/bin/python.interpreter.Details.v7": {
@@ -1308,7 +1241,7 @@
           "displayName": "Python 3.8.2 64-bit ('3.8.2': pyenv)"
         }
       },
-      "expiry": 1609424354029
+      "expiry": 1613153882395
     },
     "/Users/randallfulton/.pyenv/shims/python.interpreter.Details.v7": {
       "data": {
@@ -1365,10 +1298,12 @@
           "sysPrefix": "/usr/local/Cellar/python@3.9/3.9.1_3/Frameworks/Python.framework/Versions/3.9",
           "fileHash": "7f0b3bd44b4a743eb0bdf1ae61950c05db81f323b0166d55d2138866ac816873f18ec974873b35341f9fcd7086c2918312b8abf8aaf8be82a43145fd9f4fc0ee",
           "type": "Unknown",
-          "displayName": "Python 3.9.1 64-bit"
+          "cachedEntry": true,
+          "displayName": "Python 3.9.1 64-bit",
+          "__store": true
         }
       },
-      "expiry": 1609424354033
+      "expiry": 1613153882281
     },
     "/usr/bin/python.interpreter.Details.v7": {
       "data": {
@@ -1458,9 +1393,34 @@
           "displayName": "Python 2.7.16 64-bit"
         }
       },
-      "expiry": 1609424354040
+      "expiry": 1613153882278
     },
-    "ProposeLSBanner": false
+    "ProposeLSBanner": false,
+    "InterpreterAutoSeletionRule-cachedInterpreters": {
+      "architecture": 3,
+      "path": "/usr/local/bin/python3",
+      "version": {
+        "options": {
+          "loose": false,
+          "includePrerelease": false
+        },
+        "loose": false,
+        "raw": "3.9.1-final",
+        "major": 3,
+        "minor": 9,
+        "patch": 1,
+        "prerelease": [
+          "final"
+        ],
+        "build": [],
+        "version": "3.9.1-final"
+      },
+      "sysPrefix": "/usr/local/Cellar/python@3.9/3.9.1_3/Frameworks/Python.framework/Versions/3.9",
+      "fileHash": "7f0b3bd44b4a743eb0bdf1ae61950c05db81f323b0166d55d2138866ac816873f18ec974873b35341f9fcd7086c2918312b8abf8aaf8be82a43145fd9f4fc0ee",
+      "type": "Unknown",
+      "cachedEntry": true,
+      "displayName": "Python 3.9.1 64-bit"
+    }
   },
   "coc-python|/Users/randallfulton/git/toolbox": {
     "INTERPRETERS_CACHE_v3_PipEnvService": [],
@@ -1490,5 +1450,36 @@
       "fileHash": "ef8f2282dbace44ce6c8d5086b2bc20bc8b91b475b5e52e643bfd3de7fa0d4119250f2e2da49d2802c7c3571f7ff9f988ce8e071738c3fe8bf00ca86e4bf2169",
       "type": "Unknown"
     }
+  },
+  "coc-python|/Users/randallfulton/git/sg1-feature-flags-module": {
+    "INTERPRETERS_CACHE_v3_PipEnvService:3cf0fa8cd20d0c82d29fa3e34dd8cc69": [],
+    "INTERPRETERS_CACHE_v3_WorkspaceVirtualEnvService:3cf0fa8cd20d0c82d29fa3e34dd8cc69": [],
+    "autoSelectedWorkspacePythonInterpreter-/Users/randallfulton/git/sg1-feature-flags-module": {
+      "architecture": 3,
+      "path": "/usr/local/bin/python3",
+      "version": {
+        "options": {
+          "loose": false,
+          "includePrerelease": false
+        },
+        "loose": false,
+        "raw": "3.9.1-final",
+        "major": 3,
+        "minor": 9,
+        "patch": 1,
+        "prerelease": [
+          "final"
+        ],
+        "build": [],
+        "version": "3.9.1-final"
+      },
+      "sysPrefix": "/usr/local/Cellar/python@3.9/3.9.1_3/Frameworks/Python.framework/Versions/3.9",
+      "fileHash": "7f0b3bd44b4a743eb0bdf1ae61950c05db81f323b0166d55d2138866ac816873f18ec974873b35341f9fcd7086c2918312b8abf8aaf8be82a43145fd9f4fc0ee",
+      "type": "Unknown",
+      "cachedEntry": true,
+      "displayName": "Python 3.9.1 64-bit"
+    },
+    "INTERPRETERS_CACHE_v3_PipEnvService": [],
+    "INTERPRETERS_CACHE_v3_WorkspaceVirtualEnvService": []
   }
 }
