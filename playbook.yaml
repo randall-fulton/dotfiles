@@ -6,8 +6,8 @@
     - name: Install libraries with Homebrew
       homebrew: name={{ item }} state=present
       with_items:
-        - delta
         - fzf
+        - git-delta
         - kafkacat
         - neovim
         - node
