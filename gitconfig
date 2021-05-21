@@ -1,10 +1,25 @@
 # This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
-name = Randall Fulton
-email = randall@shipt.com
+  name = Randall Fulton
+  email = randall@shipt.com
+
+[alias]
+	recent = branch --sort=-committerdate --format=\"%(committerdate:relative)%09%(refname:short)\"
 
 [url "ssh://git@github.com/"]
   insteadOf = https://github.com/
+
 [core]
 	autocrlf = input
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  features = side-by-side line-numbers decorations
+
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-styled = none
