@@ -10,13 +10,12 @@
         - git-delta
         - kafkacat
         - neovim
-        - node
+        - node@14
         - openssl
         - pyenv
         - redis
         - tmux
         - wget
-        - yarn
     - name: Symlink dotfiles
       file: path={{ home }}/.{{ item }} src={{ playbook_dir }}/{{ item }} state=link
       with_items:
