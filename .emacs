@@ -9,7 +9,8 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("b1a691bb67bd8bd85b76998caf2386c9a7b2ac98a116534071364ed6489b695d" default))
- '(package-selected-packages '(yasnippet company lsp-ui lsp-mode go-mode gruvbox-theme)))
+ '(package-selected-packages
+   '(magit which-key yasnippet company lsp-ui lsp-mode go-mode gruvbox-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -25,6 +26,7 @@
 (set-frame-font "FiraMono Nerd Font Mono 14" nil t)
 
 (ido-mode) ; find-file completion
+(which-key-mode)
 
 ; LSP
 (require 'lsp-mode)
