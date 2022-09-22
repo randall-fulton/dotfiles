@@ -10,7 +10,7 @@
  '(custom-safe-themes
    '("b1a691bb67bd8bd85b76998caf2386c9a7b2ac98a116534071364ed6489b695d" default))
  '(package-selected-packages
-   '(magit which-key yasnippet company lsp-ui lsp-mode go-mode gruvbox-theme)))
+   '(flycheck rustic magit which-key yasnippet company lsp-ui lsp-mode go-mode gruvbox-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -28,12 +28,20 @@
 (ido-mode) ; find-file completion
 (which-key-mode)
 
-; LSP
 (require 'lsp-mode)
 
+;; Go
 (defun lsp-go-install-save-hooks ()
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (add-hook 'go-mode-hook #'lsp-deferred)
 (add-hook 'go-mode-hook #'yas-minor-mode)
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+;; Rust
+(defun lsp-rust-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'rustic-mode-hook #'lsp-deferred)
+(add-hook 'rustic-mode-hook #'yas-minor-mode)
+(add-hook 'rustic-mode-hook #'lsp-rust-install-save-hooks)
