@@ -37,6 +37,7 @@
 (tool-bar-mode -1)
 (load-theme 'gruvbox)
 (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 14")
+		      ((eq system-type 'gnu/linux) "FiraMono Nerd Font Mono 12")
 		      ((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
 		nil t)
 
