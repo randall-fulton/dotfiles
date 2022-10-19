@@ -20,8 +20,6 @@
 
 (use-package magit :ensure t)
 
-(use-package org :ensure t)
-
 (use-package which-key :ensure t)
 (which-key-mode)
 
@@ -30,8 +28,8 @@
   :ensure t
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :commands lsp
-  :hook (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+;;  :hook (lsp-mode . lsp-enable-which-key-integration))
 ;; (use-package yasnippet)
 ;; (use-package lsp-ui)
 
@@ -41,6 +39,7 @@
   :ensure t
   :hook (yas-minor-mode)
   :config
+  (add-hook 'go-mode-hook #'lsp-deferred)
   (add-hook 'before-save-hook #'lsp-format-buffer)
   (add-hook 'before-save-hook #'lsp-organize-imports))
 

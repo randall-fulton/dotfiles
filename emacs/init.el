@@ -26,4 +26,7 @@
  ;; If there is more than one, they won't work right.
  )
 
-(org-babel-load-file "./configuration.org")
+(straight-use-package 'org)
+
+(org-babel-load-file (expand-file-name "configuration.org"
+				       user-emacs-directory))
