@@ -1,0 +1,92 @@
+** Straight
+#+begin_src emacs-lisp
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)  
+#+end_src
+
+** Emacs defaults
+#+begin_src emacs-lisp
+  (use-package gruvbox-theme)
+
+  (setq inhibit-startup-screen t)
+  (menu-bar-mode nil)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (load-theme 'gruvbox)
+  (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 14")
+			((eq system-type 'gnu/linux) "FiraMono Nerd Font Mono 12")
+			((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
+		  nil t)
+  (ido-mode) ; find-file completion
+#+end_src
+
+*** Path
+
+Ensure Emacs shares =$PATH= with a normal shell. Without this, some executables won't be
+available (e.g. =rust-analyzer=).
+
+#+begin_src emacs-lisp
+  (use-package exec-path-from-shell :ensure t)
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
+#+end_src
+
+** Utilities
+
+#+begin_src emacs-lisp
+  (use-package magit :ensure t)
+
+  (use-package org :ensure t)
+
+  (use-package which-key :ensure t)
+  (which-key-mode)
+#+end_src
+
+** IDE
+
+Advanced functionality to turn Emacs into a full-blown IDE.
+
+*** LSP
+
+#+begin_src emacs-lisp
+  (use-package company)
+  (use-package lsp-mode
+    :ensure t
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :commands lsp
+    :hook (lsp-mode . lsp-enable-which-key-integration))
+  ;; (use-package yasnippet)
+  ;; (use-package lsp-ui)
+#+end_src
+
+*** Syntax checks
+
+#+begin_src emacs-lisp
+  (use-package flycheck)
+#+end_src
+
+*** Languages
+
+**** Go
+
+#+begin_src emacs-lisp
+  (use-package go-mode
+    :ensure t
+    :hook (yas-minor-mode)
+    :config
+    (add-hook 'before-save-hook #'lsp-format-buffer)
+    (add-hook 'before-save-hook #'lsp-organize-imports))
+#+end_src
+
+**** Rust
+
+#+begin_src emacs-lisp
+  (use-package rustic
+    :ensure t
+    :hook (lsp-deferred yas-minor-mode)
+    :config
+    (add-hook 'before-save-hook #'lsp-format-buffer)
+    (add-hook 'before-save-hook #'lsp-organize-imports))
+#+end_src
+
