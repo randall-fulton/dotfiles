@@ -55,7 +55,7 @@ local function on_attach(_, bufnr)
 	key_maps(bufnr)
 end
 
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local lsp_flags = {
 	-- This is the default in Nvim 0.7+
