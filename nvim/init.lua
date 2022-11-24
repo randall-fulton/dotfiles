@@ -15,7 +15,8 @@ end
 require("config.packer")
 
 -- Colorscheme
-vim.cmd("colorscheme gruvbox-flat")
+-- vim.cmd("colorscheme gruvbox-flat")
+vim.cmd("colorscheme dayfox")
 
 -- Leader keys
 vim.g.mapleader = ","
@@ -28,6 +29,9 @@ vim.o.signcolumn = "yes:1"
 
 -- Controls when which-key triggers
 vim.o.timeoutlen = 500
+
+-- GUI
+vim.o.guifont = "Hack_Nerd_Font_Mono:h12"
 
 -- Mouse support
 vim.o.mouse = "a"

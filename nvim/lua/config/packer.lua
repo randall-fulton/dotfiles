@@ -20,7 +20,14 @@ local plugins = packer.startup({
 		})
 
 		-- Colorscheme
-		use("eddyekofo94/gruvbox-flat.nvim")
+		-- use("eddyekofo94/gruvbox-flat.nvim")
+		use({ "EdenEast/nightfox.nvim", commit = "bb70a64" })
+
+		use({
+			"feline-nvim/feline.nvim",
+			commit = "6d4e3f9",
+			config = [[require('config.feline')]],
+		})
 
 		-- Comments
 		use({

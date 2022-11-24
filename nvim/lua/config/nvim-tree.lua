@@ -9,5 +9,5 @@ tree.setup({
 })
 
 wk.register({
-	['<leader>if'] = { ':NvimTreeToggle<CR>', 'Files' }
+	['<leader>if'] = { ':NvimTreeToggle .<CR>', 'Files' }
 }, { silent = true, noremap = true })
