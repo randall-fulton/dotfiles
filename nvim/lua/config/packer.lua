@@ -69,13 +69,6 @@ local plugins = packer.startup({
 		-- Keybinds
 		use({ "folke/which-key.nvim", config = [[require('config.which-key')]] })
 
-		-- LuaLine
-		use({
-			"nvim-lualine/lualine.nvim",
-			requires = { "kyazdani42/nvim-web-devicons", opt = true },
-			config = [[require('config.nvim-lualine')]],
-		})
-
 		-- LSP
 		use({
 			"neovim/nvim-lspconfig",
