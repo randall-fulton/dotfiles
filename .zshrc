@@ -177,3 +177,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	# make sure GNU coreutils takes priority on OSX
 	export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 fi
+
+# Quick cd with zoxide
+eval "$(zoxide init zsh)"
+# Automatically load env vars from a .envrc in a directory using direnv
+# eval "$(direnv hook zsh)"
