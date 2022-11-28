@@ -115,10 +115,10 @@ local plugins = packer.startup({
 				"antoinemadec/FixCursorHold.nvim",
 				"nvim-neotest/neotest-go",
 				"nvim-neotest/neotest-python",
-				{ "rouge8/neotest-rust", commit = "b60f2fa" },
+				{ "rouge8/neotest-rust", commit = "84171da" },
 			},
 			config = [[require('config.neotest')]],
-			tag = "v1.27.1",
+			tag = "v1.37.4",
 		})
 
 		-- Treesitter
