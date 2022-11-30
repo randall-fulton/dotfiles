@@ -95,9 +95,9 @@ rt.setup({
 		settings = {
 			["rust-analyzer"] = {
 				checkOnSave = {
-					enable = true,
+					-- enable = true,
 					command = "clippy",
-					allTargets = true,
+					-- allTargets = true,
 				},
 			},
 		},
