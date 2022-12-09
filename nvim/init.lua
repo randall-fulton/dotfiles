@@ -26,6 +26,7 @@ vim.wo.relativenumber = true
 vim.o.cursorline = true
 vim.o.termguicolors = true
 vim.o.signcolumn = "yes:1"
+vim.o.scrolloff = 10
 
 -- Controls when which-key triggers
 vim.o.timeoutlen = 500
