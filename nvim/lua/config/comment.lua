@@ -11,12 +11,10 @@ comment.setup({
 })
 
 local nmaps = {
-	["<C-/>"] = { "<Plug>(comment_toggle_linewise)<CR>", "Toggle comment" },
-	-- ["<C-_>"] = { "<Plug>(comment_toggle_linewise)<CR>", "Toggle comment" }, -- this is actually <C-/>
+	["<C-/>"] = { "<Plug>(comment_toggle_linewise_current)<CR>", "Toggle comment" },
 }
 local vmaps = {
 	["<C-/>"] = { "<Plug>(comment_toggle_linewise_visual)<CR>", "Toggle comment" },
-	-- ["<C-_>"] = { "<Plug>(comment_toggle_linewise_visual)<CR>", "Toggle comment" }, -- this is actually <C-/>
 }
 wk.register(nmaps, { silent = true, noremap = true })
 wk.register(vmaps, { mode = "v", silent = true, noremap = true })
