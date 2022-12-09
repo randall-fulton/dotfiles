@@ -16,7 +16,7 @@ require("config.packer")
 
 -- Colorscheme
 -- vim.cmd("colorscheme gruvbox-flat")
-vim.cmd("colorscheme dayfox")
+vim.cmd("colorscheme duskfox")
 
 -- Leader keys
 vim.g.mapleader = ","
