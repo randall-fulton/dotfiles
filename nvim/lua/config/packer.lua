@@ -127,6 +127,10 @@ local plugins = packer.startup({
 			commit = "5891e2e",
 			config = [[require('config.nvim-treesitter')]],
 		})
+		use({
+			'nvim-treesitter/playground',
+			commit = "1290fdf",
+		})
 
 		-- dependencies outside of Packer
 		--   brew install lua-language-server
