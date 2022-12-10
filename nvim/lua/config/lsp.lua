@@ -125,6 +125,12 @@ lsp["sumneko_lua"].setup({
 				-- don't warn that "vim" is unknown symbol
 				globals = { "vim" },
 			},
+			telemetry = {
+				enable = false,
+			},
+			workspace = {
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
 		},
 	},
 })
