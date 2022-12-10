@@ -76,7 +76,7 @@ lsp["hls"].setup({
 	flags = lsp_flags,
 	capabilities = capabilities,
 })
-lsp["ocaml-lsp"].setup({
+lsp["ocamllsp"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
 	capabilities = capabilities,
