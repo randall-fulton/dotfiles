@@ -16,10 +16,11 @@ require("config.packer")
 
 -- Colorscheme
 -- vim.cmd("colorscheme gruvbox-flat")
-vim.cmd("colorscheme duskfox")
+vim.cmd("colorscheme dayfox")
 
 -- Leader keys
-vim.g.mapleader = ","
+vim.api.nvim_set_keymap("n", "<SPC>", "", {})
+vim.g.mapleader = " "
 
 -- Basic UI tweaks
 vim.wo.relativenumber = true
@@ -32,7 +33,7 @@ vim.o.scrolloff = 10
 vim.o.timeoutlen = 500
 
 -- GUI
-vim.o.guifont = "Hack_Nerd_Font_Mono:h12"
+vim.o.guifont = "Hack_Nerd_Font_Mono:h16"
 
 -- Mouse support
 vim.o.mouse = "a"
@@ -46,3 +47,5 @@ vim.o.shiftwidth = 4
 vim.o.completeopt = "menuone,noinsert,noselect"
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+
+vim.api.nvim_create_user_command("Config", "exe 'e '.stdpath('config').'/init.lua'", {})
