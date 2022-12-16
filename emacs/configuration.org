@@ -9,12 +9,12 @@
   (use-package gruvbox-theme)
 
   (setq inhibit-startup-screen t)
-  (menu-bar-mode nil)
+  (menu-bar-mode -1)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
   (load-theme 'gruvbox)
   (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 14")
-			((eq system-type 'gnu/linux) "FiraMono Nerd Font Mono 12")
+			((eq system-type 'gnu/linux) "Iosevka 12")
 			((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
 		  nil t)
   (ido-mode) ; find-file completion
@@ -26,9 +26,11 @@ Ensure Emacs shares =$PATH= with a normal shell. Without this, some executables 
 available (e.g. =rust-analyzer=).
 
 #+begin_src emacs-lisp
+  (setq-default explicit-shell-file-name "/usr/bin/zsh")
+
   (use-package exec-path-from-shell :ensure t)
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize))
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize))
 #+end_src
 
 ** Utilities
@@ -76,6 +78,12 @@ Advanced functionality to turn Emacs into a full-blown IDE.
     (add-hook 'go-mode-hook #'lsp-deferred)
     (add-hook 'before-save-hook #'lsp-format-buffer)
     (add-hook 'before-save-hook #'lsp-organize-imports))
+#+end_src
+
+**** Odin
+
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.odin\\'" . go-mode))
 #+end_src
 
 **** Rust
