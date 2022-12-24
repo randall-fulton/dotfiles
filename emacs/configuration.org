@@ -13,6 +13,7 @@
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
   (load-theme 'gruvbox)
+  (setq-default tab-width 4)
   (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 14")
 			((eq system-type 'gnu/linux) "Iosevka 12")
 			((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
@@ -83,7 +84,9 @@ Advanced functionality to turn Emacs into a full-blown IDE.
 **** Odin
 
 #+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.odin\\'" . go-mode))
+  (use-package odin-mode
+	:ensure t
+	:straight (odin-mode :type git :host github :repo "randall-fulton/odin-mode"))
 #+end_src
 
 **** Rust

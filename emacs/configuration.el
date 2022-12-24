@@ -4,10 +4,11 @@
 (use-package gruvbox-theme)
 
 (setq inhibit-startup-screen t)
-(menu-bar-mode nil)
+(menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (load-theme 'gruvbox)
+(setq-default tab-width 4)
 (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 14")
 		      ((eq system-type 'gnu/linux) "Iosevka 12")
 		      ((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
@@ -44,6 +45,10 @@
   (add-hook 'go-mode-hook #'lsp-deferred)
   (add-hook 'before-save-hook #'lsp-format-buffer)
   (add-hook 'before-save-hook #'lsp-organize-imports))
+
+(use-package odin-mode
+      :ensure t
+      :straight (odin-mode :type git :host github :repo "randall-fulton/odin-mode"))
 
 (use-package rustic
   :ensure t
