@@ -1,7 +1,9 @@
 ** Straight
 #+begin_src emacs-lisp
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)  
+  (straight-use-package 'use-package)
+  (setq straight-use-package-by-default t)
+  (setq straight-vc-git-default-protocol 'ssh)
+  (setq straight-vc-git-force-protocol t)
 #+end_src
 
 ** Emacs defaults
@@ -85,8 +87,8 @@ Advanced functionality to turn Emacs into a full-blown IDE.
 
 #+begin_src emacs-lisp
   (use-package odin-mode
-	:ensure t
-	:straight (odin-mode :type git :host github :repo "randall-fulton/odin-mode"))
+    :ensure t
+    :straight (odin-mode :type git :host github :repo "randall-fulton/odin-mode"))
 #+end_src
 
 **** Rust

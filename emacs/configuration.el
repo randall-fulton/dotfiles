@@ -1,5 +1,7 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
+(setq straight-vc-git-default-protocol 'ssh)
+(setq straight-vc-git-force-protocol t)
 
 (use-package gruvbox-theme)
 
