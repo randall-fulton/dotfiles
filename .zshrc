@@ -149,23 +149,23 @@ alias refresh="source ~/.zshrc"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/rfulton/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/rfulton/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/rfulton/opt/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/rfulton/opt/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$('/Users/rfulton/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/Users/rfulton/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+#         . "/Users/rfulton/opt/anaconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/Users/rfulton/opt/anaconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
 # <<< conda initialize <<<
 
 alias notes="$HOME/dev/notes/notes"
@@ -179,6 +179,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # Quick cd with zoxide
-eval "$(zoxide init zsh)"
+# eval "$(zoxide init zsh)"
 # Automatically load env vars from a .envrc in a directory using direnv
 # eval "$(direnv hook zsh)"
