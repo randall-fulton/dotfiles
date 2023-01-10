@@ -89,6 +89,21 @@ Advanced functionality to turn Emacs into a full-blown IDE.
     (add-hook 'before-save-hook #'lsp-organize-imports))
 #+end_src
 
+**** Python
+
+#+begin_src emacs-lisp
+  (use-package lsp-pyright
+    :ensure t
+    :hook (python-mode . (lambda ()
+			   (require 'lsp-pyright)
+			   (lsp))))
+
+  (use-package python-black
+    :ensure t
+    :after python
+    :hook (python-mode . python-black-on-save-mode-enable-dwim))
+#+end_src
+
 **** Rust
 
 #+begin_src emacs-lisp
