@@ -58,6 +58,17 @@ Advanced functionality to turn Emacs into a full-blown IDE.
   ;; (use-package lsp-ui)
 #+end_src
 
+*** Projectile
+
+#+begin_src emacs-lisp
+  (use-package projectile
+    :bind ("s-p" . projectile-command-map))
+  (projectile-mode +1)
+  
+  ;; Recommended keymap prefix on Windows/Linux
+  ;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+#+end_src
+
 *** Syntax checks
 
 #+begin_src emacs-lisp

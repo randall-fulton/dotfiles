@@ -33,6 +33,13 @@
 ;; (use-package yasnippet)
 ;; (use-package lsp-ui)
 
+(use-package projectile
+  :bind ("s-p" . projectile-command-map))
+(projectile-mode +1)
+
+;; Recommended keymap prefix on Windows/Linux
+;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
 (use-package flycheck)
 
 (use-package go-mode
