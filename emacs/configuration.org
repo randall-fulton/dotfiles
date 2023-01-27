@@ -94,6 +94,13 @@ Advanced functionality to turn Emacs into a full-blown IDE.
     (add-hook 'before-save-hook #'lsp-organize-imports))
 #+end_src
 
+**** Haskell
+
+#+begin_src emacs-lisp
+  (use-package haskell-mode
+	:ensure t)
+#+end_src
+
 **** Lisp
 
 #+begin_src emacs-lisp

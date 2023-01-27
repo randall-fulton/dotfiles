@@ -11,7 +11,7 @@
 (tool-bar-mode -1)
 (load-theme 'gruvbox)
 (setq-default tab-width 4)
-(set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 14")
+(set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
 		      ((eq system-type 'gnu/linux) "Iosevka 12")
 		      ((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
 		nil t)
@@ -55,6 +55,10 @@
   (add-hook 'before-save-hook #'lsp-format-buffer)
   (add-hook 'before-save-hook #'lsp-organize-imports))
 
+(use-package slime
+      :ensure t)
+(setq inferior-lisp-program "sbcl")
+
 (use-package lsp-pyright
   :ensure t
   :hook (python-mode . (lambda ()
@@ -67,8 +71,8 @@
   :hook (python-mode . python-black-on-save-mode-enable-dwim))
 
 (use-package odin-mode
-      :ensure t
-      :straight (odin-mode :type git :host github :repo "randall-fulton/odin-mode"))
+  :ensure t
+  :straight (odin-mode :type git :host github :repo "randall-fulton/odin-mode"))
 
 (use-package rustic
   :ensure t
