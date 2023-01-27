@@ -82,6 +82,13 @@ Advanced functionality to turn Emacs into a full-blown IDE.
 
 *** Languages
 
+**** Docker
+
+#+begin_src emacs-lisp
+  (use-package dockerfile-mode
+	:ensure t)
+#+end_src
+
 **** Go
 
 #+begin_src emacs-lisp
