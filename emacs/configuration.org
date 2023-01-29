@@ -111,9 +111,15 @@ Advanced functionality to turn Emacs into a full-blown IDE.
 **** Lisp
 
 #+begin_src emacs-lisp
+  (use-package parinfer-rust-mode
+	:ensure t
+	:hook (emacs-lisp-mode lisp-mode)
+	:init
+	(setq parinfer-rust-auto-download t))
   (use-package slime
-	:ensure t)
-  (setq inferior-lisp-program "sbcl")
+	:ensure t
+	:init
+	(setq inferior-lisp-program "sbcl"))
 #+end_src
 
 **** Python
