@@ -159,3 +159,9 @@ Advanced functionality to turn Emacs into a full-blown IDE.
     (add-hook 'before-save-hook #'lsp-organize-imports))
 #+end_src
 
+**** Yaml
+
+#+begin_src emacs-lisp
+  (use-package yaml-mode
+	:ensure t)
+#+end_src
