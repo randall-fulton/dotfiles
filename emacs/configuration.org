@@ -119,7 +119,10 @@ Advanced functionality to turn Emacs into a full-blown IDE.
   (use-package slime
 	:ensure t
 	:init
-	(setq inferior-lisp-program "sbcl"))
+	(setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
+	(setq browse-url-handlers
+		  '(("hyperspec" . eww-browse-url)
+			("." . browse-url-default-browser)))
 #+end_src
 
 **** Python
