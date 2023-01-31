@@ -122,7 +122,7 @@ Advanced functionality to turn Emacs into a full-blown IDE.
 	(setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
 	(setq browse-url-handlers
 		  '(("hyperspec" . eww-browse-url)
-			("." . browse-url-default-browser)))
+			("." . browse-url-default-browser))))
 #+end_src
 
 **** Python
@@ -152,11 +152,14 @@ Advanced functionality to turn Emacs into a full-blown IDE.
 
 #+begin_src emacs-lisp
   (use-package rustic
-    :ensure t
-    :hook (lsp-deferred yas-minor-mode)
-    :config
-    (add-hook 'before-save-hook #'lsp-format-buffer)
-    (add-hook 'before-save-hook #'lsp-organize-imports))
+	:ensure t
+	:hook (lsp-deferred yas-minor-mode)
+	:init
+	(setq lsp-rust-analyzer-server-display-inlay-hints t)
+	:config
+	(add-hook 'before-save-hook #'lsp-format-buffer)
+	(add-hook 'before-save-hook #'lsp-organize-imports)
+  	(lsp-rust-analyzer-inlay-hints-mode))
 #+end_src
 
 **** Yaml
