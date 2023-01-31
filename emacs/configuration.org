@@ -1,3 +1,4 @@
+
 ** Straight
 #+begin_src emacs-lisp
   (straight-use-package 'use-package)
@@ -54,10 +55,12 @@ Advanced functionality to turn Emacs into a full-blown IDE.
 #+begin_src emacs-lisp
   (use-package company)
   (use-package lsp-mode
-    :ensure t
-    :init
-    (setq lsp-keymap-prefix "C-c l")
-    :commands lsp)
+	:ensure t
+	:init
+	(setq lsp-keymap-prefix "C-c l")
+	:commands lsp
+	:custom
+	(lsp-rust-analyzer-cargo-watch-command "clippy"))
   ;;  :hook (lsp-mode . lsp-enable-which-key-integration))
   ;; (use-package yasnippet)
   ;; (use-package lsp-ui)
@@ -67,11 +70,14 @@ Advanced functionality to turn Emacs into a full-blown IDE.
 
 #+begin_src emacs-lisp
   (use-package projectile
-    :bind ("s-p" . projectile-command-map))
+	:ensure t
+	:bind ("s-p" . projectile-command-map)
+	:init
+	(setq projectile-project-search-path '("~/dev")))
   (projectile-mode +1)
-  
-  ;; Recommended keymap prefix on Windows/Linux
-  ;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+	;; Recommended keymap prefix on Windows/Linux
+	;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 #+end_src
 
 *** Syntax checks
@@ -153,13 +159,13 @@ Advanced functionality to turn Emacs into a full-blown IDE.
 #+begin_src emacs-lisp
   (use-package rustic
 	:ensure t
-	:hook (lsp-deferred yas-minor-mode)
+	:hook (lsp-deferred yas-minor-mode) ; lsp-rust-analyzer-inlay-hints-mode
 	:init
-	(setq lsp-rust-analyzer-server-display-inlay-hints t)
+	;; (setq lsp-rust-analyzer-server-display-inlay-hints t)
 	:config
 	(add-hook 'before-save-hook #'lsp-format-buffer)
 	(add-hook 'before-save-hook #'lsp-organize-imports)
-  	(lsp-rust-analyzer-inlay-hints-mode))
+	(push 'rustic-clippy flycheck-checkers))
 #+end_src
 
 **** Yaml

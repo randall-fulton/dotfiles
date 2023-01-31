@@ -12,8 +12,8 @@
 (load-theme 'gruvbox)
 (setq-default tab-width 4)
 (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
-		  ((eq system-type 'gnu/linux) "Iosevka 12")
-		  ((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
+		      ((eq system-type 'gnu/linux) "Iosevka 12")
+		      ((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
 		nil t)
 (ido-mode) ; find-file completion
 
@@ -39,16 +39,19 @@
 ;; (use-package lsp-ui)
 
 (use-package projectile
-  :bind ("s-p" . projectile-command-map))
+      :ensure t
+      :bind ("s-p" . projectile-command-map)
+      :init
+      (setq projectile-project-search-path '("~/dev")))
 (projectile-mode +1)
 
-;; Recommended keymap prefix on Windows/Linux
-;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+      ;; Recommended keymap prefix on Windows/Linux
+      ;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 (use-package flycheck)
 
 (use-package dockerfile-mode
-  :ensure t)
+      :ensure t)
 
 (use-package go-mode
   :ensure t
@@ -59,20 +62,20 @@
   (add-hook 'before-save-hook #'lsp-organize-imports))
 
 (use-package haskell-mode
-  :ensure t)
+      :ensure t)
 
 (use-package parinfer-rust-mode
-  :ensure t
-  :hook (emacs-lisp-mode lisp-mode)
-  :init
-  (setq parinfer-rust-auto-download t))
+      :ensure t
+      :hook (emacs-lisp-mode lisp-mode)
+      :init
+      (setq parinfer-rust-auto-download t))
 (use-package slime
-  :ensure t
-  :init
-  (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
-  (setq browse-url-handlers
+      :ensure t
+      :init
+      (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
+      (setq browse-url-handlers
 		'(("hyperspec" . eww-browse-url)
-		  ("." . browse-url-default-browser))))
+		      ("." . browse-url-default-browser))))
 
 (use-package lsp-pyright
   :ensure t
@@ -90,14 +93,13 @@
   :straight (odin-mode :type git :host github :repo "randall-fulton/odin-mode"))
 
 (use-package rustic
-  :ensure t
-  :hook (lsp-deferred yas-minor-mode)
-  :init
-  (setq lsp-rust-analyzer-server-display-inlay-hints t)
-  :config
-  (add-hook 'before-save-hook #'lsp-format-buffer)
-  (add-hook 'before-save-hook #'lsp-organize-imports)
-  (lsp-rust-analyzer-inlay-hints-mode))
+      :ensure t
+      :hook (lsp-deferred yas-minor-mode) ; lsp-rust-analyzer-inlay-hints-mode)
+      ;; :init
+      ;; (setq lsp-rust-analyzer-server-display-inlay-hints t)
+      :config
+      (add-hook 'before-save-hook #'lsp-format-buffer)
+      (add-hook 'before-save-hook #'lsp-organize-imports))
 
 (use-package yaml-mode
-  :ensure t)
+      :ensure t)
