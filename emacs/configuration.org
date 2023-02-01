@@ -1,4 +1,3 @@
-
 ** Straight
 #+begin_src emacs-lisp
   (straight-use-package 'use-package)
@@ -35,6 +34,16 @@ available (e.g. =rust-analyzer=).
   (use-package exec-path-from-shell :ensure t)
     (when (memq window-system '(mac ns x))
       (exec-path-from-shell-initialize))
+#+end_src
+
+*** Keybinds
+
+#+begin_src emacs-lisp
+  (global-unset-key (kbd "C-x o"))
+  (global-set-key (kbd "C-,")
+				  (lambda () (interactive) (other-window -1)))
+  (global-set-key (kbd "C-.")
+				  (lambda () (interactive) (other-window 1)))
 #+end_src
 
 ** Utilities
