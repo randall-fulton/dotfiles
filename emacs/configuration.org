@@ -21,6 +21,9 @@
 			((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
 		  nil t)
   (ido-mode) ; find-file completion
+
+  (setq display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode)
 #+end_src
 
 *** Path
