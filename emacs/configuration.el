@@ -15,7 +15,11 @@
 		      ((eq system-type 'gnu/linux) "Iosevka 12")
 		      ((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
 		nil t)
-(ido-mode) ; find-file completion
+;; replaced with ivy below
+;; (ido-mode) ; find-file completion
+
+(setq display-line-numbers-type 'relative)
+(global-display-line-numbers-mode)
 
 (setq-default explicit-shell-file-name "/usr/bin/zsh")
 
@@ -23,17 +27,29 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize))
 
+(global-unset-key (kbd "C-x o"))
+(global-set-key (kbd "C-,")
+				(lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-.")
+				(lambda () (interactive) (other-window 1)))
+
 (use-package magit :ensure t)
 
 (use-package which-key :ensure t)
 (which-key-mode)
 
+(use-package ivy
+      :ensure t)
+(ivy-mode)
+
 (use-package company)
 (use-package lsp-mode
-  :ensure t
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :commands lsp)
+      :ensure t
+      :init
+      (setq lsp-keymap-prefix "C-c l")
+      :commands lsp
+      :custom
+      (lsp-rust-analyzer-cargo-watch-command "clippy"))
 ;;  :hook (lsp-mode . lsp-enable-which-key-integration))
 ;; (use-package yasnippet)
 ;; (use-package lsp-ui)
@@ -94,12 +110,13 @@
 
 (use-package rustic
       :ensure t
-      :hook (lsp-deferred yas-minor-mode) ; lsp-rust-analyzer-inlay-hints-mode)
-      ;; :init
+      :hook (lsp-deferred yas-minor-mode) ; lsp-rust-analyzer-inlay-hints-mode
+      :init
       ;; (setq lsp-rust-analyzer-server-display-inlay-hints t)
       :config
       (add-hook 'before-save-hook #'lsp-format-buffer)
-      (add-hook 'before-save-hook #'lsp-organize-imports))
+      (add-hook 'before-save-hook #'lsp-organize-imports)
+      (push 'rustic-clippy flycheck-checkers))
 
 (use-package yaml-mode
       :ensure t)

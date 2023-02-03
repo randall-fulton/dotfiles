@@ -20,7 +20,8 @@
 			((eq system-type 'gnu/linux) "Iosevka 12")
 			((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
 		  nil t)
-  (ido-mode) ; find-file completion
+  ;; replaced with ivy below
+  ;; (ido-mode) ; find-file completion
 
   (setq display-line-numbers-type 'relative)
   (global-display-line-numbers-mode)
@@ -61,6 +62,21 @@ available (e.g. =rust-analyzer=).
 ** IDE
 
 Advanced functionality to turn Emacs into a full-blown IDE.
+
+*** Completion
+
+Temporarily trying out ivy over ido. Hoping to find a completion
+package that provides a bit more.
+
+Ido is too simple. For example, why no fuzzy search?
+
+Haven't tried helm yet.
+
+#+begin_src emacs-lisp
+  (use-package ivy
+	:ensure t)
+  (ivy-mode)
+#+end_src
 
 *** LSP
 
