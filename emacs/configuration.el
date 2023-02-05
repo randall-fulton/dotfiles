@@ -110,13 +110,13 @@
       :ensure t)
 
 (use-package go-mode
-  :ensure t
-  :hook (yas-minor-mode)
-  :config
-  (add-hook 'go-mode-hook #'lsp-deferred)
-  (add-hook 'go-mode-hook #'treesit-major-mode-setup)
-  (add-hook 'before-save-hook #'lsp-format-buffer)
-  (add-hook 'before-save-hook #'lsp-organize-imports))
+	:ensure t
+	:hook (yas-minor-mode)
+	:bind (("C-c C-c C-c" . tester-run-current-test))
+	:config
+	(add-hook 'go-mode-hook #'lsp-deferred)
+	(add-hook 'before-save-hook #'lsp-format-buffer)
+	(add-hook 'before-save-hook #'lsp-organize-imports))
 
 (use-package haskell-mode
       :ensure t)
