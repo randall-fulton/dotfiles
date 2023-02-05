@@ -66,6 +66,46 @@
 
 (use-package flycheck)
 
+(defun treesit-install-all-languages ()
+      "Install all languages specified by `treesit-language-source-alist'."
+      (interactive)
+      (let ((languages (mapcar 'car treesit-language-source-alist)))
+	(dolist (lang languages)
+	      (treesit-install-language-grammar lang)
+	      (message "`%s' parser was installed." lang)
+	      (sit-for 0.75))))
+
+(defun treesit-initialize ()
+      "Initialize tree-sitter."
+      (interactive)
+      (setq treesit-extra-load-path '("~/dev/tree-sitter-module/dist"))
+      (setq treesit-language-source-alist
+		'((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
+		      (c . ("https://github.com/tree-sitter/tree-sitter-c"))
+		      (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+		      (go . ("https://github.com/tree-sitter/tree-sitter-go"))
+		      (gomod . ("https://github.com/camdencheek/tree-sitter-go-mod"))
+		      (json . ("https://github.com/tree-sitter/tree-sitter-json"))
+		      (make . ("https://github.com/alemuller/tree-sitter-make"))
+		      (python . ("https://github.com/tree-sitter/tree-sitter-python"))
+		      (rust . ("https://github.com/tree-sitter/tree-sitter-rust"))
+		      (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))))
+      (when (treesit-available-p)
+	(require 'treesit)
+	;; (treesit-install-all-languages)
+	(when (treesit-ready-p 'go t)
+	      (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode)))))
+
+(when (and (not (version< emacs-version "29"))
+		       (treesit-available-p))
+      (treesit-initialize)
+      (use-package tester
+	:ensure t
+	:straight (tester
+			       :type git
+			       :host github
+			       :repo "randall-fulton/tester.el")))
+
 (use-package dockerfile-mode
       :ensure t)
 
@@ -74,6 +114,7 @@
   :hook (yas-minor-mode)
   :config
   (add-hook 'go-mode-hook #'lsp-deferred)
+  (add-hook 'go-mode-hook #'treesit-major-mode-setup)
   (add-hook 'before-save-hook #'lsp-format-buffer)
   (add-hook 'before-save-hook #'lsp-organize-imports))
 
