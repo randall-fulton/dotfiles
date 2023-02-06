@@ -114,13 +114,18 @@ Haven't tried helm yet.
   (use-package flycheck)
 #+end_src
 
-*** Treesitter
+*** Treesitter (Disabled)
 
-The following only works with Emacs 29+.
+The following only works with Emacs 29+. Follow [[https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter][this guide]] to setup
+tree-sitter.
 
-Follow [[https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter][this guide]] to setup tree-sitter.
+This still has a huge drawback: it replaces language modes with
+tree-sitter equivalents. This would sound great, except the
+replacement modes are not yet full-featured. For example, =go-ts-mode=
+has improper highlighting, indentation, and requires separate
+configuration to =go-mode=.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :eval never-export
   (defun treesit-install-all-languages ()
 	"Install all languages specified by `treesit-language-source-alist'."
 	(interactive)
