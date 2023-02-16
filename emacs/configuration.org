@@ -1,4 +1,4 @@
-** TODO configure Org to condense header levels
+q** TODO configure Org to condense header levels
 
 ** Straight
 #+begin_src emacs-lisp
@@ -49,13 +49,14 @@ Customize code style through font, theme, ligatures, etc.
 *** TODO add ligature support
 
 #+begin_src emacs-lisp
-    (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
+  (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
 						((eq system-type 'gnu/linux) "Iosevka 12")
 						((eq system-type 'windows-nt) "Fira Code 12"))
 				  nil t)
 
-  (use-package gruvbox-theme)
-  (load-theme 'gruvbox)  
+  (use-package gruvbox-theme
+	:config
+	(load-theme 'gruvbox))
 #+end_src
 
 Helpful editor customizations to make code navigation easier.
@@ -95,9 +96,10 @@ navigation. Much more fluid movement, reminiscent of Vim.
 
 #+begin_src emacs-lisp
   (use-package magit :ensure t)
-
-  (use-package which-key :ensure t)
-  (which-key-mode)
+  (use-package which-key
+	:ensure t
+	:config
+	(which-key-mode))
 #+end_src
 
 ** IDE
