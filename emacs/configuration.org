@@ -180,6 +180,8 @@ configuration to =go-mode=.
 
 **** Go
 
+* TODO use =gofumpt= on-save
+
 #+begin_src emacs-lisp
   (use-package go-mode
 	  :ensure t
