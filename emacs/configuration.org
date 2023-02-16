@@ -118,6 +118,16 @@ Ivy. It's better than Ido, but who knows about helm...
 
 #+begin_src emacs-lisp
   (use-package company)
+  
+  (use-package lsp-ui
+	:bind (("C-c o" . lsp-ui-imenu))
+	:custom
+	(lsp-ui-imenu-window-fix-width t)
+	(lsp-ui-doc-enable t)
+	(lsp-ui-doc-show-with-cursor t)
+	(lsp-ui-doc-delay 1)
+	(lsp-ui-doc-position 'top))
+
   (use-package lsp-mode
 	:ensure t
 	:init
@@ -125,9 +135,7 @@ Ivy. It's better than Ido, but who knows about helm...
 	:commands lsp
 	:custom
 	(lsp-rust-analyzer-cargo-watch-command "clippy"))
-  ;;  :hook (lsp-mode . lsp-enable-which-key-integration))
   ;; (use-package yasnippet)
-  ;; (use-package lsp-ui)
 #+end_src
 
 *** Projectile
