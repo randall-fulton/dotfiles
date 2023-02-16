@@ -10,6 +10,12 @@
 
 ** Emacs defaults
 
+Always start maximized.
+
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+
 Remove GUI decorations, to present a plain window.
 
 #+begin_src emacs-lisp

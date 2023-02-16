@@ -3,20 +3,28 @@
 (setq straight-vc-git-default-protocol 'ssh)
 (setq straight-vc-git-force-protocol t)
 
-(use-package gruvbox-theme)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-(setq inhibit-startup-screen t)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
-(load-theme 'gruvbox)
+
+(setq default-directory
+	      (cond ((equal window-system 'w32) "G:\\Developer")
+			(t "~/dev")))
+
+(setq inhibit-startup-screen t)
+(setq initial-buffer-choice default-directory)
+
 (setq-default tab-width 4)
+
 (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
-		      ((eq system-type 'gnu/linux) "Iosevka 12")
-		      ((eq system-type 'windows-nt) "FuraMono Nerd Font Mono 11"))
-		nil t)
-;; replaced with ivy below
-;; (ido-mode) ; find-file completion
+					      ((eq system-type 'gnu/linux) "Iosevka 12")
+					      ((eq system-type 'windows-nt) "Fira Code 12"))
+				nil t)
+
+(use-package gruvbox-theme)
+(load-theme 'gruvbox)
 
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
@@ -56,13 +64,10 @@
 
 (use-package projectile
       :ensure t
-      :bind ("s-p" . projectile-command-map)
+      :bind ("M-p" . projectile-command-map)
       :init
-      (setq projectile-project-search-path '("~/dev")))
+      (setq projectile-project-search-path (list default-directory)))
 (projectile-mode +1)
-
-      ;; Recommended keymap prefix on Windows/Linux
-      ;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 (use-package flycheck)
 
