@@ -1,3 +1,5 @@
+** TODO configure Org to condense header levels
+
 ** Straight
 #+begin_src emacs-lisp
   (straight-use-package 'use-package)
@@ -7,27 +9,52 @@
 #+end_src
 
 ** Emacs defaults
+
+Remove GUI decorations, to present a plain window.
+
 #+begin_src emacs-lisp
-  (use-package gruvbox-theme)
-
-  (setq inhibit-startup-screen t)
-  (setq default-directory
-		(cond ((equal window-system 'w32) "G:\\Developer")
-			  (t "~/dev")))
-
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
-  (load-theme 'gruvbox)
+#+end_src
 
+Set the default working directory and show it in dired on startup.
+
+#+begin_src emacs-lisp
+  (setq default-directory
+		(cond ((equal window-system 'w32) "G:\\Developer")
+			  (t "~/dev")))
+  
+  (setq inhibit-startup-screen t)
+  (setq initial-buffer-choice default-directory)
+#+end_src
+
+Global code formatting rules.
+
+Note sure if this is doing anything. It was added when I was using
+=go-ts-mode=, which has its own problems.
+
+#+begin_src emacs-lisp
   (setq-default tab-width 4)
-  (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
-			((eq system-type 'gnu/linux) "Iosevka 12")
-			((eq system-type 'windows-nt) "Fira Code 12"))
-		  nil t)
-  ;; replaced with ivy below
-  ;; (ido-mode) ; find-file completion
+#+end_src
 
+Customize code style through font, theme, ligatures, etc.
+
+*** TODO add ligature support
+
+#+begin_src emacs-lisp
+    (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
+						((eq system-type 'gnu/linux) "Iosevka 12")
+						((eq system-type 'windows-nt) "Fira Code 12"))
+				  nil t)
+
+  (use-package gruvbox-theme)
+  (load-theme 'gruvbox)  
+#+end_src
+
+Helpful editor customizations to make code navigation easier.
+
+#+begin_src emacs-lisp
   (setq display-line-numbers-type 'relative)
   (global-display-line-numbers-mode)
 #+end_src
@@ -46,6 +73,9 @@ available (e.g. =rust-analyzer=).
 #+end_src
 
 *** Keybinds
+
+Change =other-window= to allow for easy forward and backward
+navigation. Much more fluid movement, reminiscent of Vim.
 
 #+begin_src emacs-lisp
   (global-unset-key (kbd "C-x o"))
@@ -70,12 +100,7 @@ Advanced functionality to turn Emacs into a full-blown IDE.
 
 *** Completion
 
-Temporarily trying out ivy over ido. Hoping to find a completion
-package that provides a bit more.
-
-Ido is too simple. For example, why no fuzzy search?
-
-Haven't tried helm yet.
+Ivy. It's better than Ido, but who knows about helm...
 
 #+begin_src emacs-lisp
   (use-package ivy
@@ -180,7 +205,7 @@ configuration to =go-mode=.
 
 **** Go
 
-* TODO use =gofumpt= on-save
+****** TODO use =gofumpt= on-save
 
 #+begin_src emacs-lisp
   (use-package go-mode
