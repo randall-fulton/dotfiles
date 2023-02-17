@@ -83,6 +83,16 @@ Customize code style through font, theme, ligatures, etc.
 	(global-ligature-mode t))
 #+end_src
 
+Mode line
+
+#+begin_src emacs-lisp :eval never-export
+  (use-package mood-line
+	:config
+	(mood-line-mode)
+	:custom
+	(mood-line-glyph-alist . mood-line-glyphs-fira-code))
+#+end_src
+
 Helpful editor customizations to make code navigation easier.
 
 #+begin_src emacs-lisp
@@ -114,6 +124,16 @@ navigation. Much more fluid movement, reminiscent of Vim.
 				  (lambda () (interactive) (other-window -1)))
   (global-set-key (kbd "C-.")
 				  (lambda () (interactive) (other-window 1)))
+#+end_src
+
+Open this file for editing.
+
+#+begin_src emacs-lisp
+  (defun rf/config-edit ()
+	"Open configuration file"
+	(interactive)
+	(find-file (expand-file-name "configuration.org" user-emacs-directory)))
+  (global-set-key (kbd "C-c c") '("config-edit" . rf/config-edit))
 #+end_src
 
 ** Utilities
