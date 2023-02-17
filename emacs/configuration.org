@@ -1,4 +1,4 @@
-q** TODO configure Org to condense header levels
+** TODO configure Org to condense header levels
 
 ** Straight
 #+begin_src emacs-lisp
@@ -28,7 +28,7 @@ Set the default working directory and show it in dired on startup.
 
 #+begin_src emacs-lisp
   (setq default-directory
-		(cond ((equal window-system 'w32) "G:\\Developer")
+		(cond ((equal system-type 'windows-nt) "G:\\Developer")
 			  (t "~/dev")))
   
   (setq inhibit-startup-screen t)
