@@ -10,7 +10,7 @@
 (tool-bar-mode -1)
 
 (setq default-directory
-	      (cond ((equal window-system 'w32) "G:\\Developer")
+	      (cond ((equal system-type 'windows-nt) "G:\\Developer")
 			(t "~/dev")))
 
 (setq inhibit-startup-screen t)
@@ -23,17 +23,46 @@
 					      ((eq system-type 'windows-nt) "Fira Code 12"))
 				nil t)
 
-(use-package gruvbox-theme)
-(load-theme 'gruvbox)
+(use-package gruvbox-theme
+      :config
+      (load-theme 'gruvbox))
+
+(use-package ligature
+      :load-path "path-to-ligature-repo"
+      :config
+      ;; Enable the "www" ligature in every possible major mode
+      (ligature-set-ligatures 't '("www"))
+      ;; Enable traditional ligature support in eww-mode, if the
+      ;; `variable-pitch' face supports it
+      (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+      ;; Enable all Cascadia Code ligatures in programming modes
+      (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+									       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+									       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+									       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+									       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+									       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+									       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+									       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+									       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+									       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+									       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+									       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+									       "\\\\" "://"))
+      ;; Enables ligature checks globally in all buffers. You can also do it
+      ;; per mode with `ligature-mode'.
+      (global-ligature-mode t))
 
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
 (setq-default explicit-shell-file-name "/usr/bin/zsh")
 
-(use-package exec-path-from-shell :ensure t)
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize))
+(use-package exec-path-from-shell
+      :ensure t
+      :config
+      (when (memq window-system '(mac ns x))
+	(exec-path-from-shell-initialize)))
 
 (global-unset-key (kbd "C-x o"))
 (global-set-key (kbd "C-,")
@@ -41,81 +70,54 @@
 (global-set-key (kbd "C-.")
 				(lambda () (interactive) (other-window 1)))
 
-(use-package magit :ensure t)
+(defun rf/config-edit ()
+      "Open configuration file"
+      (interactive)
+      (find-file (expand-file-name "configuration.org" user-emacs-directory)))
+(global-set-key (kbd "C-c c") '("config-edit" . rf/config-edit))
 
-(use-package which-key :ensure t)
-(which-key-mode)
+(use-package magit
+      :ensure t)
+(use-package which-key
+      :ensure t
+      :config
+      (which-key-mode))
 
 (use-package ivy
-      :ensure t)
-(ivy-mode)
+      :ensure t
+      :config
+      (ivy-mode))
 
 (use-package company)
+
+(use-package lsp-ui
+      :bind (("C-c o" . lsp-ui-imenu))
+      :custom
+      (lsp-ui-imenu-window-fix-width t)
+      (lsp-ui-doc-enable t)
+      (lsp-ui-doc-show-with-cursor t)
+      (lsp-ui-doc-delay 1)
+      (lsp-ui-doc-position 'top))
+
 (use-package lsp-mode
-      :ensure t
       :init
       (setq lsp-keymap-prefix "C-c l")
       :commands lsp
       :custom
       (lsp-rust-analyzer-cargo-watch-command "clippy"))
-;;  :hook (lsp-mode . lsp-enable-which-key-integration))
 ;; (use-package yasnippet)
-;; (use-package lsp-ui)
 
 (use-package projectile
-      :ensure t
       :bind ("M-p" . projectile-command-map)
       :init
-      (setq projectile-project-search-path (list default-directory)))
-(projectile-mode +1)
+      (setq projectile-project-search-path (list default-directory))
+      (projectile-mode +1))
 
 (use-package flycheck)
 
-(defun treesit-install-all-languages ()
-      "Install all languages specified by `treesit-language-source-alist'."
-      (interactive)
-      (let ((languages (mapcar 'car treesit-language-source-alist)))
-	(dolist (lang languages)
-	      (treesit-install-language-grammar lang)
-	      (message "`%s' parser was installed." lang)
-	      (sit-for 0.75))))
-
-(defun treesit-initialize ()
-      "Initialize tree-sitter."
-      (interactive)
-      (setq treesit-extra-load-path '("~/dev/tree-sitter-module/dist"))
-      (setq treesit-language-source-alist
-		'((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
-		      (c . ("https://github.com/tree-sitter/tree-sitter-c"))
-		      (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
-		      (go . ("https://github.com/tree-sitter/tree-sitter-go"))
-		      (gomod . ("https://github.com/camdencheek/tree-sitter-go-mod"))
-		      (json . ("https://github.com/tree-sitter/tree-sitter-json"))
-		      (make . ("https://github.com/alemuller/tree-sitter-make"))
-		      (python . ("https://github.com/tree-sitter/tree-sitter-python"))
-		      (rust . ("https://github.com/tree-sitter/tree-sitter-rust"))
-		      (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))))
-      (when (treesit-available-p)
-	(require 'treesit)
-	;; (treesit-install-all-languages)
-	(when (treesit-ready-p 'go t)
-	      (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode)))))
-
-(when (and (not (version< emacs-version "29"))
-		       (treesit-available-p))
-      (treesit-initialize)
-      (use-package tester
-	:ensure t
-	:straight (tester
-			       :type git
-			       :host github
-			       :repo "randall-fulton/tester.el")))
-
-(use-package dockerfile-mode
-      :ensure t)
+(use-package dockerfile-mode)
 
 (use-package go-mode
-	:ensure t
 	:hook (yas-minor-mode)
 	:bind (("C-c C-c C-c" . tester-run-current-test))
 	:config
@@ -123,16 +125,13 @@
 	(add-hook 'before-save-hook #'lsp-format-buffer)
 	(add-hook 'before-save-hook #'lsp-organize-imports))
 
-(use-package haskell-mode
-      :ensure t)
+(use-package haskell-mode)
 
 (use-package parinfer-rust-mode
-      :ensure t
       :hook (emacs-lisp-mode lisp-mode)
       :init
       (setq parinfer-rust-auto-download t))
 (use-package slime
-      :ensure t
       :init
       (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
       (setq browse-url-handlers
@@ -140,22 +139,18 @@
 		      ("." . browse-url-default-browser))))
 
 (use-package lsp-pyright
-  :ensure t
   :hook (python-mode . (lambda ()
 			 (require 'lsp-pyright)
 			 (lsp))))
 
 (use-package python-black
-  :ensure t
   :after python
   :hook (python-mode . python-black-on-save-mode-enable-dwim))
 
 (use-package odin-mode
-  :ensure t
   :straight (odin-mode :type git :host github :repo "randall-fulton/odin-mode"))
 
 (use-package rustic
-      :ensure t
       :hook (lsp-deferred yas-minor-mode) ; lsp-rust-analyzer-inlay-hints-mode
       :init
       ;; (setq lsp-rust-analyzer-server-display-inlay-hints t)
@@ -164,5 +159,4 @@
       (add-hook 'before-save-hook #'lsp-organize-imports)
       (push 'rustic-clippy flycheck-checkers))
 
-(use-package yaml-mode
-      :ensure t)
+(use-package yaml-mode)

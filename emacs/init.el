@@ -39,7 +39,6 @@
 ;; (rf/config-update-from-git)
 
 (straight-use-package 'org)
+(load-file (expand-file-name "configuration.el" user-emacs-directory))
 
-(org-babel-load-file (expand-file-name "configuration.org"
-                      user-emacs-directory))
 
