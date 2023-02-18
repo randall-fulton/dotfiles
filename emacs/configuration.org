@@ -300,8 +300,13 @@ configuration to =go-mode=.
 **** Haskell
 
 #+begin_src emacs-lisp
-  (use-package haskell-mode)
-  (use-package hindent)
+  (use-package haskell-mode
+	:config
+	(add-hook 'haskell-mode-hook #'lsp-deferred)
+	(add-hook 'haskell-mode-hook #'flycheck-mode)
+	:init
+	(use-package lsp-haskell)
+	(use-package hindent))
 #+end_src
 
 **** Lisp

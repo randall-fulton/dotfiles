@@ -127,8 +127,13 @@
 	(add-hook 'before-save-hook #'lsp-format-buffer)
 	(add-hook 'before-save-hook #'lsp-organize-imports))
 
-(use-package haskell-mode)
-(use-package hindent)
+(use-package haskell-mode
+  :config
+  (add-hook 'haskell-mode-hook #'lsp-deferred)
+  (add-hook 'haskell-mode-hook #'flycheck-mode)
+  :init
+  (use-package lsp-haskell)
+  (use-package hindent))
 
 (use-package parinfer-rust-mode
   :hook (emacs-lisp-mode lisp-mode)
