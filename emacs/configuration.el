@@ -110,12 +110,15 @@
 ;; (use-package yasnippet)
 
 (use-package projectile
-  :bind ("M-p" . projectile-command-map)
+  :bind ("C-c p" . projectile-command-map)
   :init
   (setq projectile-project-search-path (list default-directory))
   (projectile-mode +1))
 
-(use-package flycheck)
+(use-package flycheck
+  :bind
+  (("M-p" . flycheck-previous-error)
+   ("M-n" . flycheck-next-error)))
 
 (use-package dockerfile-mode)
 
