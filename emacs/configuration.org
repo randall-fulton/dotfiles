@@ -4,12 +4,18 @@
 
 ** TODO configure Org to condense header levels
 
-** Straight
+** Package management
+
+Straight is used to manage package installation, with the
+=use-package= integration.
+
 #+begin_src emacs-lisp
   (straight-use-package 'use-package)
   (setq straight-use-package-by-default t)
   (setq straight-vc-git-default-protocol 'ssh)
   (setq straight-vc-git-force-protocol t)
+
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 #+end_src
 
 ** Emacs defaults
@@ -197,6 +203,8 @@ minibuffer and eshell. LSP completion is not handled by ivy.
 
 *** Projectile
 
+**** TODO usage of =projectile-project-search-path= slows startup
+
 #+begin_src emacs-lisp
   (use-package projectile
 	:bind ("M-p" . projectile-command-map)
@@ -293,6 +301,7 @@ configuration to =go-mode=.
 
 #+begin_src emacs-lisp
   (use-package haskell-mode)
+  (use-package hindent)
 #+end_src
 
 **** Lisp
