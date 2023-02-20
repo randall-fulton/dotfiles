@@ -6,47 +6,46 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
-(use-package org
-  :config
+(defun rf/configure-org ()
   (variable-pitch-mode)
   (visual-line-mode)
-  (setq display-line-numbers nil
-        org-pretty-entities t
-        org-hide-leading-star t
-        org-hide-emphasis-markers t
-        org-startup-indented t)
+  (setq org-pretty-entities t
+		org-hide-leading-star t
+		org-hide-emphasis-markers t
+		org-startup-indented t)
   (let* ((variable-tuple
-          (cond ((x-list-fonts "ETBembo")      '(:font "ETBembo"))
-                ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
-                (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-         (base-font-color     (face-foreground 'default nil 'default))
-         (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
-    (custom-theme-set-faces
-     'user
-     `(variable-pitch ((t (,@variable-tuple :height 180 :weight thin))))
-     '(fixed-pitch ((t (:font "Fira Code" :height 120))))
-     `(org-level-8 ((t (,@headline ,@variable-tuple))))
-     `(org-level-7 ((t (,@headline ,@variable-tuple))))
-     `(org-level-6 ((t (,@headline ,@variable-tuple))))
-     `(org-level-5 ((t (,@headline ,@variable-tuple))))
-     `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
-     `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
-     `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
-     `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
-     `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))
-     '(org-code ((t (:inherit (shadow fixed-pitch)))))
-     '(org-block ((t (:inherit fixed-pitch))))
-     '(org-code ((t (:inherit (shadow fixed-pitch)))))
-     '(org-document-info ((t (:foreground "dark orange"))))
-     '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-     '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-     '(org-link ((t (:foreground "royal blue" :underline t))))
-     '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-     '(org-property-value ((t (:inherit fixed-pitch))) t)
-     '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-     '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
-     '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-     '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))))
+		  (cond ((x-list-fonts "ETBembo")      '(:font "ETBembo"))
+				((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
+				(nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+		 (base-font-color     (face-foreground 'default nil 'default))
+		 (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+	(custom-theme-set-faces
+	 'user
+	 `(variable-pitch ((t (,@variable-tuple :height 180 :weight thin))))
+	 '(fixed-pitch ((t (:font "Fira Code" :height 120))))
+	 `(org-level-8 ((t (,@headline ,@variable-tuple))))
+	 `(org-level-7 ((t (,@headline ,@variable-tuple))))
+	 `(org-level-6 ((t (,@headline ,@variable-tuple))))
+	 `(org-level-5 ((t (,@headline ,@variable-tuple))))
+	 `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+	 `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
+	 `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
+	 `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
+	 `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))
+	 '(org-code ((t (:inherit (shadow fixed-pitch)))))
+	 '(org-block ((t (:inherit fixed-pitch))))
+	 '(org-code ((t (:inherit (shadow fixed-pitch)))))
+	 '(org-document-info ((t (:foreground "dark orange"))))
+	 '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+	 '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+	 '(org-link ((t (:foreground "royal blue" :underline t))))
+	 '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+	 '(org-property-value ((t (:inherit fixed-pitch))) t)
+	 '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+	 '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+	 '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+	 '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))))
+(add-hook #'org-mode-hook #'rf/configure-org)
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -64,13 +63,13 @@
 (setq-default tab-width 4)
 
 (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
-					  ((eq system-type 'gnu/linux) "Iosevka 12")
-					  ((eq system-type 'windows-nt) "Fira Code 12"))
-				nil t)
+                      ((eq system-type 'gnu/linux) "Fira Code 12")
+                      ((eq system-type 'windows-nt) "Fira Code 12"))
+                nil t)
 
 (use-package gruvbox-theme
   :config
-  (load-theme 'gruvbox))
+  (load-theme 'gruvbox-light-medium))
 
 (use-package ligature
   :load-path "path-to-ligature-repo"
@@ -81,25 +80,26 @@
   ;; `variable-pitch' face supports it
   (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
   ;; Enable all Cascadia Code ligatures in programming modes
-  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-									   ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-									   "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-									   "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-									   "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-									   "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-									   "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-									   "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-									   ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-									   "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-									   "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-									   "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
-									   "\\\\" "://"))
+  (ligature-set-ligatures '(prog-mode org-mode)
+                          '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                            ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                            "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                            "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                            "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                            "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                            "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                            "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                            ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                            "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                            "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                            "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                            "\\\\" "://"))
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
 
 (setq display-line-numbers-type 'relative)
-(global-display-line-numbers-mode)
+(add-hook #'prog-mode-hook #'display-line-numbers-mode)
 
 (setq-default explicit-shell-file-name "/usr/bin/zsh")
 
