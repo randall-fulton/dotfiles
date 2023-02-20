@@ -166,12 +166,17 @@
 (use-package dockerfile-mode)
 
 (use-package go-mode
-	:hook (yas-minor-mode)
-	:bind (("C-c C-c C-c" . tester-run-current-test))
-	:config
-	(add-hook 'go-mode-hook #'lsp-deferred)
-	(add-hook 'before-save-hook #'lsp-format-buffer)
-	(add-hook 'before-save-hook #'lsp-organize-imports))
+  :hook (yas-minor-mode)
+  :bind (("C-c C-c C-c" . tester-run-current-test))
+  :config
+  (add-hook 'go-mode-hook #'lsp-deferred)
+  (add-hook 'before-save-hook #'lsp-format-buffer)
+  (add-hook 'before-save-hook #'lsp-organize-imports))
+(use-package ob-go
+  :straight (ob-go
+             :type git
+             :host github
+             :repo "pope/ob-go"))
 
 (use-package haskell-mode
   :config
