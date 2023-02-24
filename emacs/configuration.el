@@ -1,3 +1,8 @@
+(defvar rf/source-code-font
+  (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
+        ((eq system-type 'gnu/linux) "Fira Code 12")
+        ((eq system-type 'windows-nt) "Fira Code 12")))
+
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 (setq straight-vc-git-default-protocol 'ssh)
@@ -7,13 +12,22 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 (defun rf/configure-org ()
-  (variable-pitch-mode)
-  (visual-line-mode)
+  ;; vars
   (setq org-pretty-entities t
         org-hide-leading-star t
         org-hide-emphasis-markers t
+        org-log-done t
         org-startup-indented t)
+
+  ;; keybinds
+  (define-key org-mode-map (kbd "C-c a") #'org-agenda)
+
+  ;; babel languages
   (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
+
+  ;; style
+  (variable-pitch-mode)
+  (visual-line-mode)
   (let* ((variable-tuple
           (cond ((x-list-fonts "ETBembo")      '(:font "ETBembo"))
                 ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
@@ -23,7 +37,7 @@
     (custom-theme-set-faces
      'user
      `(variable-pitch ((t (,@variable-tuple :height 180 :weight thin))))
-     '(fixed-pitch ((t (:font "Fira Code" :height 120))))
+     `(fixed-pitch ((t (:font ,rf/source-code-font :height 120))))
      `(org-level-8 ((t (,@headline ,@variable-tuple))))
      `(org-level-7 ((t (,@headline ,@variable-tuple))))
      `(org-level-6 ((t (,@headline ,@variable-tuple))))
@@ -46,7 +60,9 @@
      '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
      '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
      '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))))
+
 (add-hook #'org-mode-hook #'rf/configure-org)
+(setq org-agenda-files '("~/org/work.org"))
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -63,10 +79,7 @@
 
 (setq-default tab-width 4)
 
-(set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
-                      ((eq system-type 'gnu/linux) "Fira Code 12")
-                      ((eq system-type 'windows-nt) "Fira Code 12"))
-                nil t)
+(set-frame-font rf/source-code-font nil t)
 
 (use-package gruvbox-theme
   :config
@@ -153,11 +166,12 @@
   (lsp-rust-analyzer-cargo-watch-command "clippy"))
 ;; (use-package yasnippet)
 
+(use-package rg)
 (use-package projectile
-  :bind ("C-c p" . projectile-command-map)
-  :init
-  (setq projectile-project-search-path (list default-directory))
-  (projectile-mode +1))
+    :bind ("C-c p" . projectile-command-map)
+    :init
+    (setq projectile-project-search-path (list default-directory))
+    (projectile-mode +1))
 
 (use-package flycheck
   :bind

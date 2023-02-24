@@ -2,6 +2,15 @@
 #+PROPERTY: header-args+ :eval never
 #+PROPERTY: header-args+ :exports code
 
+** Globals
+
+#+begin_src elisp
+  (defvar rf/source-code-font
+    (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
+          ((eq system-type 'gnu/linux) "Fira Code 12")
+          ((eq system-type 'windows-nt) "Fira Code 12")))
+#+end_src
+
 ** Package management
 
 Straight is used to manage package installation, with the
@@ -21,13 +30,22 @@ Straight is used to manage package installation, with the
 
 #+begin_src elisp
   (defun rf/configure-org ()
-    (variable-pitch-mode)
-    (visual-line-mode)
+    ;; vars
     (setq org-pretty-entities t
           org-hide-leading-star t
           org-hide-emphasis-markers t
+          org-log-done t
           org-startup-indented t)
+
+    ;; keybinds
+    (define-key org-mode-map (kbd "C-c a") #'org-agenda)
+
+    ;; babel languages
     (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
+
+    ;; style
+    (variable-pitch-mode)
+    (visual-line-mode)
     (let* ((variable-tuple
             (cond ((x-list-fonts "ETBembo")      '(:font "ETBembo"))
                   ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
@@ -37,7 +55,7 @@ Straight is used to manage package installation, with the
       (custom-theme-set-faces
        'user
        `(variable-pitch ((t (,@variable-tuple :height 180 :weight thin))))
-       '(fixed-pitch ((t (:font "Fira Code" :height 120))))
+       `(fixed-pitch ((t (:font ,rf/source-code-font :height 120))))
        `(org-level-8 ((t (,@headline ,@variable-tuple))))
        `(org-level-7 ((t (,@headline ,@variable-tuple))))
        `(org-level-6 ((t (,@headline ,@variable-tuple))))
@@ -60,7 +78,9 @@ Straight is used to manage package installation, with the
        '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
        '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
        '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))))
+
   (add-hook #'org-mode-hook #'rf/configure-org)
+  (setq org-agenda-files '("~/org/work.org"))
 #+end_src
 
 ** Emacs defaults
@@ -102,10 +122,7 @@ Note sure if this is doing anything. It was added when I was using
 Customize code style through font, theme, ligatures, etc.
 
 #+begin_src elisp
-  (set-frame-font (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
-                        ((eq system-type 'gnu/linux) "Fira Code 12")
-                        ((eq system-type 'windows-nt) "Fira Code 12"))
-                  nil t)
+  (set-frame-font rf/source-code-font nil t)
 
   (use-package gruvbox-theme
     :config
@@ -251,12 +268,15 @@ minibuffer and eshell. LSP completion is not handled by ivy.
 
 **** TODO usage of =projectile-project-search-path= slows startup
 
+Package =rg= is required for projectile-ripgrep.
+
 #+begin_src elisp
+  (use-package rg)
   (use-package projectile
-	:bind ("C-c p" . projectile-command-map)
-	:init
-	(setq projectile-project-search-path (list default-directory))
-	(projectile-mode +1))
+      :bind ("C-c p" . projectile-command-map)
+      :init
+      (setq projectile-project-search-path (list default-directory))
+      (projectile-mode +1))
 #+end_src
 
 *** Syntax checks
