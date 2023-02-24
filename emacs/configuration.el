@@ -164,7 +164,6 @@
   :commands lsp
   :custom
   (lsp-rust-analyzer-cargo-watch-command "clippy"))
-;; (use-package yasnippet)
 
 (use-package rg)
 (use-package projectile
@@ -178,15 +177,24 @@
   (("M-p" . flycheck-previous-error)
    ("M-n" . flycheck-next-error)))
 
+(use-package yasnippet-snippets)
+
+(use-package yasnippet
+  :bind (:map yas-minor-mode-map
+              ("M-/" . yas-expand)
+              ("TAB" . nil)))
+(require 'yasnippet)
+(yas-reload-all)
+
 (use-package dockerfile-mode)
 
 (use-package go-mode
-  :hook (yas-minor-mode)
   :bind (("C-c C-c C-c" . tester-run-current-test))
   :config
   (add-hook 'go-mode-hook #'lsp-deferred)
   (add-hook 'before-save-hook #'lsp-format-buffer)
-  (add-hook 'before-save-hook #'lsp-organize-imports))
+  (add-hook 'before-save-hook #'lsp-organize-imports)
+  (add-hook 'go-mode-hook #'yas-minor-mode))
 (use-package ob-go
   :straight (ob-go
              :type git
@@ -225,7 +233,7 @@
   :straight (odin-mode :type git :host github :repo "randall-fulton/odin-mode"))
 
 (use-package rustic
-  :hook (lsp-deferred yas-minor-mode) ; lsp-rust-analyzer-inlay-hints-mode
+  :hook (lsp-deferred) ; lsp-rust-analyzer-inlay-hints-mode
   :init
   ;; (setq lsp-rust-analyzer-server-display-inlay-hints t)
   :config

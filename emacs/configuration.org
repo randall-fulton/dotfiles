@@ -261,7 +261,6 @@ minibuffer and eshell. LSP completion is not handled by ivy.
 	:commands lsp
 	:custom
 	(lsp-rust-analyzer-cargo-watch-command "clippy"))
-  ;; (use-package yasnippet)
 #+end_src
 
 *** Projectile
@@ -289,6 +288,27 @@ Package =rg= is required for projectile-ripgrep.
 	:bind
 	(("M-p" . flycheck-previous-error)
 	 ("M-n" . flycheck-next-error)))
+#+end_src
+
+*** Snippets
+
+Yasnippet isn't configured with any snippets by default, so we have to create them ourselves or use another package.
+
+Luckily, there is a fairly comprehensive one. =M-x yas-describe-tables= provides a list of available snippets.
+
+#+begin_src elisp
+    (use-package yasnippet-snippets)
+#+end_src
+
+Yasnippet itself is enabled as a per-mode minor-mode, using hooks. It can also be setup as a global mode.
+
+#+begin_src elisp
+  (use-package yasnippet
+    :bind (:map yas-minor-mode-map
+                ("M-/" . yas-expand)
+                ("TAB" . nil)))
+  (require 'yasnippet)
+  (yas-reload-all)
 #+end_src
 
 *** Treesitter (Disabled)
@@ -356,19 +376,21 @@ configuration to =go-mode=.
 
 ****** TODO use =gofumpt= on-save
 
+****** TODO add snippet for =t.Run()=
+
 #+begin_src elisp
-  (use-package go-mode
-    :hook (yas-minor-mode)
-    :bind (("C-c C-c C-c" . tester-run-current-test))
-    :config
-    (add-hook 'go-mode-hook #'lsp-deferred)
-    (add-hook 'before-save-hook #'lsp-format-buffer)
-    (add-hook 'before-save-hook #'lsp-organize-imports))
-  (use-package ob-go
-    :straight (ob-go
-               :type git
-               :host github
-               :repo "pope/ob-go"))
+    (use-package go-mode
+      :bind (("C-c C-c C-c" . tester-run-current-test))
+      :config
+      (add-hook 'go-mode-hook #'lsp-deferred)
+      (add-hook 'before-save-hook #'lsp-format-buffer)
+      (add-hook 'before-save-hook #'lsp-organize-imports)
+      (add-hook 'go-mode-hook #'yas-minor-mode))
+    (use-package ob-go
+      :straight (ob-go
+                 :type git
+                 :host github
+                 :repo "pope/ob-go"))
 #+end_src
 
 **** Haskell
@@ -422,7 +444,7 @@ configuration to =go-mode=.
 
 #+begin_src elisp
   (use-package rustic
-	:hook (lsp-deferred yas-minor-mode) ; lsp-rust-analyzer-inlay-hints-mode
+	:hook (lsp-deferred) ; lsp-rust-analyzer-inlay-hints-mode
 	:init
 	;; (setq lsp-rust-analyzer-server-display-inlay-hints t)
 	:config
