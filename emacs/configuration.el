@@ -112,6 +112,12 @@
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
 
+(use-package mood-line
+  ;; Use pretty Fira Code-compatible glyphs
+  :custom
+  (mood-line-glyph-alist mood-line-glyphs-fira-code))
+(mood-line-mode)
+
 (setq display-line-numbers-type 'relative)
 (add-hook #'prog-mode-hook #'display-line-numbers-mode)
 
