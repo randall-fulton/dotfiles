@@ -179,13 +179,16 @@ Ensure Emacs shares =$PATH= with a normal shell. Without this, some executables 
 available (e.g. =rust-analyzer=).
 
 #+begin_src elisp
-  (setq-default explicit-shell-file-name "/usr/bin/zsh")
+  (setq-default explicit-shell-file-name
+                (cond ((eq system-type 'darwin) "/usr/local/bin/zsh")
+                      ((eq system-type 'gnu/linux) "/usr/bin/zsh")
+                      ((eq system-type 'windows-nt) "bash")))
 
   (use-package exec-path-from-shell
-	:ensure t
-	:config
-	(when (memq window-system '(mac ns x))
-	  (exec-path-from-shell-initialize)))
+    :ensure t
+    :config
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
 #+end_src
 
 *** Keybinds

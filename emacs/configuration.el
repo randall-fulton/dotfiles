@@ -121,13 +121,16 @@
 (setq display-line-numbers-type 'relative)
 (add-hook #'prog-mode-hook #'display-line-numbers-mode)
 
-(setq-default explicit-shell-file-name "/usr/bin/zsh")
+(setq-default explicit-shell-file-name
+              (cond ((eq system-type 'darwin) "/usr/local/bin/zsh")
+                    ((eq system-type 'gnu/linux) "/usr/bin/zsh")
+                    ((eq system-type 'windows-nt) "bash")))
 
 (use-package exec-path-from-shell
   :ensure t
   :config
   (when (memq window-system '(mac ns x))
-	(exec-path-from-shell-initialize)))
+    (exec-path-from-shell-initialize)))
 
 (global-unset-key (kbd "C-x o"))
 (global-set-key (kbd "C-,")
