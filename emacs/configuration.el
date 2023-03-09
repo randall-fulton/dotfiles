@@ -229,6 +229,8 @@
 		'(("hyperspec" . eww-browse-url)
 		  ("." . browse-url-default-browser))))
 
+(use-package nix-mode)
+
 (use-package lsp-pyright
   :hook (python-mode . (lambda ()
 			 (require 'lsp-pyright)

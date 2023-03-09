@@ -422,6 +422,12 @@ configuration to =go-mode=.
 			("." . browse-url-default-browser))))
 #+end_src
 
+**** Nix
+
+#+begin_src elisp
+  (use-package nix-mode)
+#+end_src
+
 **** Python
 
 #+begin_src elisp

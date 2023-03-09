@@ -20,7 +20,8 @@
    '("3e374bb5eb46eb59dbd92578cae54b16de138bc2e8a31a2451bf6fdb0f3fd81b" "e45f6f1a61b7eb23a400b5a184e1adc87b35ff3db6c668d953655828e30de8a5" "b1a691bb67bd8bd85b76998caf2386c9a7b2ac98a116534071364ed6489b695d" default))
  '(package-selected-packages nil)
  '(safe-local-variable-values
-   '((flycheck-golangci-lint-config . "~/dev/controller/.golangci.yml"))))
+   '((lsp-pyright-venv-path . "./venv")
+	 (flycheck-golangci-lint-config . "~/dev/controller/.golangci.yml"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
