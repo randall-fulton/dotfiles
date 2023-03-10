@@ -151,6 +151,8 @@
   :config
   (which-key-mode))
 
+(use-package vterm)
+
 (use-package ivy
   :ensure t
   :config

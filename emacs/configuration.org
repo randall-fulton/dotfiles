@@ -225,6 +225,14 @@ Open this file for editing.
 	(which-key-mode))
 #+end_src
 
+** Terminal
+
+Eshell is nice, but it doesn't play well with tools that expect a "full-featured" terminal. Using =ansi-term= doesn't work too well in those cases either. (See =bacon test=, for example.)
+
+#+begin_src elisp
+  (use-package v
+#+end_src
+
 ** IDE
 
 Advanced functionality to turn Emacs into a full-blown IDE.
