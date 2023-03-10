@@ -77,6 +77,8 @@
 (setq inhibit-startup-screen t)
 (setq initial-buffer-choice default-directory)
 
+(setq backup-directory-alist `(("." . "~/.saves")))
+
 (setq-default tab-width 4)
 
 (set-frame-font rf/source-code-font nil t)

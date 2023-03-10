@@ -110,6 +110,12 @@ Set the default working directory and show it in dired on startup.
   (setq initial-buffer-choice default-directory)
 #+end_src
 
+Put all backup files in a central location. Prevents triggering tools like =gotestsum= every time an Emacs backup happens.
+
+#+begin_src elisp
+  (setq backup-directory-alist `(("." . "~/.saves")))
+#+end_src
+
 Global code formatting rules.
 
 Note sure if this is doing anything. It was added when I was using
@@ -230,7 +236,7 @@ Open this file for editing.
 Eshell is nice, but it doesn't play well with tools that expect a "full-featured" terminal. Using =ansi-term= doesn't work too well in those cases either. (See =bacon test=, for example.)
 
 #+begin_src elisp
-  (use-package v
+  (use-package vterm)
 #+end_src
 
 ** IDE
