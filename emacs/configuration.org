@@ -380,6 +380,8 @@ configuration to =go-mode=.
 
 ****** TODO add snippet for =t.Run()=
 
+****** TODO use =gotestsum= for auto-testing
+
 #+begin_src elisp
     (use-package go-mode
       :bind (("C-c C-c C-c" . tester-run-current-test))
@@ -461,6 +463,8 @@ configuration to =go-mode=.
     (add-hook 'rust-mode-hook #'yas-minor-mode)
 	(push 'rustic-clippy flycheck-checkers))
 #+end_src
+
+***** TODO use =bacon= for auto-testing
 
 **** Yaml
 
