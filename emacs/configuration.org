@@ -67,7 +67,6 @@ Straight is used to manage package installation, with the
        `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))
        '(org-code ((t (:inherit (shadow fixed-pitch)))))
        '(org-block ((t (:inherit fixed-pitch))))
-       '(org-code ((t (:inherit (shadow fixed-pitch)))))
        '(org-document-info ((t (:foreground "dark orange"))))
        '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
        '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
@@ -113,7 +112,8 @@ Set the default working directory and show it in dired on startup.
 Put all backup files in a central location. Prevents triggering tools like =gotestsum= every time an Emacs backup happens.
 
 #+begin_src elisp
-  (setq backup-directory-alist `(("." . "~/.saves")))
+  (setq backup-directory-alist `(("." . "~/.saves"))
+        auto-save-default nil)
 #+end_src
 
 Global code formatting rules.
