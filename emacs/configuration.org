@@ -411,6 +411,11 @@ configuration to =go-mode=.
                  :repo "pope/ob-go"))
 #+end_src
 
+To support files with build-tags in lsp-mode, use something like the following in dir-locals.
+#+begin_src lisp-data :export none :tangle no
+   ((go-mode . (lsp-gopls-build-flags . ["-tags=unit,integration"])))
+#+end_src
+
 **** Haskell
 
 #+begin_src elisp
