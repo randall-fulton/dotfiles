@@ -176,12 +176,12 @@ To use icons in =doom-modeline= we have to have =all-the-icons=. After installin
 
 Mode line
 #+begin_src elisp
-      (use-package doom-modeline
-        :init
-        (require 'all-the-icons)
-        (doom-modeline-mode 1)
-        :config
-        (setq doom-modeline-height 60))
+  (use-package doom-modeline
+    :init
+    (require 'all-the-icons)
+    (doom-modeline-mode 1)
+    :config
+    (setq doom-modeline-height 50))
 #+end_src
 
 Helpful editor customizations to make code navigation easier.

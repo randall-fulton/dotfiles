@@ -128,7 +128,7 @@
   (require 'all-the-icons)
   (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-height 60))
+  (setq doom-modeline-height 50))
 
 (setq display-line-numbers-type 'relative)
 (add-hook #'prog-mode-hook #'display-line-numbers-mode)
