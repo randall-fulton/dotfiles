@@ -92,7 +92,7 @@
   :init
   (setq modus-themes-bold-constructs t
         modus-themes-org-blocks 'gray-background)
-  :config (load-theme 'modus-vivendi))
+  :config (load-theme 'modus-operandi))
 
 (use-package ligature
   :load-path "path-to-ligature-repo"
