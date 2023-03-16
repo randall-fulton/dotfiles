@@ -130,9 +130,10 @@ Customize code style through font, theme, ligatures, etc.
 #+begin_src elisp
   (set-frame-font rf/source-code-font nil t)
 
-  (use-package gruvbox-theme
+  (use-package kaolin-themes
     :config
-    (load-theme 'gruvbox-light-medium))
+    (load-theme 'kaolin-valley-light t)
+    (kaolin-treemacs-theme))
 
   (use-package ligature
     :load-path "path-to-ligature-repo"
@@ -162,14 +163,19 @@ Customize code style through font, theme, ligatures, etc.
     (global-ligature-mode t))
 #+end_src
 
-Mode line
-
+To use icons in =doom-modeline= we have to have =all-the-icons=. After installing the package, run =M-x all-the-icons-install-fonts= to get required icon fonts.
 #+begin_src elisp
-  (use-package mood-line
-    ;; Use pretty Fira Code-compatible glyphs
-    :custom
-    (mood-line-glyph-alist mood-line-glyphs-fira-code))
-  (mood-line-mode)
+  (use-package all-the-icons)
+#+end_src
+
+Mode line
+#+begin_src elisp
+      (use-package doom-modeline
+        :init
+        (require 'all-the-icons)
+        (doom-modeline-mode 1)
+        :config
+        (setq doom-modeline-height 60))
 #+end_src
 
 Helpful editor customizations to make code navigation easier.

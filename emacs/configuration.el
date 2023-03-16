@@ -83,9 +83,10 @@
 
 (set-frame-font rf/source-code-font nil t)
 
-(use-package gruvbox-theme
+(use-package kaolin-themes
   :config
-  (load-theme 'gruvbox-light-medium))
+  (load-theme 'kaolin-valley-light t)
+  (kaolin-treemacs-theme))
 
 (use-package ligature
   :load-path "path-to-ligature-repo"
@@ -114,11 +115,14 @@
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
 
-(use-package mood-line
-  ;; Use pretty Fira Code-compatible glyphs
-  :custom
-  (mood-line-glyph-alist mood-line-glyphs-fira-code))
-(mood-line-mode)
+(use-package all-the-icons)
+
+(use-package doom-modeline
+  :init
+  (require 'all-the-icons)
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-height 60))
 
 (setq display-line-numbers-type 'relative)
 (add-hook #'prog-mode-hook #'display-line-numbers-mode)
