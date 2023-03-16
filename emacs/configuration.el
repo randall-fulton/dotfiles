@@ -5,8 +5,8 @@
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
-(setq straight-vc-git-default-protocol 'ssh)
-(setq straight-vc-git-force-protocol t)
+(setq straight-vc-git-default-protocol 'https)
+(setq straight-vc-git-force-protocol nil)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -83,10 +83,16 @@
 
 (set-frame-font rf/source-code-font nil t)
 
-(use-package kaolin-themes
-  :config
-  (load-theme 'kaolin-valley-light t)
-  (kaolin-treemacs-theme))
+;; (use-package kaolin-themes
+;;   :config
+;;   (load-theme 'kaolin-valley-light t)
+;;   (kaolin-treemacs-theme))
+
+(use-package modus-themes
+  :init
+  (setq modus-themes-bold-constructs t
+        modus-themes-org-blocks 'gray-background)
+  :config (load-theme 'modus-vivendi))
 
 (use-package ligature
   :load-path "path-to-ligature-repo"
