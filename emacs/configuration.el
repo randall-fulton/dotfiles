@@ -5,8 +5,8 @@
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
-(setq straight-vc-git-default-protocol 'ssh)
-(setq straight-vc-git-force-protocol t)
+(setq straight-vc-git-default-protocol 'https)
+(setq straight-vc-git-force-protocol nil)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -37,7 +37,7 @@
     (custom-theme-set-faces
      'user
      `(variable-pitch ((t (,@variable-tuple :height 180 :weight thin))))
-     `(fixed-pitch ((t (:font ,rf/source-code-font :height 120))))
+     `(fixed-pitch ((t (:font ,rf/source-code-font :height 180))))
      `(org-level-8 ((t (,@headline ,@variable-tuple))))
      `(org-level-7 ((t (,@headline ,@variable-tuple))))
      `(org-level-6 ((t (,@headline ,@variable-tuple))))
@@ -83,9 +83,16 @@
 
 (set-frame-font rf/source-code-font nil t)
 
-(use-package gruvbox-theme
-  :config
-  (load-theme 'gruvbox-light-medium))
+;; (use-package kaolin-themes
+;;   :config
+;;   (load-theme 'kaolin-valley-light t)
+;;   (kaolin-treemacs-theme))
+
+(use-package modus-themes
+  :init
+  (setq modus-themes-bold-constructs t
+        modus-themes-org-blocks 'gray-background)
+  :config (load-theme 'modus-operandi))
 
 (use-package ligature
   :load-path "path-to-ligature-repo"
@@ -114,11 +121,14 @@
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
 
-(use-package mood-line
-  ;; Use pretty Fira Code-compatible glyphs
-  :custom
-  (mood-line-glyph-alist mood-line-glyphs-fira-code))
-(mood-line-mode)
+(use-package all-the-icons)
+
+(use-package doom-modeline
+  :init
+  (require 'all-the-icons)
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-height 50))
 
 (setq display-line-numbers-type 'relative)
 (add-hook #'prog-mode-hook #'display-line-numbers-mode)
