@@ -254,7 +254,7 @@
   :config
   (add-hook 'before-save-hook #'lsp-format-buffer)
   (add-hook 'before-save-hook #'lsp-organize-imports)
-  (add-hook 'rust-mode-hook #'yas-minor-mode)
-  (push 'rustic-clippy flycheck-checkers))
+  (add-hook 'rust-mode-hook #'yas-minor-mode))
+  ;; (push 'rustic-clippy flycheck-checkers))
 
 (use-package yaml-mode)

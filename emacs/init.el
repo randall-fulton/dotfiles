@@ -20,7 +20,13 @@
    '("3e374bb5eb46eb59dbd92578cae54b16de138bc2e8a31a2451bf6fdb0f3fd81b" "e45f6f1a61b7eb23a400b5a184e1adc87b35ff3db6c668d953655828e30de8a5" "b1a691bb67bd8bd85b76998caf2386c9a7b2ac98a116534071364ed6489b695d" default))
  '(package-selected-packages nil)
  '(safe-local-variable-values
-   '((lsp-go-env quote
+   '((lsp-rust-features .
+						["parity"])
+	 (lsp-gopls-build-flags .
+							["-tags=unit,integration"])
+	 (projectile-project-test-cmd . "CONTROLLER_LOG_LEVEL=error go test -tags=unit ./...")
+	 (projectile-project-test-cmd . "go test -tags=unit ./...")
+	 (lsp-go-env quote
 				 ((GOFLAGS . "-tags=unit,integration")))
 	 (projectile-project-compilation-cmd . "go vet -tags=unit,integration ./...")
 	 (lsp-go-env quote
