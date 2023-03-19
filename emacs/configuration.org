@@ -118,22 +118,10 @@ Put all backup files in a central location. Prevents triggering tools like =gote
 
 Global code formatting rules.
 
-Note sure if this is doing anything. It was added when I was using
-=go-ts-mode=, which has its own problems.
-
-#+begin_src elisp
-  (setq-default tab-width 4)
-#+end_src
-
 Customize code style through font, theme, ligatures, etc.
 
 #+begin_src elisp
   (set-frame-font rf/source-code-font nil t)
-
-  ;; (use-package kaolin-themes
-  ;;   :config
-  ;;   (load-theme 'kaolin-valley-light t)
-  ;;   (kaolin-treemacs-theme))
 
   (use-package modus-themes
     :init
@@ -325,7 +313,7 @@ Yasnippet isn't configured with any snippets by default, so we have to create th
 Luckily, there is a fairly comprehensive one. =M-x yas-describe-tables= provides a list of available snippets.
 
 #+begin_src elisp
-    (use-package yasnippet-snippets)
+  (use-package yasnippet-snippets)
 #+end_src
 
 Yasnippet itself is enabled as a per-mode minor-mode, using hooks. It can also be setup as a global mode.
@@ -444,15 +432,30 @@ To support files with build-tags in lsp-mode, use something like the following i
 
 #+begin_src elisp
   (use-package parinfer-rust-mode
-	:hook (elisp-mode lisp-mode)
-	:init
-	(setq parinfer-rust-auto-download t))
-  (use-package slime
-	:init
-	(setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
-	(setq browse-url-handlers
-		  '(("hyperspec" . eww-browse-url)
-			("." . browse-url-default-browser))))
+    :hook (emacs-lisp-mode lisp-mode)
+    :init
+    (setq parinfer-rust-auto-download t))
+  ;; (use-package slime
+  ;;   :init
+  ;;   (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
+  ;;   (setq browse-url-handlers
+  ;; 		'(("hyperspec" . eww-browse-url)
+  ;; 		  ("." . browse-url-default-browser))))
+  (use-package sly
+    :init
+    (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
+    (setq browse-url-handlers
+	  '(("hyperspec" . eww-browse-url)
+	    ("." . browse-url-default-browser))))
+#+end_src
+
+Parinfer doesn't work well with other minor modes that manage whitespace. If we don't disable =indent-tabs-mode=, really strange behavior happens when editing Lisp.
+#+begin_src elisp
+  (defun rf/disable-indent-tabs-for-lisp (mode-hooks)
+    "Disable indent-tabs-mode for all MODE-HOOKS."
+    (dolist (hook mode-hooks)
+      (add-hook hook #'(lambda() (indent-tabs-mode -1)))))
+  (rf/disable-indent-tabs-for-lisp '(emacs-lisp-mode-hook lisp-mode-hook))
 #+end_src
 
 **** Nix
