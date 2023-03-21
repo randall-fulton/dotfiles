@@ -70,7 +70,7 @@
 (tool-bar-mode -1)
 
 (setq default-directory
-	      (cond ((equal system-type 'windows-nt) "G:\\Developer")
+	  (cond ((equal system-type 'windows-nt) "G:\\Developer")
 			(t "~/dev")))
 
 (setq inhibit-startup-screen t)
@@ -144,42 +144,42 @@
 				(lambda () (interactive) (other-window 1)))
 
 (defun rf/config-edit ()
-      "Open configuration file"
-      (interactive)
-      (find-file (expand-file-name "configuration.org" user-emacs-directory)))
+  "Open configuration file"
+  (interactive)
+  (find-file (expand-file-name "configuration.org" user-emacs-directory)))
 (global-set-key (kbd "C-c c") '("config-edit" . rf/config-edit))
 
 (use-package magit
-      :ensure t)
+  :ensure t)
 (use-package which-key
-      :ensure t
-      :config
-      (which-key-mode))
+  :ensure t
+  :config
+  (which-key-mode))
 
 (use-package vterm)
 
 (use-package ivy
-      :ensure t
-      :config
-      (ivy-mode))
+  :ensure t
+  :config
+  (ivy-mode))
 
 (use-package company)
 
 (use-package lsp-ui
-      :bind (("C-c o" . lsp-ui-imenu))
-      :custom
-      (lsp-ui-imenu-window-fix-width t)
-      (lsp-ui-doc-enable t)
-      (lsp-ui-doc-show-with-cursor t)
-      (lsp-ui-doc-delay 1)
-      (lsp-ui-doc-position 'top))
+  :bind (("C-c o" . lsp-ui-imenu))
+  :custom
+  (lsp-ui-imenu-window-fix-width t)
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-show-with-cursor t)
+  (lsp-ui-doc-delay 1)
+  (lsp-ui-doc-position 'top))
 
 (use-package lsp-mode
-      :init
-      (setq lsp-keymap-prefix "C-c l")
-      :commands lsp
-      :custom
-      (lsp-rust-analyzer-cargo-watch-command "clippy"))
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :commands lsp
+  :custom
+  (lsp-rust-analyzer-cargo-watch-command "clippy"))
 
 (use-package rg)
 (use-package projectile
@@ -189,9 +189,9 @@
     (projectile-mode +1))
 
 (use-package flycheck
-      :bind
-      (("M-p" . flycheck-previous-error)
-       ("M-n" . flycheck-next-error)))
+  :bind
+  (("M-p" . flycheck-previous-error)
+   ("M-n" . flycheck-next-error)))
 
 (use-package yasnippet-snippets)
 
@@ -218,29 +218,25 @@
              :repo "pope/ob-go"))
 
 (use-package haskell-mode
-      :config
-      (add-hook 'haskell-mode-hook #'lsp-deferred)
-      (add-hook 'haskell-mode-hook #'flycheck-mode)
-      :init
-      (use-package lsp-haskell)
-      (use-package hindent))
+  :config
+  (add-hook 'haskell-mode-hook #'lsp-deferred)
+  (add-hook 'haskell-mode-hook #'flycheck-mode)
+  :init
+  (use-package lsp-haskell)
+  (use-package hindent))
 
 (use-package parinfer-rust-mode
   :hook (emacs-lisp-mode lisp-mode)
   :init
   (setq parinfer-rust-auto-download t))
-;; (use-package slime
-;;   :init
-;;   (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
-;;   (setq browse-url-handlers
-;; 		'(("hyperspec" . eww-browse-url)
-;; 		  ("." . browse-url-default-browser))))
 (use-package sly
   :init
   (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
   (setq browse-url-handlers
-	'(("hyperspec" . eww-browse-url)
-	  ("." . browse-url-default-browser))))
+        '(("hyperspec" . eww-browse-url)
+          ("." . browse-url-default-browser)))
+  :config
+  (require 'sly-autoloads))
 
 (defun rf/disable-indent-tabs-for-lisp (mode-hooks)
   "Disable indent-tabs-mode for all MODE-HOOKS."
@@ -263,13 +259,13 @@
   :straight (odin-mode :type git :host github :repo "randall-fulton/odin-mode"))
 
 (use-package rustic
-      :hook (lsp-deferred) ; lsp-rust-analyzer-inlay-hints-mode
-      :init
-      ;; (setq lsp-rust-analyzer-server-display-inlay-hints t)
-      :config
-      (add-hook 'before-save-hook #'lsp-format-buffer)
-      (add-hook 'before-save-hook #'lsp-organize-imports)
+  :hook (lsp-deferred) ; lsp-rust-analyzer-inlay-hints-mode
+  :init
+  ;; (setq lsp-rust-analyzer-server-display-inlay-hints t)
+  :config
+  (add-hook 'before-save-hook #'lsp-format-buffer)
+  (add-hook 'before-save-hook #'lsp-organize-imports)
   (add-hook 'rust-mode-hook #'yas-minor-mode))
-      ;; (push 'rustic-clippy flycheck-checkers))
+  ;; (push 'rustic-clippy flycheck-checkers))
 
 (use-package yaml-mode)
