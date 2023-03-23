@@ -25,6 +25,11 @@ install_nix_darwin() {
     ./result/bin/darwin-installer    
 }
 
+install_home_manager() {
+    nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz home-manager
+    nix-channel --update
+}
+
 if ! command -v nix >/dev/null; then
     msg "installing nix..."
     install_nix
@@ -38,4 +43,11 @@ if ! command -v darwin-rebuild >/dev/null; then
     ln -s $(pwd)/darwin-configuration.nix ~/.nixpkgs/darwin-configuration.nix
 else
     msg "nix-darwin already installed"
+fi
+
+if ! command -v home-manager >/dev/null; then
+    msg "installing home-manager..."
+    install_home_manager
+else
+    msg "home-manager already installed"
 fi

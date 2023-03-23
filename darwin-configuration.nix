@@ -1,6 +1,53 @@
 { config, pkgs, ... }:
 
-{ 
+{
+  imports = [ <home-manager/nix-darwin> ];
+
+  users.users.rfulton = {
+    name = "rfulton";
+    home = "/Users/rfulton";
+  };
+  home-manager.users.rfulton = { config, ... }: {
+    # options: https://nix-community.github.io/home-manager/options.html
+    home.stateVersion = "22.11";
+    home.file = {
+      ".config/kitty".source = ./kitty;
+      ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink ./nvim;
+      ".emacs.d".source = config.lib.file.mkOutOfStoreSymlink ./emacs;
+      ".zshrc".source = ./.zshrc;
+    };
+    home.sessionVariables = {
+      EDITOR = "emacs";
+    };
+    
+    programs = {
+      # emacs.enable = true;
+      fzf.enable = true;
+      git = {
+        enable = true;
+        userName = "Randall Fulton";
+        userEmail = "randall.ml.fulton@gmail.com";
+      };
+      go.enable = true;
+      jq.enable = true;
+      kitty.enable = true;
+      neovim.enable = true;
+      zsh = { # doing this with nix-darwin would enable easy fzf support
+        enable = true;
+        oh-my-zsh = {
+          enable = true;
+          plugins = ["git"];
+        };
+        # injected into .zshenv
+        envExtra = ''
+          . "$HOME/.cargo/env"
+        '';
+      };
+    };
+  };
+  
+  # options: https://daiderd.com/nix-darwin/manual/index.html
+ 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages =
