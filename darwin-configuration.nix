@@ -21,7 +21,7 @@
     };
     
     programs = {
-      # emacs.enable = true;
+      emacs.enable = true;
       fzf.enable = true;
       git = {
         enable = true;
