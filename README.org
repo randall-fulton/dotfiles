@@ -1,6 +1,8 @@
 * Dotfiles
 Here's me dotfiles.
 
+Emacs and Neovim config are symlinked, so they can be easily updated without having to invoke =home-manager=. Everything else has to be updated with =home-manager=.
+
 ** Bootstrap
 On a new system, run the following to bootstrap =nix= and =home-manager=.
 #+begin_src shell
