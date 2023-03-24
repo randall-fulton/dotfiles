@@ -1,0 +1,21 @@
+* Dotfiles
+Here's me dotfiles.
+
+** Bootstrap
+On a new system, run the following to bootstrap =nix= and =home-manager=.
+#+begin_src shell
+  sh bootstrap.sh
+#+end_src
+
+** Updating config
+After bootstrapping, and after any further changes to config, run the relevant "switch", based on system type.
+
+Darwin:
+#+begin_src shell
+  darwin-rebuild switch
+#+end_src
+
+Linux:
+#+begin_src shell
+  home-manager switch
+#+end_src
