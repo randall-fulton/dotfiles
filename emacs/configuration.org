@@ -6,9 +6,10 @@
 
 #+begin_src elisp
   (defvar rf/source-code-font
-    (cond ((eq system-type 'darwin) "FiraMono Nerd Font Mono 16")
-          ((eq system-type 'gnu/linux) "Fira Code 12")
-          ((eq system-type 'windows-nt) "Fira Code 12")))
+    (concat "Fira Code "
+	    (cond ((eq system-type 'darwin) "16")
+		  ((eq system-type 'gnu/linux) "12")
+		  ((eq system-type 'windows-nt) "12"))))
 #+end_src
 
 ** Package management
@@ -80,6 +81,11 @@ Straight is used to manage package installation, with the
 
   (add-hook #'org-mode-hook #'rf/configure-org)
   (setq org-agenda-files '("~/org/work.org"))
+#+end_src
+
+Pandoc-powered exporter. Helpful for Markdown, as the default exporter doesn't add language to source blocks in exported document.
+#+begin_src elisp
+  (use-package ox-pandoc)
 #+end_src
 
 ** Emacs defaults
