@@ -2,6 +2,8 @@
 
 set -e
 
+SYSTEM=$(uname -s)
+
 msg() {
     echo "\033[1;35m$1\033[0m"
 }
@@ -15,7 +17,7 @@ install_nix() {
     msg "installing nix..."
 
     curl -s -L https://nixos.org/nix/install > /tmp/install-nix.sh
-    case "$(uname -s)" in
+    case "${SYSTEM}" in
 	"Darwin")
 	    sh /tmp/install-nix.sh
 	    ;;
@@ -33,8 +35,7 @@ install_nix_darwin() {
     
     msg "installing nix-darwin..."
     nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-    ./result/bin/darwin-installer    
-    ln -s $(pwd)/darwin-configuration.nix ~/.nixpkgs/darwin-configuration.nix
+    ./result/bin/darwin-installer
 }
 
 install_home_manager() {
@@ -48,7 +49,14 @@ install_home_manager() {
 }
 
 install_nix
-if [ "$(uname -s)" -eq "Darwin" ]; then
+if [ "${SYSTEM}" -eq "Darwin" ]; then
     install_nix_darwin
 fi
 install_home_manager
+
+if [ "${SYSTEM}" -eq "Darwin" ]; then
+    ln -s $(pwd)/darwin-configuration.nix ~/.nixpkgs/darwin-configuration.nix
+else if [ "${SYSTEM}" -eq "Darwin" ]; then
+    ln -s $(pwd)/home.nix ~/.config/home-manager/home.nix
+fi
+    
