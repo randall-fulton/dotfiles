@@ -41,6 +41,7 @@
         # injected into .zshenv
         envExtra = ''
           . "$HOME/.cargo/env"
+          eval "$(pyenv init --path)"
         '';
       };
     };
@@ -59,6 +60,12 @@
   nix.package = pkgs.nix;
 
   programs.fish.enable = true;
+  programs.zsh = {
+    enable = true;
+    enableFzfCompletion = true;
+    enableFzfGit = true;
+    enableFzfHistory = true;
+  };
 
   services.spacebar = {
     enable = true;
