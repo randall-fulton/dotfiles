@@ -17,7 +17,7 @@
       ".zshrc".source = ./.zshrc;
     };
     home.sessionVariables = {
-      EDITOR = "emacs";
+      EDITOR = "nvim";
     };
     
     programs = {

@@ -16,18 +16,23 @@
   # changes in each release.
   home.stateVersion = "22.11";
 
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   home = {
     file = {
-      ".emacs.d".source =
-        config.lib.file.mkOutOfStoreSymlink ./emacs;
       ".config/kitty".source = ./kitty;
+      ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink ./nvim;
+      ".emacs.d".source = config.lib.file.mkOutOfStoreSymlink ./emacs;
       ".zshrc".source = ./.zshrc;
     };
     sessionVariables = {
-      EDITOR = "emacs";
+      EDITOR = "nvim";
     };
   };
 
