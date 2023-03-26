@@ -441,14 +441,12 @@ To support files with build-tags in lsp-mode, use something like the following i
     :hook (emacs-lisp-mode lisp-mode)
     :init
     (setq parinfer-rust-auto-download t))
-  (use-package sly
+  (use-package slime
     :init
     (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
     (setq browse-url-handlers
-          '(("hyperspec" . eww-browse-url)
-            ("." . browse-url-default-browser)))
-    :config
-    (require 'sly-autoloads))
+	  '(("hyperspec" . eww-browse-url)
+	    ("." . browse-url-default-browser))))
 #+end_src
 
 Parinfer doesn't work well with other minor modes that manage whitespace. If we don't disable =indent-tabs-mode=, really strange behavior happens when editing Lisp.
