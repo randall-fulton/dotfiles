@@ -27,8 +27,20 @@
         enable = true;
         userName = "Randall Fulton";
         userEmail = "randall.ml.fulton@gmail.com";
+        ignores = [
+          # emacs
+          "*~"
+          "*#*"
+          ".dir-locals.el"
+          # python
+          "*venv/"
+          "*.venv/"
+        ];
       };
-      go.enable = true;
+      go = {
+        enable = true;
+        package = pkgs.go_1_20;
+      };
       jq.enable = true;
       kitty.enable = true;
       neovim.enable = true;
