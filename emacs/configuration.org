@@ -287,18 +287,14 @@ minibuffer and eshell. LSP completion is not handled by ivy.
 #+end_src
 
 *** Projectile
-
-**** TODO usage of =projectile-project-search-path= slows startup
-
 Package =rg= is required for projectile-ripgrep.
 
 #+begin_src elisp
   (use-package rg)
   (use-package projectile
-      :bind ("C-c p" . projectile-command-map)
-      :init
-      (setq projectile-project-search-path (list default-directory))
-      (projectile-mode +1))
+    :bind ("C-c p" . projectile-command-map)
+    :init
+    (projectile-mode +1))
 #+end_src
 
 *** Syntax checks
