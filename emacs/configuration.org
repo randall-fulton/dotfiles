@@ -492,17 +492,40 @@ Parinfer doesn't work well with other minor modes that manage whitespace. If we 
 #+end_src
 
 **** Rust
+Lookup a =std= identifier on Rust docs. Necessary because =rustic='s Org integration doesn't work on Windows. Unfortunately, this doesn't work either because =eww= can't understand the Rust docs site (angrily shakes fist at JavaScript).
+#+begin_src elisp :tangle no
+  (defun rf/rust-search ()
+    "Search for identifier under cursor."
+    (interactive)
+    (let ((term (thing-at-point 'word 'no-properties)))
+      (eww (format "https://doc.rust-lang.org/std/index.html?search=%s" term))))
+#+end_src
+
+When using =tracing= and =tracing_subscriber= crates, logs have ANSI escape codes by default. The following function will parse those in a given buffer and convert them to Emacs faces. This can be added to =compilation-finish-functions= to parse all ANSI sequences after compilation completes.
+#+begin_src elisp
+  (require 'ansi-color)
+  (defun rf/display-ansi-colors-in-buffer (&optional buf)
+    "Enable ANSI colors in BUF"
+    (interactive)
+    (or buf (setq buf (current-buffer)))
+    (let ((inhibit-read-only t))
+      (with-current-buffer buf
+	(ansi-color-apply-on-region (point-min) (point-max)))))
+#+end_src
 
 #+begin_src elisp
   (use-package rustic
-	:hook (lsp-deferred) ; lsp-rust-analyzer-inlay-hints-mode
-	:init
-	;; (setq lsp-rust-analyzer-server-display-inlay-hints t)
-	:config
-	(add-hook 'before-save-hook #'lsp-format-buffer)
-	(add-hook 'before-save-hook #'lsp-organize-imports)
-    (add-hook 'rust-mode-hook #'yas-minor-mode))
-	;; (push 'rustic-clippy flycheck-checkers))
+    :hook (lsp-deferred) ; lsp-rust-analyzer-inlay-hints-mode
+    :init
+    (setq lsp-rust-analyzer-server-display-inlay-hints t)
+    :config
+    (add-hook 'before-save-hook #'lsp-format-buffer)
+    (add-hook 'before-save-hook #'lsp-organize-imports)
+    (add-hook 'rust-mode-hook #'yas-minor-mode)
+    (add-hook 'compilation-finish-functions
+	      #'(lambda (buf &rest ignored)
+		  (rf/display-ansi-colors-in-buffer buf))))
+  ;; (push 'rustic-clippy flycheck-checkers))
 #+end_src
 
 ***** TODO use =bacon= for auto-testing
