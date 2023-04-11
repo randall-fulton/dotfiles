@@ -242,7 +242,8 @@ Open this file for editing.
 Eshell is nice, but it doesn't play well with tools that expect a "full-featured" terminal. Using =ansi-term= doesn't work too well in those cases either. (See =bacon test=, for example.)
 
 #+begin_src elisp
-  (use-package vterm)
+  (unless (eq system-type 'windows-nt)
+    (use-package vterm))
 #+end_src
 
 ** IDE
