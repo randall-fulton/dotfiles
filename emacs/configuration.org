@@ -515,7 +515,7 @@ When using =tracing= and =tracing_subscriber= crates, logs have ANSI escape code
 
 #+begin_src elisp
   (use-package rustic
-    :hook (lsp-deferred) ; lsp-rust-analyzer-inlay-hints-mode
+    :hook (lsp-deferred)
     :init
     (setq lsp-rust-analyzer-server-display-inlay-hints t)
     :config
@@ -525,7 +525,6 @@ When using =tracing= and =tracing_subscriber= crates, logs have ANSI escape code
     (add-hook 'compilation-finish-functions
 	      #'(lambda (buf &rest ignored)
 		  (rf/display-ansi-colors-in-buffer buf))))
-  ;; (push 'rustic-clippy flycheck-checkers))
 #+end_src
 
 ***** TODO use =bacon= for auto-testing
