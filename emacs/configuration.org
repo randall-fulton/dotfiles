@@ -263,15 +263,16 @@ Modified from [[https://stackoverflow.com/a/16323678/21591799][this Stack Overfl
 	   (call-interactively (key-binding ,key))))))
 #+end_src
 
-Highlight =TODO= comments. This needs to be manually added as a hook on target major mode. It is not enabled globally.
+Highlight =TODO= and =NOTE= comments. This needs to be manually added as a hook on target major modes. It is not enabled globally.
 #+begin_src elisp
   (defun rf/buffer-highlight-todo (&optional buf)
-    "Enable highlighting of TODO comments in BUF. Will target active
-     buffer when BUF is not provided."
+    "Enable highlighting of TODO/NOTE comments in BUF. Will target
+     active buffer when BUF is not provided."
     (interactive)
     (or buf (setq buf (current-buffer)))
     (with-current-buffer buf
-      (hi-lock-face-phrase-buffer "TODO" 'modus-themes-intense-magenta)))
+      (hi-lock-face-phrase-buffer "TODO" 'modus-themes-intense-magenta)
+      (hi-lock-face-phrase-buffer "NOTE" 'bold)))
 #+end_src
 
 ** Terminal
