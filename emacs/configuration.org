@@ -237,6 +237,43 @@ Open this file for editing.
 	(which-key-mode))
 #+end_src
 
+Support for multiple cursors, similar to other modern editors (e.g. VS Code).
+
+To trigger, mark a selection, then use =C->= to add the next match, =C-<= to add the previous, or =C-c C-<= to add all matches.
+
+While using multiple cursors =C-j= must be used for newlines.
+#+begin_src elisp
+  (use-package multiple-cursors
+    :bind (("C-c >" . 'mc/mark-next-like-this)
+	   ("C-c <" . 'mc/unmark-previous-like-this)))
+#+end_src
+
+Conditionally rebind a key when a given predicate is true. Useful for overriding an existing keybind only in very specific situations (e.g. when mark is set).
+
+Ran into issues using this for =multiple-cursors=, so not 100% it works perfectly. Leaving here for now though, as it has the potential to be quite useful.
+
+Modified from [[https://stackoverflow.com/a/16323678/21591799][this Stack Overflow answer]].
+#+begin_src elisp
+  (defmacro rf/define-key-with-fallback (keymap key def condition)
+    "Binds KEY to definition DEF in KEYMAP. Binding is only active
+     when CONDITION is true."
+    `(define-key ,keymap ,key
+       (lambda () (interactive)
+	 (if ,condition (progn ,def (print "overridden"))
+	   (call-interactively (key-binding ,key))))))
+#+end_src
+
+Highlight =TODO= comments. This needs to be manually added as a hook on target major mode. It is not enabled globally.
+#+begin_src elisp
+  (defun rf/buffer-highlight-todo (&optional buf)
+    "Enable highlighting of TODO comments in BUF. Will target active
+     buffer when BUF is not provided."
+    (interactive)
+    (or buf (setq buf (current-buffer)))
+    (with-current-buffer buf
+      (hi-lock-face-phrase-buffer "TODO" 'modus-themes-intense-magenta)))
+#+end_src
+
 ** Terminal
 
 Eshell is nice, but it doesn't play well with tools that expect a "full-featured" terminal. Using =ansi-term= doesn't work too well in those cases either. (See =bacon test=, for example.)
@@ -294,7 +331,13 @@ Package =rg= is required for projectile-ripgrep.
   (use-package projectile
     :bind ("C-c p" . projectile-command-map)
     :init
-    (projectile-mode +1))
+    (projectile-mode +1)
+    (projectile-register-project-type 'go '("go.mod")
+				      :project-file "go.mod"
+				      :compile "go build"
+				      :test "go test"
+				      :run "go run ./..."
+				      :test-suffix "_test.go"))
 #+end_src
 
 *** Syntax checks
@@ -515,7 +558,8 @@ When using =tracing= and =tracing_subscriber= crates, logs have ANSI escape code
 
 #+begin_src elisp
   (use-package rustic
-    :hook (lsp-deferred)
+    :hook (lsp-deferred
+	   (rustic-mode . rf/buffer-highlight-todo))
     :init
     (setq lsp-rust-analyzer-server-display-inlay-hints t)
     :config
@@ -528,6 +572,7 @@ When using =tracing= and =tracing_subscriber= crates, logs have ANSI escape code
 #+end_src
 
 ***** TODO use =bacon= for auto-testing
+***** TODO update struct/enum snippets to auto-derive =Debug=
 
 **** Yaml
 
