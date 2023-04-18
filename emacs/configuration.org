@@ -275,6 +275,20 @@ Highlight =TODO= and =NOTE= comments. This needs to be manually added as a hook 
       (hi-lock-face-phrase-buffer "NOTE" 'bold)))
 #+end_src
 
+Open a side buffer containing a list of all =TODO= comments in current buffer.
+
+#+begin_src elisp
+  (defun rf/todo-open-list (&optional nlines)
+    "Do a `projectile-multi-occur' for all TODOs in project."
+    (interactive "P")
+    (let ((project (projectile-acquire-root)))
+      (multi-occur (projectile-project-buffers project)
+		   "TODO"
+		   nlines)))
+#+end_src
+
+*** TODO filter out non-code buffers
+
 ** Terminal
 
 Eshell is nice, but it doesn't play well with tools that expect a "full-featured" terminal. Using =ansi-term= doesn't work too well in those cases either. (See =bacon test=, for example.)
