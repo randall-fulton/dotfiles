@@ -80,7 +80,7 @@ Straight is used to manage package installation, with the
        '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))))
 
   (add-hook #'org-mode-hook #'rf/configure-org)
-  (setq org-agenda-files '("~/org/work/daily.org"))
+  (setq org-agenda-files (directory-files "~/org/work" t ".org$"))
 #+end_src
 
 Pandoc-powered exporter. Helpful for Markdown, as the default exporter doesn't add language to source blocks in exported document.
