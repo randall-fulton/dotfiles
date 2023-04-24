@@ -33,10 +33,10 @@ Straight is used to manage package installation, with the
   (defun rf/configure-org ()
     ;; vars
     (setq org-pretty-entities t
-          org-hide-leading-star t
-          org-hide-emphasis-markers t
-          org-log-done t
-          org-startup-indented t)
+	  org-hide-leading-star t
+	  org-hide-emphasis-markers t
+	  org-log-done t
+	  org-startup-indented t)
 
     ;; keybinds
     (define-key org-mode-map (kbd "C-c a") #'org-agenda)
@@ -48,11 +48,11 @@ Straight is used to manage package installation, with the
     (variable-pitch-mode)
     (visual-line-mode)
     (let* ((variable-tuple
-            (cond ((x-list-fonts "ETBembo")      '(:font "ETBembo"))
-                  ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
-                  (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-           (base-font-color     (face-foreground 'default nil 'default))
-           (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+	    (cond ((x-list-fonts "ETBembo")      '(:font "ETBembo"))
+		  ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
+		  (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+	   (base-font-color     (face-foreground 'default nil 'default))
+	   (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
       (custom-theme-set-faces
        'user
        `(variable-pitch ((t (,@variable-tuple :height 180 :weight thin))))
@@ -80,7 +80,7 @@ Straight is used to manage package installation, with the
        '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))))
 
   (add-hook #'org-mode-hook #'rf/configure-org)
-  (setq org-agenda-files '("~/org/work.org"))
+  (setq org-agenda-files '("~/org/work/daily.org"))
 #+end_src
 
 Pandoc-powered exporter. Helpful for Markdown, as the default exporter doesn't add language to source blocks in exported document.
@@ -96,6 +96,12 @@ Always start maximized.
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
+Don't show the dreaded startup screen.
+
+#+begin_src elisp
+  (setq inhibit-startup-screen t)
+#+end_src
+
 Remove GUI decorations, to present a plain window.
 
 #+begin_src elisp
@@ -106,12 +112,14 @@ Remove GUI decorations, to present a plain window.
 
 Set the default working directory and show it in dired on startup.
 
-#+begin_src elisp
+(Disabled because it causes two buffers to be opened when Emacs is started from a terminal with =emacs . &=. Need to find a way to only do this when emacs wasn't launched for a particular directory.)
+
+#+begin_src elisp :tangle no
   (setq default-directory
 		(cond ((equal system-type 'windows-nt) "G:\\Developer")
-			  (t "~/dev")))
-  
-  (setq inhibit-startup-screen t)
+			  (t "~/dev"))
+		)
+
   (setq initial-buffer-choice default-directory)
 #+end_src
 
@@ -244,8 +252,8 @@ To trigger, mark a selection, then use =C->= to add the next match, =C-<= to add
 While using multiple cursors =C-j= must be used for newlines.
 #+begin_src elisp
   (use-package multiple-cursors
-    :bind (("C-c >" . 'mc/mark-next-like-this)
-	   ("C-c <" . 'mc/unmark-previous-like-this)))
+    :bind (("C-M-n" . 'mc/mark-next-like-this)
+	   ("C-M-p" . 'mc/unmark-previous-like-this)))
 #+end_src
 
 Conditionally rebind a key when a given predicate is true. Useful for overriding an existing keybind only in very specific situations (e.g. when mark is set).
@@ -382,10 +390,9 @@ Yasnippet itself is enabled as a per-mode minor-mode, using hooks. It can also b
 #+begin_src elisp
   (use-package yasnippet
     :bind (:map yas-minor-mode-map
-                ("M-/" . yas-expand)
-                ("TAB" . nil)))
-  (require 'yasnippet)
-  (yas-reload-all)
+		("M-/" . yas-expand)
+		("TAB" . nil))
+    :config (yas-reload-all))
 #+end_src
 
 *** Treesitter (Disabled)
@@ -442,6 +449,21 @@ configuration to =go-mode=.
 #+end_src
 
 *** Languages
+
+**** C
+#+begin_src elisp
+  (use-package company-ctags)
+#+end_src
+
+#+begin_src elisp
+  (defun rf/setup-c-mode ()
+    "Setup c-mode"
+    (add-hook 'c-mode-hook #'yas-minor-mode)
+    (add-hook 'c-mode-hook #'company-mode)
+    (add-hook 'c-mode-hook #'company-ctags-auto-setup))
+
+  (rf/setup-c-mode)
+#+end_src
 
 **** Docker
 
