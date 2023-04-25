@@ -43,6 +43,16 @@
       enable = true;
       userName = "Randall Fulton";
       userEmail = "randall.ml.fulton@gmail.com";
+      ignores = [
+        # emacs
+        "*/.saves"
+        "*~"
+        "*#*"
+        ".dir-locals.el"
+        # python
+        "*venv/"
+        "*.venv/"
+      ];
     };
     go = {
       enable = true;

@@ -125,8 +125,10 @@ Set the default working directory and show it in dired on startup.
 
 Put all backup files in a central location. Prevents triggering tools like =gotestsum= every time an Emacs backup happens.
 
+Must be a relative path. If absolute, this will be ignored on Windows, due to MS-DOS systems not (elegantly) supporting long line names. See [[https://lists.gnu.org/archive/html/bug-gnu-emacs/2014-07/msg00160.html][bug#17938]]. (Not always true. Msys appears to appropriately handle backups, but I'd prefer a solution that has zero edge cases.)
+
 #+begin_src elisp
-  (setq backup-directory-alist `(("." . "~/.saves"))
+  (setq backup-directory-alist `(("." . ".saves"))
         auto-save-default nil)
 #+end_src
 
@@ -247,12 +249,11 @@ Open this file for editing.
 
 Support for multiple cursors, similar to other modern editors (e.g. VS Code).
 
-To trigger, mark a selection, then use =C->= to add the next match, =C-<= to add the previous, or =C-c C-<= to add all matches.
-
 While using multiple cursors =C-j= must be used for newlines.
 #+begin_src elisp
   (use-package multiple-cursors
     :bind (("C-M-n" . 'mc/mark-next-like-this)
+	   ("C-M-k" . 'mc/skip-to-next-like-this)
 	   ("C-M-p" . 'mc/unmark-previous-like-this)))
 #+end_src
 
