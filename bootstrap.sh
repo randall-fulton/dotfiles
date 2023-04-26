@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# TODO: prompt for shell restart after installing nix
+
 set -e
 
 SYSTEM=$(uname -s)
@@ -44,19 +46,19 @@ install_home_manager() {
     fi
     
     msg "installing home-manager..."
-    nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz home-manager
+    nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
     nix-channel --update
 }
 
 install_nix
-if [ "${SYSTEM}" -eq "Darwin" ]; then
+install_home_manager
+if [[ "${SYSTEM}" -eq "Darwin" ]]; then
     install_nix_darwin
 fi
-install_home_manager
 
-if [ "${SYSTEM}" -eq "Darwin" ]; then
+if [[ "${SYSTEM}" -eq "Darwin" ]]; then
     ln -s $(pwd)/darwin-configuration.nix ~/.nixpkgs/darwin-configuration.nix
-else if [ "${SYSTEM}" -eq "Darwin" ]; then
+else
     ln -s $(pwd)/home.nix ~/.config/home-manager/home.nix
 fi
     
