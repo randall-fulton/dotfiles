@@ -1,32 +1,80 @@
 { config, pkgs, ... }:
 
+# TODO: install Fira Code Nerd Font
+# TODO: install starship
+# TODO: auto-hide menu bar
+# TODO: setup homebrew
+# TODO: setup alfred and disable spotlight
+# TODO: install emacs
+# TODO: configure yabai to ignore emacs lsp-ui popups
+# TODO: install kitty
+# TODO: create aliases in /Applications for any homebrew GUI apps
+
 {
   imports = [ <home-manager/nix-darwin> ];
 
-  users.users.rfulton = {
-    name = "rfulton";
-    home = "/Users/rfulton";
+  users.users.randall = {
+    name = "randall";
+    home = "/Users/randall";
   };
-  home-manager.users.rfulton = { config, ... }: {
+  home-manager.users.randall = { config, lib, ... }: {
     # options: https://nix-community.github.io/home-manager/options.html
     home.stateVersion = "22.11";
+
+	nix.extraOptions = ''
+	  extra-experimental-features = nix-command flakes
+	'';
+	
     home.file = {
-      ".config/kitty".source = ./kitty;
+	    ".config/kitty".source = config.lib.file.mkOutOfStoreSymlink ./kitty;
       ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink ./nvim;
+      ".config/starship.toml".source = config.lib.file.mkOutOfStoreSymlink ./starship.toml;
       ".emacs.d".source = config.lib.file.mkOutOfStoreSymlink ./emacs;
-      ".zshrc".source = ./.zshrc;
     };
+
     home.sessionVariables = {
       EDITOR = "nvim";
     };
+
+    home.packages =
+      [ pkgs.autoconf
+        pkgs.automake
+        pkgs.cmake
+        pkgs.colima
+        pkgs.coreutils-full
+        pkgs.docker
+        pkgs.findutils
+        pkgs.gawk 
+        pkgs.getopt 
+        pkgs.gnugrep
+        pkgs.gnupg
+        pkgs.gnused
+        pkgs.gnutar
+        pkgs.gnutls
+        pkgs.gopls
+        # pkgs.golangci-lint
+        pkgs.indent 
+        pkgs.libksba
+        pkgs.libtool
+        pkgs.libyaml
+        pkgs.openssl_1_1 # needed by brew (for rvm)
+        pkgs.pandoc
+        pkgs.pgcli
+        pkgs.pkg-config
+        pkgs.postgresql
+        pkgs.rbenv
+        pkgs.ripgrep
+        pkgs.readline
+        pkgs.zlib
+	    ];
     
     programs = {
-      emacs.enable = true;
+      # emacs.enable = true;
       fzf.enable = true;
       git = {
         enable = true;
         userName = "Randall Fulton";
-        userEmail = "randall.ml.fulton@gmail.com";
+        userEmail = "randall@shipt.com";
         ignores = [
           # emacs
           "*/.saves"
@@ -43,7 +91,34 @@
         package = pkgs.go_1_20;
       };
       jq.enable = true;
-      kitty.enable = true;
+    # kitty = {
+	  #   enable = true;
+	  #   font = {
+	  #     name = "Fira Code";
+	  #     size = 36.0;
+	  #   };
+	  #   darwinLaunchOptions =
+	  #     [ "--config=/Users/randall/.config/kitty/kitty.conf"
+	  #     ];
+	  #   settings = {
+	  #     tab_title_template = "{tab.active_wd}";
+	  #     remember_window_size = "yes";
+	  #     hide_window_decorations = "yes";
+	  #     tab_bar_style = "powerline";
+	  #     tab_switch_strategy = "right";
+	  #     macos_option_as_alt = "yes";
+	  #   };	
+	  #   keybindings = {
+	  #     "kitty_mod+enter" = "new_window_with_cwd";
+	  #     "kitty_mod+f" = "goto_layout fat";
+	  #     "kitty_mod+s" = "goto_layout stack";
+	  #     "kitty_mod+," = "load_config_file";
+	  #   };
+	  #   # extraConfig = ''
+	  #   #   include ./theme.conf
+	  #   #   include current-theme.conf
+	  #   # '';
+	  # };
       neovim.enable = true;
       zsh = { # doing this with nix-darwin would enable easy fzf support
         enable = true;
@@ -51,10 +126,33 @@
           enable = true;
           plugins = ["git"];
         };
-        # injected into .zshenv
-        envExtra = ''
-          . "$HOME/.cargo/env"
-          eval "$(pyenv init --path)"
+        shellAliases = {
+          refresh = "source $HOME/.zshrc";
+          restart-yabai = "launchctl kickstart -k \"gui/\${UID}/org.nixos.yabai\"";
+          switch = "darwin-rebuild switch";
+        };
+		    envExtra = ''
+          export NIX_BUILD_SHELL=zsh
+          export PATH=$PATH:$HOME/.rd/bin # Rancher Desktop
+        '';
+        initExtra = ''
+          if [[ -d "$HOME/.cargo/" ]]; then
+             . "$HOME/.cargo/env"
+          fi
+
+          if command -v pyenv >/dev/null; then
+             eval "$(pyenv init --path)"
+          fi
+
+          if command -v starship >/dev/null; then
+             eval "$(starship init zsh)"
+          fi
+
+          if command -v rbenv >/dev/null; then
+             eval "$(rbenv init - zsh)"
+          fi
+
+          eval "$(/opt/homebrew/bin/brew shellenv)"
         '';
       };
     };
@@ -68,6 +166,11 @@
     [ pkgs.vim
     ];
 
+  fonts.fonts = 
+    [ pkgs.fira-code
+	    pkgs.material-icons
+	  ];
+
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
@@ -80,6 +183,7 @@
     enableFzfHistory = true;
   };
 
+  # services.emacs.enable = true; 
   services.spacebar = {
     enable = true;
     package = pkgs.spacebar;
@@ -128,7 +232,7 @@
     config = {
       external_bar                 = "all:36:0";
       focus_follows_mouse          = "autoraise";
-      mouse_follows_focus          = "off";
+      mouse_follows_focus          = "on";
       window_placement             = "second_child";
       window_opacity               = "off";
       window_opacity_duration      = "0.0";
@@ -150,7 +254,9 @@
       window_gap                   = 10;
     };
     extraConfig = ''
-      yabai -m rule --add label=emacs app=Emacs manage=on
+      yabai -m rule --add app=emacs manage=on
+      yabai -m rule --add app=emacs-28.2 manage=on
+      yabai -m rule --add app=Emacs manage=on
       yabai -m rule --add app='System Settings' manage=off
     '';
   };
