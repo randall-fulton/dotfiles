@@ -27,78 +27,6 @@ Straight is used to manage package installation, with the
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 #+end_src
 
-** Org Setup
-
-#+begin_src elisp
-  (use-package org-roam
-    :custom
-    (org-roam-directory (file-truename "~/org/roam"))
-    :bind (("C-c n l" . org-roam-buffer-toggle)
-           ("C-c n f" . org-roam-node-find)
-           ("C-c n i" . org-roam-node-insert))
-    :config
-    (org-roam-setup))
-#+end_src
-
-#+begin_src elisp
-  (defun rf/configure-org ()
-    ;; vars
-    (setq org-pretty-entities t
-	  org-hide-leading-star t
-	  org-hide-emphasis-markers t
-	  org-log-done t
-	  org-startup-indented t)
-
-    ;; keybinds
-    (define-key org-mode-map (kbd "C-c a") #'org-agenda)
-
-    ;; babel languages
-    (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
-
-    ;; style
-    (variable-pitch-mode)
-    (visual-line-mode)
-    (let* ((variable-tuple
-	    (cond ((x-list-fonts "ETBembo")      '(:font "ETBembo"))
-		  ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
-		  (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-	   (base-font-color     (face-foreground 'default nil 'default))
-	   (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
-      (custom-theme-set-faces
-       'user
-       `(variable-pitch ((t (,@variable-tuple :height 180 :weight thin))))
-       `(fixed-pitch ((t (:font ,rf/source-code-font :height 180))))
-       `(org-level-8 ((t (,@headline ,@variable-tuple))))
-       `(org-level-7 ((t (,@headline ,@variable-tuple))))
-       `(org-level-6 ((t (,@headline ,@variable-tuple))))
-       `(org-level-5 ((t (,@headline ,@variable-tuple))))
-       `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
-       `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
-       `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
-       `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
-       `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))
-       '(org-code ((t (:inherit (shadow fixed-pitch)))))
-       '(org-block ((t (:inherit fixed-pitch))))
-       '(org-document-info ((t (:foreground "dark orange"))))
-       '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-       '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-       '(org-link ((t (:foreground "royal blue" :underline t))))
-       '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-       '(org-property-value ((t (:inherit fixed-pitch))) t)
-       '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-       '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
-       '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-       '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))))
-
-  (add-hook #'org-mode-hook #'rf/configure-org)
-  (setq org-agenda-files (directory-files "~/org/work" t ".org$"))
-#+end_src
-
-Pandoc-powered exporter. Helpful for Markdown, as the default exporter doesn't add language to source blocks in exported document.
-#+begin_src elisp
-  (use-package ox-pandoc)
-#+end_src
-
 ** Emacs defaults
 
 /DISABLED: doesn't play nicely with tiling WMs/
@@ -248,7 +176,116 @@ Open this file for editing.
   (global-set-key (kbd "C-c c") '("config-edit" . rf/config-edit))
 #+end_src
 
+** Workflow
+Utilities for non-dev tasks (e.g. email).
+
+#+begin_src elisp
+  (use-package mu4e)
+#+end_src
+
+** Org Setup
+
+#+begin_src elisp
+  (use-package org-roam
+    :custom
+    (org-roam-directory (file-truename "~/org/roam"))
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n i" . org-roam-node-insert))
+    :config
+    (org-roam-setup))
+#+end_src
+
+#+begin_src elisp
+  (defun rf/configure-org ()
+    ;; vars
+    (setq org-pretty-entities t
+          org-hide-leading-star t
+          org-hide-emphasis-markers t
+          org-log-done t
+          org-startup-indented t)
+
+    ;; keybinds
+    (define-key org-mode-map (kbd "C-c a") #'org-agenda)
+
+    ;; babel languages
+    (org-babel-do-load-languages 'org-babel-load-languages
+                                 '((shell . t)
+                                   (dot . t)))
+
+    ;; style
+    (variable-pitch-mode)
+    (visual-line-mode)
+    (let* ((variable-tuple
+            (cond ((x-list-fonts "ETBembo")      '(:font "ETBembo"))
+                  ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
+                  (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+           (base-font-color     (face-foreground 'default nil 'default))
+           (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+      (custom-theme-set-faces
+       'user
+       `(variable-pitch ((t (,@variable-tuple :height 180 :weight thin))))
+       `(fixed-pitch ((t (:font ,rf/source-code-font :height 180))))
+       `(org-level-8 ((t (,@headline ,@variable-tuple))))
+       `(org-level-7 ((t (,@headline ,@variable-tuple))))
+       `(org-level-6 ((t (,@headline ,@variable-tuple))))
+       `(org-level-5 ((t (,@headline ,@variable-tuple))))
+       `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+       `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
+       `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
+       `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
+       `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))
+       '(org-code ((t (:inherit (shadow fixed-pitch)))))
+       '(org-block ((t (:inherit fixed-pitch))))
+       '(org-document-info ((t (:foreground "dark orange"))))
+       '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+       '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+       '(org-link ((t (:foreground "royal blue" :underline t))))
+       '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+       '(org-property-value ((t (:inherit fixed-pitch))) t)
+       '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+       '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+       '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+       '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))))
+
+  (add-hook #'org-mode-hook #'rf/configure-org)
+  (setq org-agenda-files (directory-files "~/org/work" t ".org$"))
+#+end_src
+
+Pandoc-powered exporter. Helpful for Markdown, as the default exporter doesn't add language to source blocks in exported document.
+#+begin_src elisp
+  (use-package ox-pandoc)
+#+end_src
+
+Graphviz is used in my Zettelkasten to create diagrams.
+#+begin_src elisp
+  (use-package graphviz-dot-mode)
+#+end_src
+
 ** Utilities
+*** Buffer Keymap
+All of the functionality under =C-c C-b=. It's buffer-specific.
+
+Run =multi-occur= in the current buffer only.
+#+begin_src elisp
+  (defun rf/multi-occur (regexp)
+    "Run MULTI-OCCUR in the active buffer."
+    (interactive "sSearch regexp: ")
+    (multi-occur `(,(current-buffer)) regexp))
+#+end_src
+
+Setup a keymap for all buffer-specific commands.
+#+begin_src elisp
+  (global-set-key (kbd "C-c C-b") 'rf/buffer-map)
+
+  (defalias 'rf/buffer-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "s") 'rf/multi-occur)
+      map)
+    "Bindings for current buffer.")
+#+end_src
+
+*** Quality of Life packages
 
 #+begin_src elisp
   (use-package magit
@@ -341,22 +378,22 @@ minibuffer and eshell. LSP completion is not handled by ivy.
 
 #+begin_src elisp
   (use-package company)
-  
+
   (use-package lsp-ui
-	:bind (("C-c o" . lsp-ui-imenu))
-	:custom
-	(lsp-ui-imenu-window-fix-width t)
-	(lsp-ui-doc-enable t)
-	(lsp-ui-doc-show-with-cursor t)
-	(lsp-ui-doc-delay 1)
-	(lsp-ui-doc-position 'top))
+    :bind (("C-c o" . lsp-ui-imenu))
+    :custom
+    (lsp-ui-imenu-window-fix-width t)
+    (lsp-ui-doc-enable nil) ; causes issues with yabai
+    (lsp-ui-doc-show-with-cursor t)
+    (lsp-ui-doc-delay 1)
+    (lsp-ui-doc-position 'at-point))
 
   (use-package lsp-mode
-	:init
-	(setq lsp-keymap-prefix "C-c l")
-	:commands lsp
-	:custom
-	(lsp-rust-analyzer-cargo-watch-command "clippy"))
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :commands lsp
+    :custom
+    (lsp-rust-analyzer-cargo-watch-command "clippy"))
 #+end_src
 
 *** Projectile
@@ -582,6 +619,12 @@ Parinfer doesn't work well with other minor modes that manage whitespace. If we 
 		      :server-id 'ols
 		      :multi-root t))
     (add-hook 'odin-mode-hook #'lsp-deferred))
+#+end_src
+
+**** Ruby
+
+#+begin_src elisp
+  (add-hook 'ruby-mode-hook #'lsp-deferred)
 #+end_src
 
 **** Rust
