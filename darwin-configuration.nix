@@ -53,7 +53,8 @@
         pkgs.gnutls
         pkgs.gopls
         # pkgs.golangci-lint
-        pkgs.indent 
+        pkgs.graphviz
+        pkgs.indent
         pkgs.libksba
         pkgs.libtool
         pkgs.libyaml
@@ -85,6 +86,13 @@
           "*venv/"
           "*.venv/"
         ];
+        extraConfig = {
+          url = {
+            "ssh://git@github.com/" = {
+              insteadOf = "https://github.com/";
+            };
+          };
+        };
       };
       go = {
         enable = true;
@@ -134,6 +142,7 @@
 		    envExtra = ''
           export NIX_BUILD_SHELL=zsh
           export PATH=$PATH:$HOME/.rd/bin # Rancher Desktop
+          export GOPRIVATE=github.com/shipt
         '';
         initExtra = ''
           if [[ -d "$HOME/.cargo/" ]]; then
