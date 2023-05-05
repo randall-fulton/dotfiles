@@ -242,7 +242,7 @@
       external_bar                 = "all:36:0";
       focus_follows_mouse          = "autoraise";
       mouse_follows_focus          = "on";
-      window_placement             = "second_child";
+      window_placement             = "first_child";
       window_opacity               = "off";
       window_opacity_duration      = "0.0";
       active_window_border_topmost = "off";
@@ -251,7 +251,7 @@
       active_window_opacity        = "1.0";
       normal_window_opacity        = "1.0";
       split_ratio                  = "0.50";
-      auto_balance                 = "on";
+      auto_balance                 = "off";
       mouse_modifier               = "fn";
       mouse_action1                = "move";
       mouse_action2                = "resize";
