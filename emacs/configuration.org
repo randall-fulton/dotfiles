@@ -311,8 +311,9 @@ While using multiple cursors =C-j= must be used for newlines.
 #+begin_src elisp
   (use-package multiple-cursors
     :bind (("C-M-n" . 'mc/mark-next-like-this)
-	   ("C-M-k" . 'mc/skip-to-next-like-this)
-	   ("C-M-p" . 'mc/unmark-previous-like-this)))
+           ("C-M-k" . 'mc/skip-to-next-like-this)
+           ("C-M-p" . 'mc/unmark-previous-like-this))
+    :custom ((mc/always-run-for-all t)))
 #+end_src
 
 Conditionally rebind a key when a given predicate is true. Useful for overriding an existing keybind only in very specific situations (e.g. when mark is set).
