@@ -41,7 +41,6 @@
       [ pkgs.autoconf
         pkgs.automake
         pkgs.cmake
-        pkgs.colima
         pkgs.coreutils-full
         pkgs.docker
         pkgs.findutils
