@@ -7,6 +7,7 @@
 # TODO: setup alfred and disable spotlight
 # TODO: install emacs
 # TODO: configure yabai to ignore emacs lsp-ui popups
+# TODO: explore yabai spaces for tab-like setup https://github.com/koekeishiya/yabai/issues/203
 # TODO: install kitty
 # TODO: create aliases in /Applications for any homebrew GUI apps
 
