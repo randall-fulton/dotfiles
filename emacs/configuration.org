@@ -515,12 +515,37 @@ configuration to =go-mode=.
   (use-package company-ctags)
 #+end_src
 
+Align macros so that line-ending backslashes are aligned.
+#+begin_src elisp
+  (defun rf/c-align-macro (begin end)
+    (interactive "r")
+    (align-regexp
+     begin
+     end
+     "\\(\\s-*\\)\\\\[[:space:]]*$"
+     1 1 nil))
+#+end_src
+
+Formatting keybinds. (Not working. Can't remember how. :shrug)
+#+begin_src elisp :tangle no
+  (defalias 'rf/c-format-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "m") 'rf/c-align-macro)
+      map)
+    "Bindings for formatting various C constructs.")
+#+end_src
+
 #+begin_src elisp
   (defun rf/setup-c-mode ()
     "Setup c-mode"
     (add-hook 'c-mode-hook #'yas-minor-mode)
     (add-hook 'c-mode-hook #'company-mode)
-    (add-hook 'c-mode-hook #'company-ctags-auto-setup))
+    (add-hook 'c-mode-hook #'company-ctags-auto-setup)
+    (add-hook 'c-mode-hook
+	      (lambda ()
+		(define-key c-mode-map
+		  (kbd "C-c f m")
+		  'rf/c-align-macro))))
 
   (rf/setup-c-mode)
 #+end_src
@@ -529,6 +554,12 @@ configuration to =go-mode=.
 
 #+begin_src elisp
   (use-package dockerfile-mode)
+#+end_src
+
+**** GLSL
+
+#+begin_src elisp
+  (use-package glsl-mode)
 #+end_src
 
 **** Go
