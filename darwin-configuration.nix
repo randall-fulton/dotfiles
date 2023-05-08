@@ -63,6 +63,8 @@
         pkgs.pgcli
         pkgs.pkg-config
         pkgs.postgresql
+        pkgs.protobuf
+        pkgs.protoc-gen-go
         pkgs.rbenv
         pkgs.ripgrep
         pkgs.readline
