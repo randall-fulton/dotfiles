@@ -230,6 +230,7 @@ Org table keymap.
           org-startup-indented t)
 
     ;; keybinds
+    (unbind-key (kbd "C-,") org-mode-map)
     (define-key org-mode-map (kbd "C-c a") 'org-agenda)
     (define-key org-mode-map (kbd "C-c t") 'rf/org-table-map)
     (define-key org-mode-map (kbd "C-c n a")
