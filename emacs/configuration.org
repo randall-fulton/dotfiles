@@ -185,16 +185,19 @@ Would love to use for email, but can't get it to work on darwin.
 #+end_src
 
 ** Org Setup
-
+Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian GUI.
 #+begin_src elisp
   (use-package org-roam
     :custom
     (org-roam-directory (file-truename "~/org/roam"))
+    (org-roam-dailies-directory (file-truename "~/org/roam/daily"))
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
-           ("C-c n i" . org-roam-node-insert))
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n t" . org-roam-dailies-goto-today))
     :config
-    (org-roam-setup))
+    (org-roam-setup)
+    (org-roam-db-autosync-mode))
 
   (use-package org-roam-ui
     :after org-roam
@@ -203,6 +206,18 @@ Would love to use for email, but can't get it to work on darwin.
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
+#+end_src
+
+Org table keymap.
+#+begin_src elisp
+  (defalias 'rf/org-table-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "c") 'org-table-insert-column)
+      (define-key map (kbd "h") 'org-table-insert-hline)
+      (define-key map (kbd "r") 'org-table-insert-row)
+      (define-key map (kbd "s") 'org-table-sort-lines)
+      map)
+    "Bindings for editing org tables.")
 #+end_src
 
 #+begin_src elisp
@@ -215,7 +230,12 @@ Would love to use for email, but can't get it to work on darwin.
           org-startup-indented t)
 
     ;; keybinds
-    (define-key org-mode-map (kbd "C-c a") #'org-agenda)
+    (define-key org-mode-map (kbd "C-c a") 'org-agenda)
+    (define-key org-mode-map (kbd "C-c t") 'rf/org-table-map)
+    (define-key org-mode-map (kbd "C-c n a")
+      (lambda ()
+        (interactive)
+        (find-file (file-truename "~/org/work/daily.org"))))
 
     ;; babel languages
     (org-babel-do-load-languages 'org-babel-load-languages
@@ -258,7 +278,8 @@ Would love to use for email, but can't get it to work on darwin.
        '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))))
 
   (add-hook #'org-mode-hook #'rf/configure-org)
-  (setq org-agenda-files (directory-files "~/org/work" t ".org$"))
+  (setq org-agenda-files (append (directory-files "~/org/work" t ".org$")
+                                 (directory-files "~/org/roam/daily" t ".org$")))
 #+end_src
 
 Pandoc-powered exporter. Helpful for Markdown, as the default exporter doesn't add language to source blocks in exported document.
@@ -599,6 +620,11 @@ Parinfer doesn't work well with other minor modes that manage whitespace. If we 
 
 #+begin_src elisp
   (use-package nix-mode)
+#+end_src
+
+**** Protobuf
+#+begin_src elisp
+  (use-package protobuf-mode)
 #+end_src
 
 **** Python
