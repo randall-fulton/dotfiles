@@ -194,7 +194,10 @@ Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
-           ("C-c n t" . org-roam-dailies-goto-today))
+           ;; dailies
+           ("C-c n y" . org-roam-dailies-goto-yesterday)
+           ("C-c n d" . org-roam-dailies-goto-today)
+           ("C-c n t" . org-roam-dailies-goto-tomorrow))
     :config
     (org-roam-setup)
     (org-roam-db-autosync-mode))
@@ -231,6 +234,8 @@ Org table keymap.
 
     ;; keybinds
     (unbind-key (kbd "C-,") org-mode-map)
+    (define-key org-mode-map (kbd "C-c f b") 'org-indent-block)
+    (define-key org-mode-map (kbd "C-c i") 'org-toggle-inline-images)
     (define-key org-mode-map (kbd "C-c a") 'org-agenda)
     (define-key org-mode-map (kbd "C-c t") 'rf/org-table-map)
     (define-key org-mode-map (kbd "C-c n a")
