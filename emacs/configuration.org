@@ -239,16 +239,19 @@ Org table keymap.
           org-log-done t
           org-startup-indented t)
 
+    (require 'org-id)
+    (add-to-list 'org-modules 'org-id)
+    (setq org-id-link-to-org-use-id t)
+
     ;; keybinds
     (unbind-key (kbd "C-,") org-mode-map)
     (define-key org-mode-map (kbd "C-c f b") 'org-indent-block)
     (define-key org-mode-map (kbd "C-c i") 'org-toggle-inline-images)
     (define-key org-mode-map (kbd "C-c a") 'org-agenda)
     (define-key org-mode-map (kbd "C-c t") 'rf/org-table-map)
-    (define-key org-mode-map (kbd "C-c n a")
-      (lambda ()
-        (interactive)
-        (find-file (file-truename "~/org/work/daily.org"))))
+    (define-key org-mode-map (kbd "C-c l i") 'org-insert-last-stored-link)
+    (define-key org-mode-map (kbd "C-c l l") 'org-insert-link)
+    (define-key org-mode-map (kbd "C-c l s") 'org-id-store-link)
 
     ;; babel languages
     (org-babel-do-load-languages 'org-babel-load-languages
