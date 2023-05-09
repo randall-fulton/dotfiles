@@ -197,7 +197,9 @@ Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian
            ;; dailies
            ("C-c n y" . org-roam-dailies-goto-yesterday)
            ("C-c n d" . org-roam-dailies-goto-today)
-           ("C-c n t" . org-roam-dailies-goto-tomorrow))
+           ("C-c n t" . org-roam-dailies-goto-tomorrow)
+           ("C-c n a" . (lambda () (interactive)
+                          (find-file (file-truename "~/org/work/daily.org")))))
     :config
     (org-roam-setup)
     (org-roam-db-autosync-mode))
