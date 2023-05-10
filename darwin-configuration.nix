@@ -143,9 +143,10 @@
           switch = "darwin-rebuild switch";
         };
 		    envExtra = ''
+          export GOPRIVATE=github.com/shipt
           export NIX_BUILD_SHELL=zsh
           export PATH=$PATH:$HOME/.rd/bin # Rancher Desktop
-          export GOPRIVATE=github.com/shipt
+          export PROJECT_ROOT=$HOME/dev
         '';
         initExtra = ''
           if [[ -d "$HOME/.cargo/" ]]; then
@@ -162,6 +163,10 @@
 
           if command -v rbenv >/dev/null; then
              eval "$(rbenv init - zsh)"
+          fi
+
+          if [ -f $HOME/dev/tools/profile ]; then
+             source "$HOME/dev/tools/profile"
           fi
 
           eval "$(/opt/homebrew/bin/brew shellenv)"
