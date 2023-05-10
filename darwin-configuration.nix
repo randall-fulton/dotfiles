@@ -53,6 +53,7 @@
         pkgs.gnutls
         pkgs.gopls
         # pkgs.golangci-lint
+        pkgs.go-swagger
         pkgs.graphviz
         pkgs.indent
         pkgs.libksba
