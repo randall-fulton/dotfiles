@@ -750,6 +750,11 @@ When using =tracing= and =tracing_subscriber= crates, logs have ANSI escape code
 ***** TODO use =bacon= for auto-testing
 ***** TODO update struct/enum snippets to auto-derive =Debug=
 
+**** Typescript
+#+begin_src elisp
+  (use-package typescript-mode)
+#+end_src
+
 **** Yaml
 
 #+begin_src elisp

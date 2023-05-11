@@ -59,6 +59,7 @@
         pkgs.libksba
         pkgs.libtool
         pkgs.libyaml
+        pkgs.ngrok
         pkgs.openssl_1_1 # needed by brew (for rvm)
         pkgs.pandoc
         pkgs.pgcli
@@ -69,6 +70,7 @@
         pkgs.rbenv
         pkgs.ripgrep
         pkgs.readline
+        pkgs.yarn
         pkgs.zlib
 	    ];
     
@@ -100,6 +102,9 @@
       go = {
         enable = true;
         package = pkgs.go_1_20;
+        goPrivate =
+          [ "github.com/shipt/*"
+          ];
       };
       jq.enable = true;
     # kitty = {
@@ -143,9 +148,11 @@
           switch = "darwin-rebuild switch";
         };
 		    envExtra = ''
-          export GOPRIVATE=github.com/shipt
           export NIX_BUILD_SHELL=zsh
+
           export PATH=$PATH:$HOME/.rd/bin # Rancher Desktop
+          export PATH=$PATH:$HOME/go/bin  # Go binaries
+
           export PROJECT_ROOT=$HOME/dev
         '';
         initExtra = ''
