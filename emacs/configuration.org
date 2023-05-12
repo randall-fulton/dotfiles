@@ -42,6 +42,12 @@ Don't show the dreaded startup screen.
   (setq inhibit-startup-screen t)
 #+end_src
 
+Stop the stupid bell sound. I /know/ that did nothing Emacs, but I want
+to hit =C-g= 80 times anyway!
+#+begin_src elisp
+  (setq ring-bell-function 'ignore)
+#+end_src
+
 Remove GUI decorations, to present a plain window.
 
 #+begin_src elisp
@@ -142,7 +148,7 @@ available (e.g. =rust-analyzer=).
 
 #+begin_src elisp
   (setq-default explicit-shell-file-name
-                (cond ((eq system-type 'darwin) "/usr/local/bin/zsh")
+                (cond ((eq system-type 'darwin) "zsh")
                       ((eq system-type 'gnu/linux) "/usr/bin/zsh")
                       ((eq system-type 'windows-nt) "bash")))
 
@@ -400,7 +406,8 @@ Eshell is nice, but it doesn't play well with tools that expect a "full-featured
 
 #+begin_src elisp
   (unless (eq system-type 'windows-nt)
-    (use-package vterm))
+    (use-package vterm
+      :custom ((vterm-shell "zsh"))))
 #+end_src
 
 ** IDE
