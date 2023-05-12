@@ -59,7 +59,7 @@
         pkgs.libksba
         pkgs.libtool
         pkgs.libyaml
-        pkgs.ngrok
+        # pkgs.ngrok
         pkgs.openssl_1_1 # needed by brew (for rvm)
         pkgs.pandoc
         pkgs.pgcli
@@ -144,6 +144,7 @@
         };
         shellAliases = {
           refresh = "source $HOME/.zshrc";
+          restart-spacebar = "launchctl kickstart -k \"gui/\${UID}/org.nixos.spacebar\"";
           restart-yabai = "launchctl kickstart -k \"gui/\${UID}/org.nixos.yabai\"";
           switch = "darwin-rebuild switch";
         };
