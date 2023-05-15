@@ -198,22 +198,25 @@ Would love to use for email, but can't get it to work on darwin.
 ** Org Setup
 Extension to =org-roam= to support weekly files.
 #+begin_src elisp
-  (defun rf/format-week-id ()
-    "Create string identifying current week in format '<YEAR> Week
-  <WEEK NUM>'. Weeks start on Monday."
-    (concat
-     (format-time-string "%Y")
-     " Week "
-     (format-time-string "%W")))
+  (defun rf/format-week-id (&optional offset)
+    "Create string identifying week OFFSET weeks in future in format
+  '<YEAR> Week <WEEK NUM>'. Weeks start on Monday."
+    (let* ((offset-seconds (* 60 60 24 7 (or offset 0)))
+           (target-week (time-add (current-time)
+                                  offset-seconds)))
+      (concat
+       (format-time-string "%Y" target-week)
+       " Week "
+       (format-time-string "%W" target-week))))
 
-  (defun rf/org-roam-goto-weekly ()
+  (defun rf/org-roam-goto-weekly (arg)
     "Open weekly file for current week, creating it if it does not
   exist. Serves as a collection point for an entire week of
-  dailies."
-    (interactive)
+  dailies. Use with prefix to open ARG weeks in future."
+    (interactive "P")
     (let* ((org-roam-directory (expand-file-name org-roam-dailies-directory
                                                  org-roam-directory))
-           (weekly-file-id (rf/format-week-id))
+           (weekly-file-id (rf/format-week-id arg))
            (weekly-file-name (concat (string-replace " " "_" weekly-file-id) ".org"))
            (weekly-file-path (expand-file-name weekly-file-name
                                                org-roam-directory))
@@ -221,6 +224,7 @@ Extension to =org-roam= to support weekly files.
       (find-file weekly-file-path)
       (when new-file-p
         (insert (concat "#+title: " weekly-file-id "\n\n")
+                "#+todo: TODO(t) DOING(d) MEET(m) | DONE(f) CANCELED(c)"
                 "* Goals\n\n"
                 "* Monday\n\n"
                 "* Tuesday\n\n"
