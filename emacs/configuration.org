@@ -100,7 +100,7 @@ Customize code style through font, theme, ligatures, etc.
     ;; `variable-pitch' face supports it
     (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
     ;; Enable all Cascadia Code ligatures in programming modes
-    (ligature-set-ligatures '(prog-mode org-mode)
+    (ligature-set-ligatures '(prog-mode) ; org-mode)
                             '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
                               ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
                               "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
@@ -196,6 +196,41 @@ Would love to use for email, but can't get it to work on darwin.
 #+end_src
 
 ** Org Setup
+Extension to =org-roam= to support weekly files.
+#+begin_src elisp
+  (defun rf/format-week-id ()
+    "Create string identifying current week in format '<YEAR> Week
+  <WEEK NUM>'. Weeks start on Monday."
+    (concat
+     (format-time-string "%Y")
+     " Week "
+     (format-time-string "%W")))
+
+  (defun rf/org-roam-goto-weekly ()
+    "Open weekly file for current week, creating it if it does not
+  exist. Serves as a collection point for an entire week of
+  dailies."
+    (interactive)
+    (let* ((org-roam-directory (expand-file-name org-roam-dailies-directory
+                                                 org-roam-directory))
+           (weekly-file-id (rf/format-week-id))
+           (weekly-file-name (concat (string-replace " " "_" weekly-file-id) ".org"))
+           (weekly-file-path (expand-file-name weekly-file-name
+                                               org-roam-directory))
+           (new-file-p (not (f-exists-p weekly-file-path))))
+      (find-file weekly-file-path)
+      (when new-file-p
+        (insert (concat "#+title: " weekly-file-id "\n\n")
+                "* Goals\n\n"
+                "* Monday\n\n"
+                "* Tuesday\n\n"
+                "* Wednesday\n\n"
+                "* Thursday\n\n"
+                "* Friday\n\n")
+        (beginning-of-buffer)
+        (org-id-get-create))))
+#+end_src
+
 Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian GUI.
 #+begin_src elisp
   (use-package org-roam
@@ -209,6 +244,7 @@ Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian
            ("C-c n y" . org-roam-dailies-goto-yesterday)
            ("C-c n d" . org-roam-dailies-goto-today)
            ("C-c n t" . org-roam-dailies-goto-tomorrow)
+           ("C-c n w" . rf/org-roam-goto-weekly)
            ("C-c n a" . (lambda () (interactive)
                           (find-file (file-truename "~/org/work/daily.org")))))
     :config
