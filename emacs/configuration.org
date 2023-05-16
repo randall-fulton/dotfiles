@@ -235,6 +235,17 @@ Extension to =org-roam= to support weekly files.
         (org-id-get-create))))
 #+end_src
 
+Update agenda files. Setting them on startup won't take into account
+new files that are created in a session. Since I tend to keep a single
+Emacs running for days, that would be a problem.
+#+begin_src elisp
+  (defun rf/org-agenda-set-agenda-files ()
+    "Update `org-agenda-files' to include all org-roam files."
+    (interactive)
+    (setq org-agenda-files (append (directory-files "~/org/work" t ".org$")
+                                   (directory-files "~/org/roam/daily" t ".org$"))))
+#+end_src
+
 Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian GUI.
 #+begin_src elisp
   (use-package org-roam
@@ -250,7 +261,9 @@ Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian
            ("C-c n t" . org-roam-dailies-goto-tomorrow)
            ("C-c n w" . rf/org-roam-goto-weekly)
            ("C-c n a" . (lambda () (interactive)
-                          (find-file (file-truename "~/org/work/daily.org")))))
+                          (find-file (file-truename "~/org/work/daily.org"))))
+           ;; agenda (really doesn't belong here, but 'C-c a' is taken)
+           ("C-c n r" . rf/org-agenda-set-agenda-files))
     :config
     (org-roam-setup)
     (org-roam-db-autosync-mode))
@@ -340,8 +353,7 @@ Org table keymap.
        '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))))
 
   (add-hook #'org-mode-hook #'rf/configure-org)
-  (setq org-agenda-files (append (directory-files "~/org/work" t ".org$")
-                                 (directory-files "~/org/roam/daily" t ".org$")))
+  (rf/org-agenda-set-agenda-files)
 #+end_src
 
 Pandoc-powered exporter. Helpful for Markdown, as the default exporter doesn't add language to source blocks in exported document.
