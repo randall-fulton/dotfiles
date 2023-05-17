@@ -196,6 +196,12 @@ Would love to use for email, but can't get it to work on darwin.
 #+end_src
 
 ** Org Setup
+Extended set of todo states.
+#+begin_src elisp
+  (defconst rf/todo-states "#+todo: TODO(t) DOING(d) MEET(m) | DONE(f) CANCELED(c)"
+    "Extended todo states. Should be used across all `org-agenda' accessible files.")
+#+end_src
+
 Extension to =org-roam= to support weekly files.
 #+begin_src elisp
   (defun rf/format-week-id (&optional offset)
@@ -224,7 +230,7 @@ Extension to =org-roam= to support weekly files.
       (find-file weekly-file-path)
       (when new-file-p
         (insert (concat "#+title: " weekly-file-id "\n\n")
-                "#+todo: TODO(t) DOING(d) MEET(m) | DONE(f) CANCELED(c)"
+                rf/todo-states
                 "* Goals\n\n"
                 "* Monday\n\n"
                 "* Tuesday\n\n"
@@ -252,6 +258,10 @@ Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian
     :custom
     (org-roam-directory (file-truename "~/org/roam"))
     (org-roam-dailies-directory (file-truename "~/org/roam/daily"))
+    (org-roam-dailies-capture-templates `(("d" "default" entry "* %?" :target
+                                           (file+head "%<%Y-%m-%d>.org"
+                                                      ,(concat rf/todo-states "\n"
+                                                               "#+title: %<%Y-%m-%d>")))))
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
