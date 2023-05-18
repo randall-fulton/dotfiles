@@ -41,6 +41,7 @@
       [ pkgs.autoconf
         pkgs.automake
         pkgs.cmake
+        pkgs.confluent-platform
         pkgs.coreutils-full
         pkgs.docker
         pkgs.findutils
@@ -52,7 +53,7 @@
         pkgs.gnutar
         pkgs.gnutls
         pkgs.gopls
-        # pkgs.golangci-lint
+        pkgs.golangci-lint
         pkgs.go-swagger
         pkgs.graphviz
         pkgs.indent
@@ -208,7 +209,7 @@
     enableFzfHistory = true;
   };
 
-  # services.emacs.enable = true; 
+  # services.emacs.enable = true;
   services.spacebar = {
     enable = true;
     package = pkgs.spacebar;
@@ -256,8 +257,8 @@
     package = pkgs.yabai;
     config = {
       external_bar                 = "all:36:0";
-      focus_follows_mouse          = "autoraise";
-      mouse_follows_focus          = "on";
+      focus_follows_mouse          = "autofocus";
+      mouse_follows_focus          = "off";
       window_placement             = "first_child";
       window_opacity               = "off";
       window_opacity_duration      = "0.0";
