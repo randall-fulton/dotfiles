@@ -46,7 +46,8 @@
         pkgs.docker
         pkgs.findutils
         pkgs.gawk 
-        pkgs.getopt 
+        pkgs.getopt
+        pkgs.gh
         pkgs.gnugrep
         pkgs.gnupg
         pkgs.gnused
@@ -210,6 +211,14 @@
   };
 
   # services.emacs.enable = true;
+  
+  services.skhd = {
+    enable = true;
+    skhdConfig = ''
+      hyper - e : open -a Emacs
+    '';
+  };
+  
   services.spacebar = {
     enable = true;
     package = pkgs.spacebar;
