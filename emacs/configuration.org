@@ -262,20 +262,24 @@ Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian
     (org-roam-dailies-capture-templates `(("d" "default" entry "* %?" :target
                                            (file+head "%<%Y-%m-%d>.org"
                                                       ,(concat rf/todo-states "\n"
-                                                               "#+title: %<%Y-%m-%d>")))))
+                                                               "#+title: %<%Y-%m-%d>" "\n\n"
+                                                               "* Highlights" "\n")))))
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
            ;; dailies
-           ("C-c n y" . org-roam-dailies-goto-yesterday)
-           ("C-c n d" . org-roam-dailies-goto-today)
-           ("C-c n t" . org-roam-dailies-goto-tomorrow)
+           ;; ("C-c n y" . org-roam-dailies-goto-yesterday)
+           ;; ("C-c n d" . org-roam-dailies-goto-today)
+           ;; ("C-c n t" . org-roam-dailies-goto-tomorrow)
            ("C-c n w" . rf/org-roam-goto-weekly)
            ("C-c n a" . (lambda () (interactive)
                           (find-file (file-truename "~/org/work/daily.org"))))
            ;; agenda (really doesn't belong here, but 'C-c a' is taken)
            ("C-c n r" . rf/org-agenda-set-agenda-files))
+    :bind-keymap
+    ("C-c n d" . org-roam-dailies-map)
     :config
+    (require 'org-roam-dailies)
     (org-roam-setup)
     (org-roam-db-autosync-mode))
 
