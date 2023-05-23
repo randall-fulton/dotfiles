@@ -89,7 +89,8 @@ Customize code style through font, theme, ligatures, etc.
     :init
     (setq modus-themes-bold-constructs t
           modus-themes-org-blocks 'gray-background)
-    :config (load-theme 'modus-operandi))
+    :config (load-theme 'modus-operandi)
+    :bind (("C-c M-a t t" . modus-themes-toggle)))
 
   (use-package ligature
     :load-path "path-to-ligature-repo"
