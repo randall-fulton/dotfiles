@@ -330,7 +330,8 @@ Org table keymap.
     ;; babel languages
     (org-babel-do-load-languages 'org-babel-load-languages
                                  '((shell . t)
-                                   (dot . t)))
+                                   (dot   . t)
+                                   (d2    . t)))
 
     ;; style
     (variable-pitch-mode)
@@ -477,11 +478,7 @@ Eshell is nice, but it doesn't play well with tools that expect a "full-featured
       :custom ((vterm-shell "zsh"))))
 #+end_src
 
-** IDE
-
-Advanced functionality to turn Emacs into a full-blown IDE.
-
-*** Completion
+** Completion
 
 Ivy. It's better than Ido, but who knows about helm...
 
@@ -495,7 +492,7 @@ minibuffer and eshell. LSP completion is not handled by ivy.
 	(ivy-mode))
 #+end_src
 
-*** LSP
+** LSP
 
 #+begin_src elisp
   (use-package company)
@@ -517,7 +514,7 @@ minibuffer and eshell. LSP completion is not handled by ivy.
     (lsp-rust-analyzer-cargo-watch-command "clippy"))
 #+end_src
 
-*** Projectile
+** Projectile
 Package =rg= is required for projectile-ripgrep.
 
 #+begin_src elisp
@@ -534,10 +531,10 @@ Package =rg= is required for projectile-ripgrep.
 				      :test-suffix "_test.go"))
 #+end_src
 
-*** Syntax checks
+** Syntax checks
 
-**** TODO how do I plug in extra tools to flycheck
-**** TODO better keybinds to quickly jump between errors
+*** TODO how do I plug in extra tools to flycheck
+*** TODO better keybinds to quickly jump between errors
 
 #+begin_src elisp
   (use-package flycheck
@@ -546,7 +543,7 @@ Package =rg= is required for projectile-ripgrep.
 	 ("M-n" . flycheck-next-error)))
 #+end_src
 
-*** Snippets
+** Snippets
 
 Yasnippet isn't configured with any snippets by default, so we have to create them ourselves or use another package.
 
@@ -566,7 +563,7 @@ Yasnippet itself is enabled as a per-mode minor-mode, using hooks. It can also b
     :config (yas-reload-all))
 #+end_src
 
-*** Treesitter (Disabled)
+** Treesitter (Disabled)
 
 The following only works with Emacs 29+. Follow [[https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter][this guide]] to setup
 tree-sitter.
@@ -619,9 +616,7 @@ configuration to =go-mode=.
 				 :repo "randall-fulton/tester.el")))
 #+end_src
 
-*** Languages
-
-**** C
+** C
 #+begin_src elisp
   (use-package company-ctags)
 #+end_src
@@ -661,25 +656,32 @@ Formatting keybinds. (Not working. Can't remember how. :shrug)
   (rf/setup-c-mode)
 #+end_src
 
-**** Docker
+** Diagrams
+Various text-to-diagram languages.
+#+begin_src elisp
+  (use-package ob-d2
+    :custom
+    (ob-d2-command "~/go/bin/d2"))
+#+end_src
+** Docker
 
 #+begin_src elisp
   (use-package dockerfile-mode)
 #+end_src
 
-**** GLSL
+** GLSL
 
 #+begin_src elisp
   (use-package glsl-mode)
 #+end_src
 
-**** Go
+** Go
 
-****** TODO use =gofumpt= on-save
+**** TODO use =gofumpt= on-save
 
-****** TODO add snippet for =t.Run()=
+**** TODO add snippet for =t.Run()=
 
-****** TODO use =gotestsum= for auto-testing
+**** TODO use =gotestsum= for auto-testing
 
 #+begin_src elisp
     (use-package go-mode
@@ -701,7 +703,7 @@ To support files with build-tags in lsp-mode, use something like the following i
    ((go-mode . (lsp-gopls-build-flags . ["-tags=unit,integration"])))
 #+end_src
 
-**** Haskell
+** Haskell
 
 #+begin_src elisp
   (use-package haskell-mode
@@ -713,7 +715,7 @@ To support files with build-tags in lsp-mode, use something like the following i
 	(use-package hindent))
 #+end_src
 
-**** Lisp
+** Lisp
 
 #+begin_src elisp
   (use-package parinfer-rust-mode
@@ -737,18 +739,18 @@ Parinfer doesn't work well with other minor modes that manage whitespace. If we 
   (rf/disable-indent-tabs-for-lisp '(emacs-lisp-mode-hook lisp-mode-hook))
 #+end_src
 
-**** Nix
+** Nix
 
 #+begin_src elisp
   (use-package nix-mode)
 #+end_src
 
-**** Protobuf
+** Protobuf
 #+begin_src elisp
   (use-package protobuf-mode)
 #+end_src
 
-**** Python
+** Python
 
 #+begin_src elisp
   (use-package lsp-pyright
@@ -761,7 +763,7 @@ Parinfer doesn't work well with other minor modes that manage whitespace. If we 
     :hook (python-mode . python-black-on-save-mode-enable-dwim))
 #+end_src
 
-**** Odin
+** Odin
 
 #+begin_src elisp
   (use-package odin-mode
@@ -778,13 +780,13 @@ Parinfer doesn't work well with other minor modes that manage whitespace. If we 
     (add-hook 'odin-mode-hook #'lsp-deferred))
 #+end_src
 
-**** Ruby
+** Ruby
 
 #+begin_src elisp
   (add-hook 'ruby-mode-hook #'lsp-deferred)
 #+end_src
 
-**** Rust
+** Rust
 Lookup a =std= identifier on Rust docs. Necessary because =rustic='s Org integration doesn't work on Windows. Unfortunately, this doesn't work either because =eww= can't understand the Rust docs site (angrily shakes fist at JavaScript).
 #+begin_src elisp :tangle no
   (defun rf/rust-search ()
@@ -821,15 +823,15 @@ When using =tracing= and =tracing_subscriber= crates, logs have ANSI escape code
 		  (rf/display-ansi-colors-in-buffer buf))))
 #+end_src
 
-***** TODO use =bacon= for auto-testing
-***** TODO update struct/enum snippets to auto-derive =Debug=
+*** TODO use =bacon= for auto-testing
+*** TODO update struct/enum snippets to auto-derive =Debug=
 
-**** Typescript
+** Typescript
 #+begin_src elisp
   (use-package typescript-mode)
 #+end_src
 
-**** Yaml
+** Yaml
 
 #+begin_src elisp
   (use-package yaml-mode)
