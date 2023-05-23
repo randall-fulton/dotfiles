@@ -157,6 +157,9 @@
           export PATH=$PATH:$HOME/go/bin  # Go binaries
 
           export PROJECT_ROOT=$HOME/dev
+
+          # orthogonal connections; significantly more readable graphs
+          export D2_LAYOUT=elk
         '';
         initExtra = ''
           if [[ -d "$HOME/.cargo/" ]]; then
