@@ -31,6 +31,7 @@
       ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink ./nvim;
       ".config/starship.toml".source = config.lib.file.mkOutOfStoreSymlink ./starship.toml;
       ".emacs.d".source = config.lib.file.mkOutOfStoreSymlink ./emacs;
+      ".npmrc".source = ./npmrc;
     };
 
     home.sessionVariables = {
@@ -62,6 +63,7 @@
         pkgs.libtool
         pkgs.libyaml
         # pkgs.ngrok
+        pkgs.nodejs
         pkgs.openssl_1_1 # needed by brew (for rvm)
         pkgs.pandoc
         pkgs.pgcli
@@ -156,6 +158,9 @@
 
           export PATH=$PATH:$HOME/.rd/bin # Rancher Desktop
           export PATH=$PATH:$HOME/go/bin  # Go binaries
+          export PATH=$PATH:$HOME/.npm-packages/bin
+
+          export NODE_PATH=$HOME/.npm-packages/lib/node_modules
 
           export PROJECT_ROOT=$HOME/dev
 
