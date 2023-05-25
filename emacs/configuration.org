@@ -78,6 +78,13 @@ Must be a relative path. If absolute, this will be ignored on Windows, due to MS
         auto-save-default nil)
 #+end_src
 
+Align with spaces instead of tabs, for copyable blocks. Using tabs often makes formatting weird when copied to other programs.
+#+begin_src elisp
+  (defadvice align-regexp (around align-regexp-with-spaces activate)
+    (let ((indent-tabs-mode nil))
+      ad-do-it))
+#+end_src
+
 Global code formatting rules.
 
 Customize code style through font, theme, ligatures, etc.
@@ -329,9 +336,10 @@ Org table keymap.
 
     ;; babel languages
     (org-babel-do-load-languages 'org-babel-load-languages
-                                 '((shell . t)
-                                   (dot   . t)
-                                   (d2    . t)))
+                                 '((shell   . t)
+                                   (dot     . t)
+                                   (d2      . t)
+                                   (mermaid . t)))
 
     ;; style
     (variable-pitch-mode)
@@ -662,7 +670,18 @@ Various text-to-diagram languages.
   (use-package ob-d2
     :custom
     (ob-d2-command "~/go/bin/d2"))
+
+  (use-package d2-mode)
 #+end_src
+
+#+begin_src elisp
+  (use-package mermaid-mode)
+  
+  (use-package ob-mermaid
+      :custom
+      (ob-mermaid-cli-path "~/.npm-packages/bin/mmdc"))
+#+end_src
+
 ** Docker
 
 #+begin_src elisp
