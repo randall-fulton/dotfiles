@@ -146,6 +146,7 @@
         };
         shellAliases = {
           refresh = "source $HOME/.zshrc";
+          restart-skhd = "launchctl kickstart -k \"gui/\${UID}/org.nixos.skhd\"";
           restart-spacebar = "launchctl kickstart -k \"gui/\${UID}/org.nixos.spacebar\"";
           restart-yabai = "launchctl kickstart -k \"gui/\${UID}/org.nixos.yabai\"";
           switch = "darwin-rebuild switch";
@@ -219,6 +220,9 @@
     enable = true;
     skhdConfig = ''
       hyper - e : open -a Emacs
+      hyper - t : open -a Kitty
+      # float active window and center
+      hyper - f : yabai -m window --toggle float; yabai -m window --grid 7:5:1:1:3:5
     '';
   };
   
