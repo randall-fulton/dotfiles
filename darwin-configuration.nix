@@ -44,6 +44,7 @@
         pkgs.cmake
         pkgs.confluent-platform
         pkgs.coreutils-full
+        pkgs.delve
         pkgs.docker
         pkgs.findutils
         pkgs.gawk 
@@ -224,8 +225,12 @@
   services.skhd = {
     enable = true;
     skhdConfig = ''
+      hyper - q : open -a Slack
+      hyper - w : open -a Firefox
       hyper - e : open -a Emacs
-      hyper - t : open -a Kitty
+      hyper - r : open -a Kitty
+      hyper - t : open -a Wally
+
       # float active window and center
       hyper - f : yabai -m window --toggle float; yabai -m window --grid 7:5:1:1:3:5
     '';
