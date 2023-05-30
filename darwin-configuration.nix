@@ -38,6 +38,7 @@
       EDITOR = "nvim";
     };
 
+    # TODO: make usage/dependencies clear
     home.packages =
       [ pkgs.autoconf
         pkgs.automake
@@ -65,6 +66,7 @@
         pkgs.libyaml
         # pkgs.ngrok
         pkgs.nodejs
+        pkgs.nodePackages.pyright
         pkgs.openssl_1_1 # needed by brew (for rvm)
         pkgs.pandoc
         pkgs.pgcli
@@ -73,8 +75,9 @@
         pkgs.protobuf
         pkgs.protoc-gen-go
         pkgs.rbenv
-        pkgs.ripgrep
         pkgs.readline
+        pkgs.ripgrep
+        pkgs.rustup
         pkgs.yarn
         pkgs.zlib
 	    ];
