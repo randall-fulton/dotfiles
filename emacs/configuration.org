@@ -214,7 +214,7 @@ Extension to =org-roam= to support weekly files.
 #+begin_src elisp
   (defun rf/format-week-id (&optional offset)
     "Create string identifying week OFFSET weeks in future in format
-  '<YEAR> Week <WEEK NUM>'. Weeks start on Monday."
+   '<YEAR> Week <WEEK NUM>'. Weeks start on Monday."
     (let* ((offset-seconds (* 60 60 24 7 (or offset 0)))
            (target-week (time-add (current-time)
                                   offset-seconds)))
@@ -225,8 +225,8 @@ Extension to =org-roam= to support weekly files.
 
   (defun rf/org-roam-goto-weekly (arg)
     "Open weekly file for current week, creating it if it does not
-  exist. Serves as a collection point for an entire week of
-  dailies. Use with prefix to open ARG weeks in future."
+   exist. Serves as a collection point for an entire week of
+   dailies. Use with prefix to open ARG weeks in future."
     (interactive "P")
     (let* ((org-roam-directory (expand-file-name org-roam-dailies-directory
                                                  org-roam-directory))
@@ -247,6 +247,14 @@ Extension to =org-roam= to support weekly files.
                 "* Friday\n\n")
         (beginning-of-buffer)
         (org-id-get-create))))
+
+  (defalias 'rf/org-roam-goto-weekly-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "w") '("current"  . rf/org-roam-goto-weekly))
+      (define-key map (kbd "n") `("next"     . ,(lambda () (rf/org-roam-goto-weekly 1))))
+      (define-key map (kbd "p") `("previous" . ,(lambda () (rf/org-roam-goto-weekly -1))))
+      map)
+    "Keymap for navigating weekly files.")
 #+end_src
 
 Update agenda files. Setting them on startup won't take into account
@@ -278,7 +286,7 @@ Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian
            ;; ("C-c n y" . org-roam-dailies-goto-yesterday)
            ;; ("C-c n d" . org-roam-dailies-goto-today)
            ;; ("C-c n t" . org-roam-dailies-goto-tomorrow)
-           ("C-c n w" . rf/org-roam-goto-weekly)
+           ("C-c n w" . rf/org-roam-goto-weekly-map)
            ("C-c n a" . (lambda () (interactive)
                           (find-file (file-truename "~/org/work/daily.org"))))
            ;; agenda (really doesn't belong here, but 'C-c a' is taken)
