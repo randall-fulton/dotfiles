@@ -251,8 +251,8 @@ Extension to =org-roam= to support weekly files.
   (defalias 'rf/org-roam-goto-weekly-map
     (let ((map (make-sparse-keymap)))
       (define-key map (kbd "w") '("current"  . rf/org-roam-goto-weekly))
-      (define-key map (kbd "n") `("next"     . ,(lambda () (rf/org-roam-goto-weekly 1))))
-      (define-key map (kbd "p") `("previous" . ,(lambda () (rf/org-roam-goto-weekly -1))))
+      (define-key map (kbd "n") '("next"     . (lambda () (interactive) (rf/org-roam-goto-weekly 1))))
+      (define-key map (kbd "p") '("previous" . (lambda () (interactive) (rf/org-roam-goto-weekly -1))))
       map)
     "Keymap for navigating weekly files.")
 #+end_src
