@@ -307,6 +307,18 @@ Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian
           org-roam-ui-open-on-start t))
 #+end_src
 
+Revert =fill-paragraph=. Typically needed after exporting org to
+markdown with =org-pandoc-export-to-commonmark=. Taken from [[https://www.emacswiki.org/emacs/UnfillParagraph][EmacsWiki]].
+#+begin_src elisp
+  (defun rf/unfill-paragraph ()
+    "Takes a multi-line paragraph and makes it into a single line of text."
+    (interactive)
+    (let ((fill-column (point-max)))
+      (fill-paragraph nil)))
+
+  (global-set-key (kbd "M-Q") 'rf/unfill-paragraph)
+#+end_src
+
 Org table keymap.
 #+begin_src elisp
   (defalias 'rf/org-table-map
