@@ -80,6 +80,7 @@
         pkgs.rustup
         pkgs.yarn
         pkgs.zlib
+        pkgs.zoxide
 	    ];
     
     programs = {
@@ -90,6 +91,7 @@
         userName = "Randall Fulton";
         userEmail = "randall@shipt.com";
         ignores = [
+          ".DS_Store"
           # emacs
           "*/.saves"
           "*~"
@@ -172,27 +174,13 @@
           export D2_LAYOUT=elk
         '';
         initExtra = ''
-          if [[ -d "$HOME/.cargo/" ]]; then
-             . "$HOME/.cargo/env"
-          fi
-
-          if command -v pyenv >/dev/null; then
-             eval "$(pyenv init --path)"
-          fi
-
-          if command -v starship >/dev/null; then
-             eval "$(starship init zsh)"
-          fi
-
-          if command -v rbenv >/dev/null; then
-             eval "$(rbenv init - zsh)"
-          fi
-
-          if [ -f $HOME/dev/tools/profile ]; then
-             source "$HOME/dev/tools/profile"
-          fi
-
-          eval "$(/opt/homebrew/bin/brew shellenv)"
+          command -v pyenv >/dev/null        && eval "$(pyenv init --path)"
+          command -v rbenv >/dev/null        && eval "$(rbenv init - zsh)"
+          command -v starship >/dev/null     && eval "$(starship init zsh)"
+          command -v zoxide >/dev/null       && eval "$(zoxide init zsh)"
+          [[ -f "$HOME/.cargo/env" ]]        && . "$HOME/.cargo/env"
+          [[ -f "$HOME/dev/tools/profile" ]] && source "$HOME/dev/tools/profile"
+          [[ -f /opt/homebrew/bin/brew ]]    && eval "$(/opt/homebrew/bin/brew shellenv)"
         '';
       };
     };
