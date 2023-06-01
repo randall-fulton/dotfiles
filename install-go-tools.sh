@@ -10,3 +10,6 @@ go install github.com/Helcaraxan/gomod@v0.7.1
 # diagramming alternative to graphviz
 # releases: https://github.com/terrastruct/d2/releases
 go install oss.terrastruct.com/d2@v0.4.2
+
+# replacement for gofmt that also formats imports
+go install golang.org/x/tools/cmd/goimports@latest
