@@ -67,6 +67,8 @@ in
         pkgs.go-swagger
         pkgs.graphviz
         pkgs.indent
+        pkgs.ispell
+        pkgs.kcat
         pkgs.libksba
         pkgs.libtool
         pkgs.libyaml
