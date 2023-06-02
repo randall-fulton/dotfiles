@@ -1,5 +1,3 @@
-{ config, pkgs, ... }:
-
 # TODO: install Fira Code Nerd Font
 # TODO: install starship
 # TODO: auto-hide menu bar
@@ -11,6 +9,14 @@
 # TODO: install kitty
 # TODO: create aliases in /Applications for any homebrew GUI apps
 
+{ config, pkgs, ... }:
+let
+  vars = {
+    skhd = {
+      yabai = "shift+alt";
+    };
+  };
+in
 {
   imports = [ <home-manager/nix-darwin> ];
 
@@ -222,8 +228,16 @@
       hyper - r : open -a Kitty
       hyper - t : open -a Wally
 
-      # float active window and center
-      hyper - f : yabai -m window --toggle float; yabai -m window --grid 7:5:1:1:3:5
+      ${vars.skhd.yabai} - f     : yabai -m window --toggle float; yabai -m window --grid 7:5:1:1:3:5
+      ${vars.skhd.yabai} - p     : yabai -m window --toggle zoom-fullscreen
+      ${vars.skhd.yabai} - h     : yabai -m window --swap west
+      ${vars.skhd.yabai} - j     : yabai -m window --swap south
+      ${vars.skhd.yabai} - k     : yabai -m window --swap north
+      ${vars.skhd.yabai} - l     : yabai -m window --swap east
+      ${vars.skhd.yabai} - left  : yabai -m window --resize left:-100:0
+      ${vars.skhd.yabai} - down  : yabai -m window --resize bottom:0:100
+      ${vars.skhd.yabai} - up    : yabai -m window --resize bottom:0:-100
+      ${vars.skhd.yabai} - right : yabai -m window --resize left:100:0
     '';
   };
   
@@ -269,12 +283,14 @@
       # right_shell_command        = "whoami";
     };
   };
+
+  # inspo: https://www.reddit.com/r/unixporn/comments/vtfy73/yabaiskhd_my_macos_workflow_with_a_tiling_window/
   services.yabai = {
     enable = true;
     package = pkgs.yabai;
     config = {
       external_bar                 = "all:36:0";
-      focus_follows_mouse          = "autofocus";
+      focus_follows_mouse          = "off"; # autofocus
       mouse_follows_focus          = "off";
       window_placement             = "first_child";
       window_opacity               = "off";
