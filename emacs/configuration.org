@@ -13,7 +13,6 @@
 #+end_src
 
 ** Package management
-
 Straight is used to manage package installation, with the
 =use-package= integration.
 
@@ -521,25 +520,23 @@ minibuffer and eshell. LSP completion is not handled by ivy.
 #+end_src
 
 ** LSP
-
 #+begin_src elisp
   (use-package company)
 
-  (use-package lsp-ui
-    :bind (("C-c o" . lsp-ui-imenu))
-    :custom
-    (lsp-ui-imenu-window-fix-width t)
-    (lsp-ui-doc-enable nil) ; causes issues with yabai
-    (lsp-ui-doc-show-with-cursor t)
-    (lsp-ui-doc-delay 1)
-    (lsp-ui-doc-position 'at-point))
+  (use-package external-completion
+    :straight (:type git
+	       :host github
+	       :repo "emacs-straight/external-completion"))
 
-  (use-package lsp-mode
-    :init
-    (setq lsp-keymap-prefix "C-c l")
-    :commands lsp
-    :custom
-    (lsp-rust-analyzer-cargo-watch-command "clippy"))
+  (use-package eglot
+    :bind (("C-c l r" . eglot-rename)
+	   ("C-c l d" . eglot-find-declaration)
+	   ("C-c l i" . eglot-find-implementation)
+	   ("C-c l t" . eglot-find-typeDefinition)
+	   ("C-c l a" . eglot-code-actions)
+	   ("M-n" . flymake-goto-next-error)
+	   ("M-p" . flymake-goto-prev-error))
+    :after (company external-completion))
 #+end_src
 
 ** Projectile
@@ -564,7 +561,7 @@ Package =rg= is required for projectile-ripgrep.
 *** TODO how do I plug in extra tools to flycheck
 *** TODO better keybinds to quickly jump between errors
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package flycheck
 	:bind
 	(("M-p" . flycheck-previous-error)
@@ -686,7 +683,7 @@ Formatting keybinds. (Not working. Can't remember how. :shrug)
 
 ** Diagrams
 Various text-to-diagram languages.
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package ob-d2
     :custom
     (ob-d2-command "~/go/bin/d2"))
@@ -694,12 +691,12 @@ Various text-to-diagram languages.
   (use-package d2-mode)
 #+end_src
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package mermaid-mode)
-  
+
   (use-package ob-mermaid
-      :custom
-      (ob-mermaid-cli-path "~/.npm-packages/bin/mmdc"))
+    :custom
+    (ob-mermaid-cli-path "~/.npm-packages/bin/mmdc"))
 #+end_src
 
 ** Docker
@@ -726,9 +723,9 @@ Various text-to-diagram languages.
   (use-package go-mode
     :bind (("C-c C-c C-c" . tester-run-current-test))
     :config
-    (add-hook 'go-mode-hook #'lsp-deferred)
-    (add-hook 'before-save-hook #'lsp-format-buffer)
-    (add-hook 'before-save-hook #'lsp-organize-imports)
+    ;; (add-hook 'go-mode-hook #'lsp-deferred)
+    ;; (add-hook 'before-save-hook #'lsp-format-buffer)
+    ;; (add-hook 'before-save-hook #'lsp-organize-imports)
     (add-hook 'before-save-hook #'gofmt-before-save)
     (add-hook 'go-mode-hook #'yas-minor-mode)
     :custom
@@ -736,9 +733,9 @@ Various text-to-diagram languages.
 
   (use-package ob-go
     :straight (ob-go
-               :type git
-               :host github
-               :repo "pope/ob-go"))
+	       :type git
+	       :host github
+	       :repo "pope/ob-go"))
 #+end_src
 
 Support for using =delve= with the Grand Unified Debugger.
@@ -756,10 +753,10 @@ To support files with build-tags in lsp-mode, use something like the following i
 #+begin_src elisp
   (use-package haskell-mode
 	:config
-	(add-hook 'haskell-mode-hook #'lsp-deferred)
+	;; (add-hook 'haskell-mode-hook #'lsp-deferred)
 	(add-hook 'haskell-mode-hook #'flycheck-mode)
 	:init
-	(use-package lsp-haskell)
+	;; (use-package lsp-haskell)
 	(use-package hindent))
 #+end_src
 
@@ -801,10 +798,10 @@ Parinfer doesn't work well with other minor modes that manage whitespace. If we 
 ** Python
 
 #+begin_src elisp
-  (use-package lsp-pyright
-    :hook (python-mode . (lambda ()
-			   (require 'lsp-pyright)
-			   (lsp))))
+  ;; (use-package lsp-pyright
+  ;;   :hook (python-mode . (lambda ()
+  ;; 			 (require 'lsp-pyright)
+  ;; 			 (lsp))))
 
   (use-package python-black
     :after python
@@ -813,7 +810,7 @@ Parinfer doesn't work well with other minor modes that manage whitespace. If we 
 
 ** Odin
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package odin-mode
     :straight
     (odin-mode :type git :host github :repo "mattt-b/odin-mode")
@@ -824,14 +821,14 @@ Parinfer doesn't work well with other minor modes that manage whitespace. If we 
      (make-lsp-client :new-connection (lsp-stdio-connection "g:/Developer/odin/ols/ols.exe")
 		      :major-modes '(odin-mode)
 		      :server-id 'ols
-		      :multi-root t))
-    (add-hook 'odin-mode-hook #'lsp-deferred))
+		      :multi-root t)))
+    ;; (add-hook 'odin-mode-hook #'lsp-deferred))
 #+end_src
 
 ** Ruby
 
 #+begin_src elisp
-  (add-hook 'ruby-mode-hook #'lsp-deferred)
+  ;; ;; (add-hook 'ruby-mode-hook #'lsp-deferred)
 #+end_src
 
 ** Rust
@@ -858,13 +855,8 @@ When using =tracing= and =tracing_subscriber= crates, logs have ANSI escape code
 
 #+begin_src elisp
   (use-package rustic
-    :hook (lsp-deferred
-	   (rustic-mode . rf/buffer-highlight-todo))
-    :init
-    (setq lsp-rust-analyzer-server-display-inlay-hints t)
     :config
-    (add-hook 'before-save-hook #'lsp-format-buffer)
-    (add-hook 'before-save-hook #'lsp-organize-imports)
+    (add-hook 'rust-mode-hook #'eglot-ensure)
     (add-hook 'rust-mode-hook #'yas-minor-mode)
     (add-hook 'compilation-finish-functions
 	      #'(lambda (buf &rest ignored)
