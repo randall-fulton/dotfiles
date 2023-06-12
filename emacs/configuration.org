@@ -237,7 +237,7 @@ Extension to =org-roam= to support weekly files.
            (new-file-p (not (f-exists-p weekly-file-path))))
       (find-file weekly-file-path)
       (when new-file-p
-        (insert (concat "#+title: " weekly-file-id "\n\n")
+        (insert (concat "#+title: " weekly-file-id "\n")
                 rf/todo-states
                 "* Goals\n\n"
                 "* Monday\n\n"
