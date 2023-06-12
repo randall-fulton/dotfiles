@@ -206,7 +206,7 @@ Would love to use for email, but can't get it to work on darwin.
 ** Org Setup
 Extended set of todo states.
 #+begin_src elisp
-  (defconst rf/todo-states "#+todo: TODO(t) DOING(d) MEET(m) | DONE(f) CANCELED(c)"
+  (defconst rf/todo-states "#+todo: TODO(t) DOING(d) MEET(m) | DONE(f) CANCELED(c)\n"
     "Extended todo states. Should be used across all `org-agenda' accessible files.")
 #+end_src
 
