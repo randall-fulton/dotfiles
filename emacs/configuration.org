@@ -714,6 +714,11 @@ Various text-to-diagram languages.
   (use-package glsl-mode)
 #+end_src
 
+** GraphQL
+#+begin_src elisp
+  (use-package graphql-mode)
+#+end_src
+
 ** Go
 
 **** TODO use =gofumpt= on-save
