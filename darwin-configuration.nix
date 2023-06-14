@@ -13,7 +13,7 @@ let
   home-manager = import ./home-manager.nix {
     inherit pkgs;
     email = "randall@shipt.com";
-    envExtra = ''
+    shellEnvExtra = ''
       export PATH=$PATH:$HOME/.rd/bin # Rancher Desktop
       export PATH=$PATH:$HOME/go/bin  # Go binaries
       export PATH=$PATH:$HOME/.npm-packages/bin
@@ -24,7 +24,7 @@ let
 
       export D2_LAYOUT=elk
     '';
-    initExtra = ''
+    shellInitExtra = ''
       [[ -f "$HOME/dev/tools/profile" ]] && source "$HOME/dev/tools/profile"
       [[ -f /opt/homebrew/bin/brew ]]    && eval "$(/opt/homebrew/bin/brew shellenv)"
     '';
