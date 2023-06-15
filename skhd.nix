@@ -17,6 +17,13 @@ in
     ${yabaiMod} - j     : yabai -m window --swap south
     ${yabaiMod} - k     : yabai -m window --swap north
     ${yabaiMod} - l     : yabai -m window --swap east
+    ${yabaiMod} - y     : yabai -m window --focus west
+    ${yabaiMod} - u     : yabai -m window --focus south
+    ${yabaiMod} - i     : yabai -m window --focus north
+    ${yabaiMod} - o     : yabai -m window --focus east
+    ${yabaiMod} - b     : yabai -m space --balance
+    ${yabaiMod} - t     : yabai -m space --toggle padding; yabai -m space --toggle gap
+    ${yabaiMod} - s     : yabai -m window --toggle split
     ${yabaiMod} - left  : yabai -m window --resize left:-100:0
     ${yabaiMod} - down  : yabai -m window --resize bottom:0:100
     ${yabaiMod} - up    : yabai -m window --resize bottom:0:-100
