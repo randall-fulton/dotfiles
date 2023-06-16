@@ -77,6 +77,11 @@ Must be a relative path. If absolute, this will be ignored on Windows, due to MS
         auto-save-default nil)
 #+end_src
 
+Show folders before files in =dired=.
+#+begin_src elisp
+  (setq dired-listing-switches "-al --group-directories-first") 
+#+end_src
+
 Align with spaces instead of tabs, for copyable blocks. Using tabs often makes formatting weird when copied to other programs.
 #+begin_src elisp
   (defadvice align-regexp (around align-regexp-with-spaces activate)
