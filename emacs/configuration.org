@@ -521,7 +521,8 @@ minibuffer and eshell. LSP completion is not handled by ivy.
 
 ** LSP
 #+begin_src elisp
-  (use-package company)
+  (use-package company
+    :hook (prog-mode . company-mode))
 
   (use-package external-completion
     :straight (:type git
@@ -855,12 +856,14 @@ When using =tracing= and =tracing_subscriber= crates, logs have ANSI escape code
 
 #+begin_src elisp
   (use-package rustic
+    :custom
+    (rustic-lsp-client 'eglot)
     :config
     (add-hook 'rust-mode-hook #'eglot-ensure)
     (add-hook 'rust-mode-hook #'yas-minor-mode)
     (add-hook 'compilation-finish-functions
-	      #'(lambda (buf &rest ignored)
-		  (rf/display-ansi-colors-in-buffer buf))))
+              #'(lambda (buf &rest ignored)
+                  (rf/display-ansi-colors-in-buffer buf))))
 #+end_src
 
 *** TODO use =bacon= for auto-testing
