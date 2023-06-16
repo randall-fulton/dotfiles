@@ -770,15 +770,14 @@ To support files with build-tags in lsp-mode, use something like the following i
 
 #+begin_src elisp
   (use-package parinfer-rust-mode
-    :hook (emacs-lisp-mode lisp-mode)
-    :init
-    (setq parinfer-rust-auto-download t))
+    :hook (emacs-lisp-mode lisp-mode))
+
   (use-package slime
     :init
     (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
     (setq browse-url-handlers
-	  '(("hyperspec" . eww-browse-url)
-	    ("." . browse-url-default-browser))))
+          '(("hyperspec" . eww-browse-url)
+            ("." . browse-url-default-browser))))
 #+end_src
 
 #+begin_src elisp
