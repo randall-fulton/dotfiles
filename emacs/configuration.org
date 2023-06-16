@@ -154,6 +154,10 @@ Helpful editor customizations to make code navigation easier.
 Ensure Emacs shares =$PATH= with a normal shell. Without this, some executables won't be
 available (e.g. =rust-analyzer=).
 
+Unsetting =exec-path-from-shell-initialize= is necessary to force a
+non-login shell. Using a login shell will increase startup time to
+>750ms, which often leads to corrupted =$PATH=.
+
 #+begin_src elisp
   (setq-default explicit-shell-file-name
                 (cond ((eq system-type 'darwin) "zsh")
@@ -164,6 +168,7 @@ available (e.g. =rust-analyzer=).
     :ensure t
     :config
     (when (memq window-system '(mac ns x))
+      (setq exec-path-from-shell-arguments nil)
       (exec-path-from-shell-initialize)))
 #+end_src
 
@@ -685,20 +690,24 @@ Formatting keybinds. (Not working. Can't remember how. :shrug)
 
 ** Diagrams
 Various text-to-diagram languages.
-#+begin_src elisp :tangle no
-  (use-package ob-d2
-    :custom
-    (ob-d2-command "~/go/bin/d2"))
-
-  (use-package d2-mode)
+#+begin_src elisp
+  (let (executable (executable-find "d2"))
+    (use-package d2-mode
+      :if executable)
+    (use-package ob-d2
+      :if executable
+      :custom
+      (ob-d2-command executable)))
 #+end_src
 
-#+begin_src elisp :tangle no
-  (use-package mermaid-mode)
-
-  (use-package ob-mermaid
-    :custom
-    (ob-mermaid-cli-path "~/.npm-packages/bin/mmdc"))
+#+begin_src elisp
+  (let ((executable (executable-find "mmdc")))
+    (use-package mermaid-mode
+      :if executable)
+    (use-package ob-mermaid
+      :if executable
+      :custom
+      (ob-mermaid-cli-path executable)))
 #+end_src
 
 ** Docker
@@ -772,7 +781,7 @@ To support files with build-tags in lsp-mode, use something like the following i
 
 #+begin_src elisp
   (use-package parinfer-rust-mode
-    :hook (emacs-lisp-mode lisp-mode))
+    :hook (emacs-lisp-mode lisp-mode geiser-mode))
 
   (use-package slime
     :init
