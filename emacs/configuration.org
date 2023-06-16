@@ -781,6 +781,12 @@ To support files with build-tags in lsp-mode, use something like the following i
 	    ("." . browse-url-default-browser))))
 #+end_src
 
+#+begin_src elisp
+  (use-package geiser)
+
+  (use-package geiser-guile)
+#+end_src
+
 Parinfer doesn't work well with other minor modes that manage whitespace. If we don't disable =indent-tabs-mode=, really strange behavior happens when editing Lisp.
 #+begin_src elisp
   (defun rf/disable-indent-tabs-for-lisp (mode-hooks)
