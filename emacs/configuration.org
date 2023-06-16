@@ -92,6 +92,7 @@ Customize code style through font, theme, ligatures, etc.
   (set-frame-font rf/source-code-font nil t)
 
   (use-package modus-themes
+    :demand t
     :init
     (setq modus-themes-bold-constructs t
           modus-themes-org-blocks 'gray-background)
