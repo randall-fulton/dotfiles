@@ -214,14 +214,18 @@ Would love to use for email, but can't get it to work on darwin.
 #+end_src
 
 ** Org Setup
-Extended set of todo states.
 #+begin_src elisp
-  (defconst rf/todo-states "#+todo: TODO(t) DOING(d) MEET(m) | DONE(f) CANCELED(c)\n"
-    "Extended todo states. Should be used across all `org-agenda' accessible files.")
+  (load-file (expand-file-name "org.el" user-emacs-directory))
+#+end_src
+
+Extended set of todo states.
+#+begin_src elisp :tangle no
+  (setq org-todo-keywords
+        '((sequence "TODO" "NEXT" "WAITING" "|" "DONE" "CANCELLED" "MEETING")))
 #+end_src
 
 Extension to =org-roam= to support weekly files.
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (defun rf/format-week-id (&optional offset)
     "Create string identifying week OFFSET weeks in future in format
    '<YEAR> Week <WEEK NUM>'. Weeks start on Monday."
@@ -248,7 +252,6 @@ Extension to =org-roam= to support weekly files.
       (find-file weekly-file-path)
       (when new-file-p
         (insert (concat "#+title: " weekly-file-id "\n")
-                rf/todo-states
                 "* Goals\n\n"
                 "* Monday\n\n"
                 "* Tuesday\n\n"
@@ -270,7 +273,7 @@ Extension to =org-roam= to support weekly files.
 Update agenda files. Setting them on startup won't take into account
 new files that are created in a session. Since I tend to keep a single
 Emacs running for days, that would be a problem.
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (defun rf/org-agenda-set-agenda-files ()
     "Update `org-agenda-files' to include all org-roam files."
     (interactive)
@@ -280,16 +283,15 @@ Emacs running for days, that would be a problem.
 #+end_src
 
 Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian GUI.
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package org-roam
     :custom
     (org-roam-directory (file-truename "~/org/roam"))
     (org-roam-dailies-directory (file-truename "~/org/roam/daily"))
     (org-roam-dailies-capture-templates `(("d" "default" entry "* %?" :target
                                            (file+head "%<%Y-%m-%d>.org"
-                                                      ,(concat rf/todo-states "\n"
-                                                               "#+title: %<%Y-%m-%d>" "\n\n"
-                                                               "* Highlights" "\n")))))
+                                                      "#+title: %<%Y-%m-%d>" "\n\n"
+                                                      "* Highlights" "\n"))))
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
@@ -320,7 +322,7 @@ Org roam for Zettelkasten and roam UI to explore in browser, similar to Obsidian
 
 Revert =fill-paragraph=. Typically needed after exporting org to
 markdown with =org-pandoc-export-to-commonmark=. Taken from [[https://www.emacswiki.org/emacs/UnfillParagraph][EmacsWiki]].
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (defun rf/unfill-paragraph ()
     "Takes a multi-line paragraph and makes it into a single line of text."
     (interactive)
@@ -331,7 +333,7 @@ markdown with =org-pandoc-export-to-commonmark=. Taken from [[https://www.emacsw
 #+end_src
 
 Org table keymap.
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (defalias 'rf/org-table-map
     (let ((map (make-sparse-keymap)))
       (define-key map (kbd "c") 'org-table-insert-column)
@@ -342,7 +344,7 @@ Org table keymap.
     "Bindings for editing org tables.")
 #+end_src
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (defun rf/configure-org ()
     ;; vars
     (setq org-pretty-entities t
@@ -412,12 +414,12 @@ Org table keymap.
 #+end_src
 
 Pandoc-powered exporter. Helpful for Markdown, as the default exporter doesn't add language to source blocks in exported document.
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package ox-pandoc)
 #+end_src
 
 Graphviz is used in my Zettelkasten to create diagrams.
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package graphviz-dot-mode)
 #+end_src
 
