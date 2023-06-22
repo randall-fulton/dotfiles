@@ -18,7 +18,7 @@ this, but it seems to be a good start.
 ** TODO Move out of org-specific config file
 * Keybinds
 #+begin_src elisp
-  (unbind-key (kbd "C-,") org-mode-map)
+  (add-hook 'org-mode-hook (lambda () (unbind-key (kbd "C-,") org-mode-map)))
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c b") 'org-switchb)
   (global-set-key (kbd "C-c c") 'org-capture)
