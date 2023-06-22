@@ -1,0 +1,16 @@
+#+PROPERTY: header-args :tangle org.el
+#+PROPERTY: header-args+ :eval never
+#+PROPERTY: header-args+ :exports code
+
+Uses [[http://doc.norang.ca/org-mode.html#OrgFiles][Bernt Hansen's guide]] as a foundation.
+
+#+begin_src elisp
+  (global-set-key (kbd "C-c b") 'org-switchb)
+#+end_src
+
+#+begin_src elisp
+  (setq org-agenda-files '("~/dev/org"))
+#+end_src
+
+#+begin_src elisp
+#+end_src
