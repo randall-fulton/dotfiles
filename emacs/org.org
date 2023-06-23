@@ -137,10 +137,12 @@ Allow all files in =org= repo to include tasks honored by =org-agenda=.
   (rf/org-agenda-set-agenda-files)
 #+end_src
 
-Prevent task dimming and condense agenda view.
+Prevent task dimming, condense agenda view, and show log of all time
+clocked on tasks.
 #+begin_src elisp
   (setq org-agenda-dim-blocked-tasks nil
-        org-agenda-compact-blocks t)
+	org-agenda-compact-blocks t
+	org-agenda-start-with-log-mode t)
 #+end_src
 
 Custom agenda view. This will likely need tweaks, as it's effectively
