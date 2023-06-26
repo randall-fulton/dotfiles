@@ -111,7 +111,7 @@ Refile tweaks:
 #+begin_src elisp
   (setq org-refile-targets '((nil :maxlevel . 9)
                              (org-agenda-files :maxlevel . 9))
-        org-refile-use-outline-path t
+        org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil
         org-refile-allow-creating-parent-nodes 'confirm
         org-completion-use-ido t
