@@ -859,7 +859,7 @@ Parinfer doesn't work well with other minor modes that manage whitespace. If we 
 ** Ruby
 
 #+begin_src elisp
-  ;; ;; (add-hook 'ruby-mode-hook #'lsp-deferred)
+  (add-hook 'ruby-mode-hook 'eglot-ensure)
 #+end_src
 
 ** Rust
