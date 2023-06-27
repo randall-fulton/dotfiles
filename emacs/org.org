@@ -16,6 +16,15 @@ this, but it seems to be a good start.
 #+end_src
 
 ** TODO Move out of org-specific config file
+* Base styling
+#+begin_src elisp
+  (setq org-pretty-entities t
+	org-hide-leading-star t
+	org-hide-emphasis-markers t
+	;; org-log-done t
+	org-startup-indented t)
+#+end_src
+
 * Keybinds
 #+begin_src elisp
   (add-hook 'org-mode-hook (lambda () (unbind-key (kbd "C-,") org-mode-map)))
