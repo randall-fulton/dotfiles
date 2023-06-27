@@ -142,7 +142,8 @@ Allow all files in =org= repo to include tasks honored by =org-agenda=.
     "Update `org-agenda-files' to include all org-roam files."
     (interactive)
     (setq org-agenda-files (append (directory-files-recursively "~/dev/org/work" ".org$")
-				   `(,org-default-notes-file))))
+                                   `(,org-default-notes-file
+                                     "~/dev/org/emacs.org"))))
   (rf/org-agenda-set-agenda-files)
 #+end_src
 
