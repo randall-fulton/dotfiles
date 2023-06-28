@@ -80,6 +80,13 @@ C-w=).
   (setq org-default-notes-file "~/dev/org/refile.org")
 #+end_src
 
+Capture random interruptions (e.g. coffee break or meetings that don't
+fit a project) into the "diary" file. These should be shown in the
+agenda log-mode view as well.
+#+begin_src elisp
+  (setq rf/org-diary-file "~/dev/org/diary.org")
+#+end_src
+
 Capture types/uses:
 - =todo=: normal task, possibly for a project
 - =note=: quickly capture information that isn't actionable
@@ -105,7 +112,7 @@ that clock is resumed on finish (=:clock-resume t=).
         ("r" "respond" entry (file org-default-notes-file)
          "* NEXT Respond to %? on \nSCHEDULED: %t\n%U\n%a\n"
          :clock-in t :clock-resume t)
-        ("j" "journal" entry (file+datetree "~/dev/org/diary.org")
+        ("j" "journal" entry (file+datetree rf/org-diary-file)
          "* %?\n%U\n"
          :clock-in t :clock-resume t)))
 #+end_src
@@ -143,6 +150,7 @@ Allow all files in =org= repo to include tasks honored by =org-agenda=.
     (interactive)
     (setq org-agenda-files (append (directory-files-recursively "~/dev/org/work" ".org$")
                                    `(,org-default-notes-file
+                                     ,rf/org-diary-file
                                      "~/dev/org/emacs.org"))))
   (rf/org-agenda-set-agenda-files)
 #+end_src
