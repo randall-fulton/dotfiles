@@ -77,14 +77,18 @@ Default file is used for all captures (except for =journal=), but is
 intended to be periodically cleared as captured tasks are refiled (=C-c
 C-w=).
 #+begin_src elisp
-  (setq org-default-notes-file "~/dev/org/refile.org")
+  (setq org-default-notes-file
+        (if (boundp 'rf/org-default-notes-file)
+            rf/org-default-notes-file
+          "~/dev/org/refile.org"))
 #+end_src
 
 Capture random interruptions (e.g. coffee break or meetings that don't
 fit a project) into the "diary" file. These should be shown in the
 agenda log-mode view as well.
 #+begin_src elisp
-  (setq rf/org-diary-file "~/dev/org/diary.org")
+  (when (not (boundp 'rf/org-diary-file))
+    (setq rf/org-diary-file "~/dev/org/diary.org"))
 #+end_src
 
 Capture types/uses:
@@ -148,10 +152,15 @@ Allow all files in =org= repo to include tasks honored by =org-agenda=.
   (defun rf/org-agenda-set-agenda-files ()
     "Update `org-agenda-files' to include all org-roam files."
     (interactive)
-    (setq org-agenda-files (append (directory-files-recursively "~/dev/org/work" ".org$")
-                                   `(,org-default-notes-file
-                                     ,rf/org-diary-file
-                                     "~/dev/org/emacs.org"))))
+    (setq org-agenda-files
+          (delete-dups
+           (mapcar
+            'expand-file-name
+            (append (when (boundp 'rf/org-agenda-files)
+                      rf/org-agenda-files)
+                    `(,org-default-notes-file
+                      ,rf/org-diary-file))))))
+
   (rf/org-agenda-set-agenda-files)
 #+end_src
 
@@ -230,10 +239,6 @@ workflow will likely evolve.
                       (org-tags-match-list-sublevels nil)
                       (org-agenda-todo-ignore-scheduled rf/hide-scheduled-and-waiting-next-tasks)
                       (org-agenda-todo-ignore-deadlines rf/hide-scheduled-and-waiting-next-tasks))))
-          ;; (tags "-REFILE/"
-          ;;       ((org-agenda-overriding-header "Tasks to Archive")
-          ;;        (org-agenda-skip-function 'rf/skip-non-archivable-tasks)
-          ;;        (org-tags-match-list-sublevels nil))))
          nil)))
 #+end_src
 

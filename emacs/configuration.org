@@ -216,6 +216,7 @@ Would love to use for email, but can't get it to work on darwin.
 ** Org Setup
 #+begin_src elisp
   (load-file (expand-file-name "org.el" user-emacs-directory))
+  (load-file (expand-file-name "org-roam.el" user-emacs-directory))
 #+end_src
 
 Extended set of todo states.
