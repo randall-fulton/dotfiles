@@ -6,16 +6,6 @@ Uses [[http://doc.norang.ca/org-mode.html#OrgFiles][Bernt Hansen's guide]] as a 
 direct copy. Need to take the time to simply/rework/understand all of
 this, but it seems to be a good start.
 
-* TODO Ido
-#+begin_src elisp
-  (setq ido-everywhere t)
-  (setq ido-max-directory-size 100000)
-  (ido-mode 'both)
-  (setq ido-default-file-method 'selected-window)
-  (setq ido-default-buffer-method 'selected-window)
-#+end_src
-
-** TODO Move out of org-specific config file
 * Base styling
 #+begin_src elisp
   (setq org-pretty-entities t
