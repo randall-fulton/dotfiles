@@ -213,6 +213,30 @@ Would love to use for email, but can't get it to work on darwin.
   (use-package mu4e)
 #+end_src
 
+** Email
+Based on [[https://michal.sapka.me/2023/notmuch/][Mical Sapka's]] blog post.
+
+#+begin_src elisp
+  (use-package notmuch-indicator
+    :custom
+    (notmuch-indicator-refresh-count 60)
+    (notmuch-indicator-hide-empty-counters t)
+    (notmuch-indicator-args '((:terms "tag:gh-pr-todo" :label "pr:"))))
+#+end_src
+
+#+begin_src elisp
+  (use-package notmuch
+    :commands notmuch-hello
+    :bind (("C-c m" . notmuch-hello))
+    :custom
+    (notmuch-search-line-faces '(("gh-pr-todo" . ((t :foreground "#f77")))))
+    (notmuch-saved-searches
+     '((:name "Inbox" :query "tag:inbox" :sort-order newest-first :key "i")
+       (:name "Github[reviews]" :query "tag:gh-pr-todo" :sort-order newest-first :key "p")
+       (:name "Unread" :query "tag:unread" :sort-order newest-first :key "u")))
+    :config
+    (notmuch-indicator-mode 1))
+#+end_src
 ** Org Setup
 #+begin_src elisp
   (load-file (expand-file-name "org.el" user-emacs-directory))

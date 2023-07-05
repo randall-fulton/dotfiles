@@ -53,6 +53,7 @@ in
       pkgs.graphviz
       pkgs.indent
       pkgs.ispell
+      pkgs.isync
       pkgs.kcat
       pkgs.libksba
       pkgs.libtool
@@ -60,6 +61,7 @@ in
       # pkgs.ngrok
       pkgs.nodejs
       pkgs.nodePackages.pyright
+      pkgs.notmuch
       pkgs.openssl_1_1 # needed by brew (for rvm)
       pkgs.pandoc
       pkgs.pgcli
