@@ -237,6 +237,7 @@ Based on [[https://michal.sapka.me/2023/notmuch/][Mical Sapka's]] blog post.
     :config
     (notmuch-indicator-mode 1))
 #+end_src
+
 ** Org Setup
 #+begin_src elisp
   (load-file (expand-file-name "org.el" user-emacs-directory))

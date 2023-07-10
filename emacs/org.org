@@ -30,7 +30,7 @@ require a note to describe /why/ the state was entered and do not track
 time in state, only transition time.
 #+begin_src elisp
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+        '((sequence "IDEA(i)" "TODO(t)" "NEXT(n)" "|" "DONE(d)")
           (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "MEETING")))
 #+end_src
 
@@ -38,7 +38,8 @@ Styling overrides for each of the task states (keyword only, not task
 text).
 #+begin_src elisp
   (setq org-todo-keyword-faces
-        '(("TODO" :foreground "red" :weight bold)
+        '(("IDEA" :foreground "purple" :weight bold)
+          ("TODO" :foreground "red" :weight bold)
           ("NEXT" :foreground "blue" :weight bold)
           ("DONE" :foreground "forest green" :weight bold)
           ("WAITING" :foreground "orange" :weight bold)
@@ -82,6 +83,7 @@ agenda log-mode view as well.
 #+end_src
 
 Capture types/uses:
+- =idea=: needs further exploration before committing
 - =todo=: normal task, possibly for a project
 - =note=: quickly capture information that isn't actionable
   - should be refiled to a =* Notes= section of a project-specific file
@@ -94,21 +96,24 @@ finished (=C-c C-c=). If a clock was running when capture was started,
 that clock is resumed on finish (=:clock-resume t=).
 #+begin_src elisp
   (setq org-capture-templates
-      '(("t" "todo" entry (file org-default-notes-file)
-         "* TODO %?\n%U\n%a\n"
-         :clock-in t :clock-resume t)
-        ("n" "note" entry (file org-default-notes-file)
-         "* %? :NOTE:\n%U\n%a\n"
-         :clock-in t :clock-resume t)
-        ("m" "meeting" entry (file org-default-notes-file)
-         "* MEETING %? :MEETING:\n%U"
-         :clock-in t :clock-resume t)
-        ("r" "respond" entry (file org-default-notes-file)
-         "* NEXT Respond to %? on \nSCHEDULED: %t\n%U\n%a\n"
-         :clock-in t :clock-resume t)
-        ("j" "journal" entry (file+datetree rf/org-diary-file)
-         "* %?\n%U\n"
-         :clock-in t :clock-resume t)))
+        '(("i" "idea" entry (file org-default-notes-file)
+           "* IDEA %?\n%U\n"
+           :clock-in t :clock-resume t)
+          ("t" "todo" entry (file org-default-notes-file)
+           "* TODO %?\n%U\n"
+           :clock-in t :clock-resume t)
+          ("n" "note" entry (file org-default-notes-file)
+           "* %? :NOTE:\n%U\n"
+           :clock-in t :clock-resume t)
+          ("m" "meeting" entry (file org-default-notes-file)
+           "* MEETING %? :MEETING:\n%U"
+           :clock-in t :clock-resume t)
+          ("r" "respond" entry (file org-default-notes-file)
+           "* NEXT Respond to %? on \nSCHEDULED: %t\n%U\n%a\n"
+           :clock-in t :clock-resume t)
+          ("j" "journal" entry (file+datetree rf/org-diary-file)
+           "* %?\n%U\n"
+           :clock-in t :clock-resume t)))
 #+end_src
 
 Refile tweaks:
@@ -160,6 +165,17 @@ clocked on tasks.
   (setq org-agenda-dim-blocked-tasks nil
 	org-agenda-compact-blocks t
 	org-agenda-start-with-log-mode t)
+#+end_src
+
+Allow more space for file name in agenda view. Many of my agenda files
+tend to have names longer than 12 characters. The default limit is
+hideous.
+#+begin_src elisp
+  (setq org-agenda-prefix-format
+        '((agenda . " %i %-18:c%?-12t% s")
+          (todo . " %i %-18:c")
+          (tags . " %i %-18:c")
+          (search . " %i %-18:c")))
 #+end_src
 
 Custom agenda view. This will likely need tweaks, as it's effectively
