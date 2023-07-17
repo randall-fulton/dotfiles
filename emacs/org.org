@@ -31,7 +31,8 @@ time in state, only transition time.
 #+begin_src elisp
   (setq org-todo-keywords
         '((sequence "IDEA(i)" "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-          (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "MEETING")))
+          (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")
+          (sequence "SCHEDULED" "|" "MEETING")))
 #+end_src
 
 Styling overrides for each of the task states (keyword only, not task
@@ -45,6 +46,7 @@ text).
           ("WAITING" :foreground "orange" :weight bold)
           ("HOLD" :foreground "magenta" :weight bold)
           ("CANCELLED" :foreground "forest green" :weight bold)
+          ("SCHEDULED" :foreground "brown" :weight bold)
           ("MEETING" :foreground "forest green" :weight bold)))
 #+end_src
 
@@ -58,6 +60,7 @@ Tags are used to filter in =org-agenda= views.
         '(("CANCELLED" ("CANCELLED" . t))
           ("WAITING" ("WAITING" . t))
           ("HOLD" ("WAITING" . t) ("HOLD" . t))
+          ("SCHEDULED" ("MEETING" . t) ("WAITING") ("HOLD") ("CANCELLED"))
           ("TODO" ("WAITING") ("HOLD") ("CANCELLED"))
           ("NEXT" ("WAITING") ("HOLD") ("CANCELLED"))
           ("DONE" ("WAITING") ("HOLD") ("CANCELLED"))))
@@ -111,6 +114,9 @@ that clock is resumed on finish (=:clock-resume t=).
           ("r" "respond" entry (file org-default-notes-file)
            "* NEXT Respond to %? on \nSCHEDULED: %t\n%U\n%a\n"
            :clock-in t :clock-resume t)
+          ("s" "scheduled meeting" entry (file org-default-notes-file)
+           "* SCHEDULED %? :MEETING:\n%^T"
+           :clock-keep t)
           ("j" "journal" entry (file+datetree rf/org-diary-file)
            "* %?\n%U\n"
            :clock-in t :clock-resume t)))
