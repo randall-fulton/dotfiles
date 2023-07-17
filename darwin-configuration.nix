@@ -14,9 +14,11 @@ let
     inherit pkgs;
     email = "randall@shipt.com";
     shellEnvExtra = ''
+      export PATH=$PATH:$HOME/.local/bin
       export PATH=$PATH:$HOME/.rd/bin # Rancher Desktop
       export PATH=$PATH:$HOME/go/bin  # Go binaries
       export PATH=$PATH:$HOME/.npm-packages/bin
+      export PATH=$PATH:$HOME/.rbenv/shims # solargraphs
 
       export NODE_PATH=$HOME/.npm-packages/lib/node_modules
 
