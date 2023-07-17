@@ -151,8 +151,8 @@ Allow all files in =org= repo to include tasks honored by =org-agenda=.
           (delete-dups
            (mapcar
             'expand-file-name
-            (append (when (boundp 'rf/org-agenda-files)
-                      rf/org-agenda-files)
+            (append (when (functionp 'rf/org-agenda-get-local-agenda-files)
+                      (rf/org-agenda-get-local-agenda-files))
                     `(,org-default-notes-file
                       ,rf/org-diary-file))))))
 
