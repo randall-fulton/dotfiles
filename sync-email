@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+
+PATH="~/.nix-profile/bin/"
+
+verbose=0
+while getopts "v" arg; do
+    case $arg in
+	v) verbose=1
+	   ;;
+    esac
+done
+
+function log {
+    if [ $verbose -eq 1 ]; then
+	echo "[$(date +'%D %T')] $1"
+    fi
+}
+
+log "syncing local with remote"
+mbsync -a
+
+log "syncing notmuch db"
+notmuch new
+
+log "updating gh tags"
+notmuch tag +gh -unread -- '(from:notifications@github.com)'
+
+search_pr="\"requested your review on\" and not \"@dependabot[bot] requested\" and tag:gh and -tag:gh-pr-done"
+for thread in $(notmuch search --sort=oldest-first --output=threads -- $search_pr); do
+    for msg in $(notmuch search --sort=oldest-first --output=messages -- "$thread"); do
+	txt=$(notmuch show "$msg")
+
+	(echo "$txt" | grep "requested your review on") && notmuch tag +gh-pr-todo -- "$thread"
+	(echo "$txt" | grep "@randall-fulton approved this pull request") && notmuch tag -gh-pr-todo -- "$thread"
+	(echo "$txt" | grep "@randall-fulton requested changes on this pull request") && notmuch tag -gh-pr-todo -- "$thread"
+	(echo "$txt" | grep "Merged.*into") && notmuch tag -gh-pr-todo -- "$thread"
+    done
+done
+
+log "updating newsletter tags"
+notmuch tag +news-unread +news -unread -- '(from:architect-newsletter@mailer.infoq.com)'
