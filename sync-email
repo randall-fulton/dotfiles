@@ -37,5 +37,23 @@ for thread in $(notmuch search --sort=oldest-first --output=threads -- $search_p
     done
 done
 
+# register sending email as newsletter (call with email)
+function newsletter {
+    notmuch tag +news -unread -- "(from:$1)"
+    notmuch search --sort=oldest-first --output=messages -- "(from:$1) and date:$(date +%B).." \
+	| xargs -I {} notmuch tag +news-unread -- {}
+}
+
 log "updating newsletter tags"
-notmuch tag +news-unread +news -unread -- '(from:architect-newsletter@mailer.infoq.com)'
+newsletter 'architect-newsletter@mailer.infoq.com'
+newsletter 'hello@leaddev.com'
+
+# remove emails match filter from unread
+function ignore {
+    notmuch search --sort=oldest-first --output=messages -- $1 \
+	| xargs -I {} notmuch tag -unread -- {}
+}
+
+log "removing ignored from unread"
+ignore "\"TestFlight\""
+ignore "(from:support@t.shipt.com)"
