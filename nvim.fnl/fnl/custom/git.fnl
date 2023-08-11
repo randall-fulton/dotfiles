@@ -8,8 +8,7 @@
                      :s [ gitsigns.stage_hunk "Stage" ]
                      :u [ gitsigns.undo_stage_hunk "Unstage" ]}}}}]
   (wk.register maps)
-  (neogit.setup { :integrations { :diffview true }}))
-  (comment
+  (neogit.setup { :integrations { :diffview true }})
   (gitsigns.setup
     {; :on_attach (fn [] (wk.register maps { :silent true :noremap true }))
      :signs {:add { :hl "GitSignsAdd" :text "⎸" :numhl "GitSignsAddNr" :linehl "GitSignsAddLn" }

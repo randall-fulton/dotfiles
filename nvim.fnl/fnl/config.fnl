@@ -12,8 +12,21 @@
         (table.view packer)))))
 
 (fn install-packages [use]
+  (use {1 "nvim-neotest/neotest"
+        :requires ["nvim-lua/plenary.nvim"
+                   "nvim-treesitter/nvim-treesitter"
+                   "antoinemadec/FixCursorHold.nvim"
+                   "nvim-neotest/neotest-go"
+                   "nvim-neotest/neotest-python"
+                   {1 "rouge8/neotest-rust" :commit "84171da" }]
+        :config (fn [] (require :custom.neotest))
+        :tag "v1.37.4"})
+  (use {1 "numToStr/Comment.nvim"
+        :config (fn [] (require :custom.comments))})
   (use "wbthomason/packer.nvim")
   (use {1 "nvim-treesitter/nvim-treesitter" :commit "5891e2e"})
+  (use {1 "nvim-treesitter/playground"
+        :commit "1290fdf"})
   (use {1 "neovim/nvim-lspconfig"
         :config (fn [] (require :custom.lsp))})
   (use {1 "hrsh7th/nvim-cmp"
@@ -40,7 +53,11 @@
         :requires "nvim-lua/plenary.nvim"
         :commit "b31fafb"})
   (use {1 "lewis6991/gitsigns.nvim"
-        :tag "v0.5"}))
+        :tag "v0.5"})
+  (use {1 "kyazdani42/nvim-tree.lua"
+        :requires ["kyazdani42/nvim-web-devicons"]
+        :tag "nightly"
+        :config (fn [] (require :custom.nvim-tree))}))
 
 (bootstrap-packer)
 
@@ -49,6 +66,7 @@
 (set vim.g.mapleader " ")
 (set vim.g.maplocalleader ",")
 (set vim.wo.relativenumber true)
+(set vim.o.clipboard "unnamedplus")
 (set vim.o.cursorline false)
 (set vim.o.signcolumn "yes:1")
 (set vim.o.scrolloff 5)
@@ -67,7 +85,7 @@
   "Config" "exe 'e '.stdpath('config').'/init.lua'" {})
 
 (let [packer (require :packer)
-             wk (require :which-key)]
+      wk (require :which-key)]
   (packer.startup install-packages)
   (wk.register {"<C-h>" ["<C-w>h" "Window left"]
                 "<C-l>" ["<C-w>l" "Window right"]
