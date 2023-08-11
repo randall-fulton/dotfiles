@@ -14,16 +14,24 @@
 (fn install-packages [use]
   (use "wbthomason/packer.nvim")
   (use {1 "nvim-treesitter/nvim-treesitter" :commit "5891e2e"})
+  (use {1 "neovim/nvim-lspconfig"
+        :config (fn [] (require :custom.lsp))})
+  (use {1 "hrsh7th/nvim-cmp"
+ 		:requires ["hrsh7th/cmp-nvim-lsp"
+                   "hrsh7th/cmp-buffer"
+                   "hrsh7th/cmp-path"
+                   "hrsh7th/cmp-cmdline"
+                   "hrsh7th/cmp-vsnip"
+                   "hrsh7th/vim-vsnip"]
+ 		:config (fn [] (require :custom.cmp))})
   (use "folke/which-key.nvim")
-  ; :requires [{1 "simrat39/rust-tools.nvim" commit = "86a2b4e" }]
-  ; :config  (require "config.lsp")
   (use "atweiden/vim-fennel")
   (use {1 "EdenEast/nightfox.nvim" :commit "bb70a64"})
   (use "Olical/conjure")
   (use {1 "nvim-telescope/telescope.nvim"
-       :branch "0.1.x"
-       :requires "nvim-lua/plenary.nvim"
-       :config (fn [] (require :custom.telescope))})
+        :branch "0.1.x"
+        :requires "nvim-lua/plenary.nvim"
+        :config (fn [] (require :custom.telescope))})
   (use {1 "TimUntersberger/neogit"
         :commit "1843330"
         :requires "nvim-lua/plenary.nvim"
@@ -33,18 +41,6 @@
         :commit "b31fafb"})
   (use {1 "lewis6991/gitsigns.nvim"
         :tag "v0.5"}))
-
-(fn lsp-key-maps [bufnr])
-
-(fn lsp-on-attach [_ bufnr]
-  (let [augroup (vim.api.nvim_create_augroup "LspFormatting" {})]
-    (vim.api.nvim_buf_set_option bufnr "omnifunc" "v:lua.vim.lsp.omnifunc")
-    (vim.api.nvim_clear_autocmds {:group augroup :buffer bufnr })
-    (vim.api.nvim_create_autocmd "BufWritePre" 
-                                 {:group augroup
-                                 :buffer  bufnr
-                                 :callback  vim.lsp.buf.format})
-    (lsp-key-maps bufnr)))
 
 (bootstrap-packer)
 
@@ -74,6 +70,6 @@
              wk (require :which-key)]
   (packer.startup install-packages)
   (wk.register {"<C-h>" ["<C-w>h" "Window left"]
-               "<C-l>" ["<C-w>l" "Window right"]
-               "<C-j>" ["<C-w>j" "Window down"]
-               "<C-k>" ["<C-w>k" "Window up"]}))
+                "<C-l>" ["<C-w>l" "Window right"]
+                "<C-j>" ["<C-w>j" "Window down"]
+                "<C-k>" ["<C-w>k" "Window up"]}))
