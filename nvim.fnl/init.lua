@@ -1,72 +1,41 @@
-local hotpot_path = vim.fn.stdpath('data') .. '/site/pack/paqs/start/hotpot.nvim'
-if vim.fn.empty(vim.fn.glob(hotpot_path)) > 0 then
-  print("Could not find hotpot.nvim, cloning new copy to", hotpot_path)
-  vim.fn.system({'git', 'clone',
-                 'https://github.com/rktjmp/hotpot.nvim', hotpot_path})
-  vim.cmd("helptags " .. hotpot_path .. "/doc")
+local function build_init()
+  local _let_1_ = require("hotpot.api.make")
+  local build = _let_1_["build"]
+  local allowed_globals
+  do
+    local tbl_17_auto = {}
+    local i_18_auto = #tbl_17_auto
+    for n, _ in pairs(_G) do
+      local val_19_auto = n
+      if (nil ~= val_19_auto) then
+        i_18_auto = (i_18_auto + 1)
+        do end (tbl_17_auto)[i_18_auto] = val_19_auto
+      else
+      end
+    end
+    allowed_globals = tbl_17_auto
+  end
+  local opts = {verbosity = 0, compiler = {modules = {allowedGlobals = allowed_globals}}}
+  local function _3_(_241)
+    return _241
+  end
+  return build("~/.config/nvim/init.fnl", opts, ".+", _3_)
 end
-
--- Enable fnl/ support
-require("hotpot")
-
--- Now you can load fennel code, so you could put the rest of your
--- config in a separate `~/.config/nvim/fnl/my_config.fnl` or
--- `~/.config/nvim/fnl/plugins.fnl`, etc.
-local config = require("config")
-config()
-
-
--- local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
--- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
--- 	print("Downloading Packer ...")
--- 	vim.fn.system({
--- 		"git",
--- 		"clone",
--- 		"https://github.com/wbthomason/packer.nvim",
--- 		install_path,
--- 	})
--- 	vim.api.nvim_command("packadd packer.nvim")
--- 	require("packer").sync()
--- end
-
-require("packer").startup({
-	function(use)
-		use "folke/which-key.nvim"
-	end,
-})
-
--- Colorscheme
--- vim.cmd("colorscheme gruvbox-flat")
--- vim.cmd("colorscheme dayfox")
-
--- Leader keys
-vim.api.nvim_set_keymap("n", "<SPC>", "", {})
-vim.g.mapleader = " "
-
--- Basic UI tweaks
-vim.wo.relativenumber = true
-vim.o.cursorline = true
-vim.o.termguicolors = true
-vim.o.signcolumn = "yes:1"
-vim.o.scrolloff = 10
-
--- Controls when which-key triggers
-vim.o.timeoutlen = 500
-
--- GUI
-vim.o.guifont = "Hack_Nerd_Font_Mono:h16"
-
--- Mouse support
-vim.o.mouse = "a"
-
--- Default formatting
-vim.o.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.shiftwidth = 4
-
--- Better completion experience
-vim.o.completeopt = "menuone,noinsert,noselect"
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-
-vim.api.nvim_create_user_command("Config", "exe 'e '.stdpath('config').'/init.lua'", {})
+do
+  local hotpot = require("hotpot")
+  local setup = hotpot.setup
+  local build = hotpot.api.make.build
+  local uv = vim.loop
+  setup({provide_require_fennel = true, compiler = {modules = {correlate = true}, macros = {env = "_COMPILER", compilerEnv = _G, allowedGlobals = false}}})
+  local handle = uv.new_fs_event()
+  local path = vim.fn.expand("~/.config/nvim/init.fnl")
+  local function _4_()
+    return vim.schedule(build_init)
+  end
+  uv.fs_event_start(handle, path, {}, _4_)
+  local function _5_()
+    return uv.close(handle)
+  end
+  vim.api.nvim_create_autocmd("VimLeavePre", {callback = _5_})
+end
+return require("config")

@@ -30,4 +30,4 @@
     ;; close the uv handle when we quit nvim
     (vim.api.nvim_create_autocmd :VimLeavePre {:callback #(uv.close handle)})))
 
-; (require :the-rest-of-my-config)
+(require :config)
