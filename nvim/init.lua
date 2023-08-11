@@ -12,6 +12,8 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 	require("packer").sync()
 end
 
+vim.g["aniseed#env"] = true
+
 require("config.packer")
 
 -- Colorscheme

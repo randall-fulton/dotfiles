@@ -5,6 +5,11 @@ local plugins = packer.startup({
 		-- Packer
 		use("wbthomason/packer.nvim")
 
+		-- Lisp
+		use 'Olical/aniseed'
+		use 'Olical/conjure'
+		use 'PaterJason/cmp-conjure'
+
 		-- Completion
 		use({
 			"hrsh7th/nvim-cmp",

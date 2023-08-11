@@ -66,6 +66,25 @@ lsp["bashls"].setup({
 	flags = lsp_flags,
 	capabilities = capabilities,
 })
+lsp["fennel_language_server"].setup({
+	on_attach = on_attach,
+	flags = lsp_flags,
+	capabilities = capabilities,
+	root_dir = lsp.util.root_pattern("fnl"),
+	settings = {
+		fennel = {
+			workspace = {
+				-- If you are using hotpot.nvim or aniseed,
+				-- make the server aware of neovim runtime files.
+				library = vim.api.nvim_get_runtime_file("", true),
+				-- library = vim.api.nvim_list_runtime_paths(),
+			},
+			diagnostics = {
+				globals = { "vim" },
+			},
+		},
+	},
+})
 lsp["gopls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
