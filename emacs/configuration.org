@@ -205,14 +205,6 @@ Use =ibuffer= instead of =list-buffers=.
   (global-set-key (kbd "C-x C-b") 'ibuffer)
 #+end_src
 
-** Workflow
-Utilities for non-dev tasks (e.g. email).
-
-Would love to use for email, but can't get it to work on darwin.
-#+begin_src elisp :tangle no
-  (use-package mu4e)
-#+end_src
-
 ** Email
 Based on [[https://michal.sapka.me/2023/notmuch/][Mical Sapka's]] blog post.
 
@@ -576,6 +568,7 @@ minibuffer and eshell. LSP completion is not handled by ivy.
 	   ("C-c l i" . eglot-find-implementation)
 	   ("C-c l t" . eglot-find-typeDefinition)
 	   ("C-c l a" . eglot-code-actions)
+	   ("C-c l f" . eglot-format-buffer)
 	   ("M-n" . flymake-goto-next-error)
 	   ("M-p" . flymake-goto-prev-error))
     :after (company external-completion))
