@@ -233,8 +233,8 @@ Based on [[https://michal.sapka.me/2023/notmuch/][Mical Sapka's]] blog post.
 
 ** Org Setup
 #+begin_src elisp
-  (load-file (expand-file-name "org.el" user-emacs-directory))
-  (load-file (expand-file-name "org-roam.el" user-emacs-directory))
+  (rf/load-org-config "org.org")
+  (rf/load-org-config "org-roam.org")
 #+end_src
 
 Extended set of todo states.
