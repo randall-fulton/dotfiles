@@ -14,9 +14,9 @@ alias tmux="TERM=screen-256color-bce tmux"
 
 alias refresh="source $HOME/.zshrc"
 if [ "$(uname)" = "Darwin" ]; then
-	alias restart-skhd="launchctl kickstart -k \"gui/\${UID}/org.nixos.skhd\""
-	alias restart-spacebar="launchctl kickstart -k \"gui/\${UID}/org.nixos.spacebar\""
-	alias restart-yabai="launchctl kickstart -k \"gui/\${UID}/org.nixos.yabai\""
+	alias restart-skhd="launchctl kickstart -k \"gui/\${UID}/com.koekeishiya.skhd\""
+	alias restart-spacebar="launchctl kickstart -k \"gui/\${UID}/homebrew.mxcl.spacebar\""
+	alias restart-yabai="launchctl kickstart -k \"gui/\${UID}/com.koekeishiya.yabai\""
 fi
 
 if command -v brew >/dev/null; then
