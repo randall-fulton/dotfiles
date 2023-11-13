@@ -1,11 +1,11 @@
-".DS_Store"
+.DS_Store
 # emacs
-"*/.saves"
-"*~"
-"*#*"
-".dir-locals.el"
+*/.saves
+*~
+*#*
+.dir-locals.el
 # python
-"*venv/"
-"*.venv/"
+*venv/
+*.venv/
 # Rancher
-"qemu_*.core"
+qemu_*.core
