@@ -1,8 +1,21 @@
-shell: "/bin/zsh"
+env:
+  # unsure about overriding this
+  TERM: xterm-256color
 
 font:
   normal:
     family: "FiraCode Nerd Font"
-  size: 16
+  size: 20
+
+live_config_reload: true
+
+shell: "/bin/zsh"
+
 window:
+  decorations: buttonless
+  dynamic_padding: false
+  opacity: 1.0
   option_as_alt: Both
+  # padding:
+  #   x: 14
+  #   y: 10
