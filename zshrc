@@ -33,7 +33,7 @@ fpath=($ZSH/plugins/zsh-completions/src $fpath)
 ###############
 
 alias refresh="source $HOME/.zshrc"
-if [ "$(uname)" = "Darwin" ]; then
+if command -v uname>/dev/null && [ "$(uname)" = "Darwin" ]; then
 	alias restart-skhd="launchctl kickstart -k \"gui/\${UID}/com.koekeishiya.skhd\""
 	alias restart-spacebar="launchctl kickstart -k \"gui/\${UID}/homebrew.mxcl.spacebar\""
 	alias restart-yabai="launchctl kickstart -k \"gui/\${UID}/com.koekeishiya.yabai\""
