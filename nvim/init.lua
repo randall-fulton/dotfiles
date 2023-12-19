@@ -150,44 +150,27 @@ require('lazy').setup({
     },
   },
 
-  -- {
-  --   -- Theme inspired by Atom
-  --   'navarasu/onedark.nvim',
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'onedark'
-  --   end,
-  -- },
-
-  -- {
-  --   'rose-pine/neovim',
-  --   name = 'rose-pine',
-  --   config = function()
-  --     require('rose-pine').setup({
-  --       groups = {
-  --         background = "181818", -- match alacritty default bg
-  --       },
-  --     })
-  --     vim.cmd.colorscheme 'rose-pine'
-  --   end,
-  -- },
+  {
+    -- Theme inspired by Atom
+    'navarasu/onedark.nvim',
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme 'onedark'
+    end,
+  },
 
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
-    dependencies = { 'RRethy/nvim-base16' },
-    config = function()
-      vim.cmd.colorscheme 'base16-rose-pine'
-      require('lualine').setup({
-        options = {
-          icons_enabled = false,
-          theme = 'base16',
-          component_separators = '|',
-          section_separators = '',
-        },
-      })
-    end,
+    opts = {
+      options = {
+        icons_enabled = false,
+        theme = 'onedark',
+        component_separators = '|',
+        section_separators = '',
+      },
+    },
   },
 
   {
