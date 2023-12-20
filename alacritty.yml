@@ -52,6 +52,6 @@ window:
   dynamic_padding: false
   opacity: 1.0
   option_as_alt: Both
-  # padding:
-  #   x: 14
-  #   y: 10
+  padding:
+    x: 14
+    y: 10
