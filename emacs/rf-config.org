@@ -1,0 +1,308 @@
+* Initialization
+** Move customizations out of =init.el=
+
+Because =init.el= is generated when this file is tangled, customizations are frequently overwritten. One frequent
+annoyance due to this is need to re-trust =modus-themes= on restart. By moving customizations to a separate file,
+they are no longer lost on a tangle.
+
+#+begin_src emacs-lisp :tangle init.el
+  (setq custom-file (expand-file-name "rf-custom.el" user-emacs-directory))
+  (load-file custom-file)
+#+end_src
+
+** Package management setup
+
+I use =straight= to manage package installation. It replaces the default package installer, favoring =git= instead.
+This allows me to more easily switch to my own fork of a package, modify it, push up the changes, etc. All around a
+better experience.
+
+Bootstrap =straight=, so that I don't have to worry about installing it on a new machine.
+
+#+begin_src emacs-lisp :tangle init.el
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+	 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+	(bootstrap-version 6))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+	  (url-retrieve-synchronously
+	   "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+	   'silent 'inhibit-cookies)
+	(goto-char (point-max))
+	(eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+#+end_src
+
+Enable upgrading of built-in packages and use =straight='s integration with =use-package=. Git protocol is defaulted
+to =https= to enable installation of /private/ repos, in case I'm working on something I'm not comfortable publishing
+just yet (my default state of being).
+
+#+begin_src emacs-lisp :tangle init.el
+  (setq package-install-upgrade-built-in t)
+  (setq straight-use-package-by-default t
+        straight-vc-git-default-protocol 'https
+        straight-vc-git-force-protocol nil)
+#+end_src
+
+Adding =use-package= on top of =straight= provides a number of usability improvements when installing and managing
+packages. Hook setup, keybinding, deferred loading, and tons more can be combined into a single definition of
+/what/ to install and /how/ to configure it.
+  
+#+begin_src emacs-lisp :tangle init.el
+  (straight-use-package 'use-package)
+#+end_src
+
+Effectively, this only /adds/ =melpa= to =package-archives=. I use =setq= instead of =add-to-list= so that I can
+re-evaluate my config an arbitrary number of times without polluting this list with duplicate entries.
+
+#+begin_src emacs-lisp :tangle init.el
+  (require 'package)
+  (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                           ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                           ("melpa" . "https://melpa.org/packages/")))
+#+end_src
+
+** Disable annoying defaults
+
+Turn off a few parts of GUI Emacs that get in my way. I don't use any of the additions we get with GUI Emacs, so I'd
+rather have that screen real estate back for slightly larger buffers.
+
+#+begin_src emacs-lisp :tangle init.el
+  (setq inhibit-startup-screen t
+        ring-bell-function 'ignore)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+#+end_src
+
+** Initialize PATH
+
+=SHELL= defaults to =/bin/sh=. I prefer to use =zsh= though, so my =$PATH= isn't set correctly for the default shell.
+By overriding it, Emacs can load =exec-path= and =$PATH= from the equivalent in =zsh=, removing the need to manage
+it in triplicate.
+
+For some reason, this still reads =$PATH= from =~/.profile= instead of =~/.zshenv=. I have no idea why, but any changes
+to =$PATH= must be reflected there, or Emacs will not pick up on it.
+
+#+begin_src emacs-lisp :tangle init.el
+  (setq explicit-shell-file-name "/bin/zsh")
+  (setenv "SHELL" explicit-shell-file-name)
+
+  (use-package exec-path-from-shell
+    :config (when (memq window-system '(mac ns x))
+	      (exec-path-from-shell-initialize)))
+#+end_src
+
+** Centralized directory for backup files
+
+Allowing backup files to be created in any directory causes some problems with certain dev tooling. For example, when
+using =gotestsum --watch=, if Emacs updates a backup file, tests are re-run. That's completely unwarranted, since no
+Go files changed. This is obviously an issue with =gotestsum=, but it can easily be fixed universally by collecting all
+backup files in a single location.
+
+#+begin_src emacs-lisp :tangle init.el
+  (setq backup-directory-alist `(("." . ".saves"))
+        auto-save-default nil)
+#+end_src
+
+* Dired
+
+#+begin_src emacs-lisp :tangle init.el
+  (load-file (expand-file-name "rf-dired.el" user-emacs-directory))
+#+end_src
+
+Show folders before files.
+
+#+begin_src elisp :tangle rf-dired.el
+  (setq dired-listing-switches "-al --group-directories-first")
+#+end_src
+
+* Magit
+
+#+begin_src emacs-lisp :tangle init.el
+  (load-file (expand-file-name "rf-magit.el" user-emacs-directory))
+#+end_src
+
+#+begin_src elisp :tangle rf-magit.el
+  (use-package magit)
+#+end_src
+
+* Which key
+
+#+begin_src emacs-lisp :tangle init.el
+  (load-file (expand-file-name "rf-which-key.el" user-emacs-directory))
+#+end_src
+
+Glorious package that makes keybinds more discoverable. I don't understand how anyone uses Emacs (or Neovim, which
+also has a =which-key= package) without this.
+
+One thing to watch out for is the names of keys in the =which-key= buffer. For custom keybinds, they don't always
+show the way you would expect. This is especially true when creating prefixed keys. In those cases, a custom, named
+keymap is the way to go.
+
+#+begin_src emacs-lisp :tangle rf-which-key.el
+  (use-package which-key
+    :config
+    (which-key-mode)
+    (which-key-setup-side-window-bottom))
+#+end_src
+
+* Theme
+
+#+begin_src emacs-lisp :tangle init.el
+  (load-file (expand-file-name "rf-theme.el" user-emacs-directory))
+#+end_src
+
+Modus is a high-contrast theme that is built-in (starting in 29). Explicitly installing allows me to track changes
+happening between Emacs releases. It also gives me access to documentation via =(info)=.
+
+#+begin_src emacs-lisp :tangle rf-theme.el
+  (use-package modus-themes
+    :init
+    (setq modus-themes-bold-constructs t
+          modus-themes-org-blocks 'gray-background)
+    :config (load-theme 'modus-operandi))
+;;    :bind (("C-c M-a t t" . modus-themes-toggle)))
+#+end_src
+
+** Org
+
+Keeping this simple, for now. My usage of Org always gets away from me. I want it to do everything, because it can.
+Unfortunately, I overwhelm myself every time. It's always a copy of someone else's setup, instead of something
+that happens organically over time.
+
+/Note to self: if you want to ignore the story above, check out [[http://doc.norang.ca/org-mode.html#OrgFiles][Bernt Hansen's guide]]./
+
+#+begin_src emacs-lisp :tangle rf-theme.el
+  (setq org-pretty-entities t
+        org-hide-leading-star t
+        org-hide-emphasis-markers t
+        org-startup-indented t)
+#+end_src
+
+The custom face styling below might not translate well across different DPIs. Pitch heights in particular could
+change to make this work across machines. It's currently working well on a Retina display and a 27" 1440p external
+monitor, but wasn't so great in the past on other displays (Lenovo X1 Carbon).
+
+#+begin_src emacs-lisp :tangle rf-theme.el
+  (defun rf/customize-org-faces ()
+    (variable-pitch-mode)
+    (let* ((variable-tuple
+            (cond ((x-list-fonts "ETBembo")      '(:font "ETBembo"))
+                  ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
+                  (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+           (base-font-color     (face-foreground 'default nil 'default))
+           (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+      (custom-theme-set-faces
+       'user
+       `(variable-pitch ((t (,@variable-tuple :height 160 :weight thin))))
+       `(fixed-pitch ((t (:font "Fira Code" :height 140))))
+       `(org-level-8 ((t (,@headline ,@variable-tuple))))
+       `(org-level-7 ((t (,@headline ,@variable-tuple))))
+       `(org-level-6 ((t (,@headline ,@variable-tuple))))
+       `(org-level-5 ((t (,@headline ,@variable-tuple))))
+       `(org-level-4 ((t (,@headline ,@variable-tuple))))
+       `(org-level-3 ((t (,@headline ,@variable-tuple))))
+       `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.1))))
+       `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.25))))
+       `(org-document-title ((t (,@headline ,@variable-tuple :underline nil))))
+       '(org-code ((t (:inherit (shadow fixed-pitch)))))
+       '(org-block ((t (:inherit fixed-pitch))))
+       '(org-document-info ((t (:foreground "dark orange"))))
+       '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+       '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+       '(org-link ((t (:foreground "royal blue" :underline t))))
+       '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+       '(org-property-value ((t (:inherit fixed-pitch))) t)
+       '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+       '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+       '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+       '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))))
+#+end_src
+
+Requires hooking into =org-mode= as the above changes are buffer-local. This will ensure faces are set appropriately
+every time a new buffer is created.
+
+#+begin_src emacs-lisp :tangle rf-theme.el
+  (add-hook 'org-mode-hook 'rf/customize-org-faces)
+#+end_src
+
+* Languages
+
+Language config is placed in =rf-langs.el=. This file must be loaded from =init.el= on startup.
+
+#+begin_src emacs-lisp :tangle init.el
+  (load-file (expand-file-name "rf-langs.el" user-emacs-directory))
+#+end_src
+
+** Setup Treesitter
+
+Any language using a Treesitter-powered major mode will need to have a Treesitter grammar installed. All grammars are
+registered here. Not a huge fan of separating that from the rest of the config for each language, but I don't love
+splitting this variables definition across tons of blocks either.
+
+#+begin_src emacs-lisp :tangle rf-langs.el
+  (setq treesit-language-source-alist
+   '((go "https://github.com/tree-sitter/tree-sitter-go")
+     (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+     (json "https://github.com/tree-sitter/tree-sitter-json")
+     (make "https://github.com/alemuller/tree-sitter-make")
+     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+     (python "https://github.com/tree-sitter/tree-sitter-python")
+     (toml "https://github.com/tree-sitter/tree-sitter-toml")
+     (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+#+end_src
+
+This will reinstall all registered grammars. It is not called by default to prevent recompiling on every startup.
+
+#+begin_src emacs-lisp :tangle rf-langs.el
+  (defun rf/treesitter-update-langs ()
+    "Install all treesitter grammers in `treesit-language-source-alist'.
+
+  This should not be run on startup, as it doesn't prevent
+  reinstall/recompile of grammars that already exist."
+    (interactive)
+    (mapc #'treesit-install-language-grammar
+	  (mapcar #'car treesit-language-source-alist)))
+#+end_src
+
+** Go
+
+Using the new Treesitter mode for now. It's still lagging behind the non-TS mode, but I'd like to keep up with the
+"latest and greatest". (Would be nice to help improve the new mode, but that's likely a bit out of reach.)
+
+#+begin_src emacs-lisp :tangle rf-langs.el
+  (use-package go-ts-mode)
+#+end_src
+
+* LSP
+
+#+begin_src emacs-lisp :tangle init.el
+  (load-file (expand-file-name "rf-lsp.el" user-emacs-directory))
+#+end_src
+
+#+begin_src emacs-lisp :tangle rf-lsp.el
+  (use-package eglot
+    :hook (go-ts-mode . eglot-ensure)
+    :bind (:map eglot-mode-map
+                ("C-c C-r" . eglot-rename)))
+#+end_src
+
+* Utilities
+
+Various elisp utilities that don't cleanly fit anywhere else.
+
+#+begin_src emacs-lisp :tangle init.el
+  (load-file (expand-file-name "rf-utils.el" user-emacs-directory))
+#+end_src
+
+** Align by arbitrary pattern
+
+Disable tabs when using =align-regexp=. Tabs cause some /very/ weird formatting when trying to align. (Try it
+and see.) Enabling spaces instead leads to more consistent alignment across buffers and languages.
+
+#+begin_src emacs-lisp :tangle rf-utils.el
+  (defadvice align-regexp (around align-regexp-with-spaces activate)
+    (let ((indent-tabs-mode nil))
+      ad-do-it))
+#+end_src
