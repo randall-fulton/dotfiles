@@ -18,3 +18,5 @@ reinstall/recompile of grammars that already exist."
 	(mapcar #'car treesit-language-source-alist)))
 
 (use-package go-ts-mode)
+
+(use-package markdown-mode)

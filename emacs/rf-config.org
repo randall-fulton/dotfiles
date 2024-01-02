@@ -275,6 +275,12 @@ Using the new Treesitter mode for now. It's still lagging behind the non-TS mode
   (use-package go-ts-mode)
 #+end_src
 
+** Markdown
+
+#+begin_src emacs-lisp :tangle rf-langs.el
+  (use-package markdown-mode)
+#+end_src
+
 * LSP
 
 #+begin_src emacs-lisp :tangle init.el
