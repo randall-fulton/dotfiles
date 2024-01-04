@@ -1,4 +1,13 @@
 * Initialization
+** Reload last session on startup
+
+Saves current session on shutdown and reloads on startup. This is relative to the current directory,
+allowing one session per project.
+
+#+begin_src emacs-lisp :tangle init.el
+  (desktop-save-mode 1)
+#+end_src
+
 ** Move customizations out of =init.el=
 
 Because =init.el= is generated when this file is tangled, customizations are frequently overwritten. One frequent
@@ -165,6 +174,12 @@ happening between Emacs releases. It also gives me access to documentation via =
 ;;    :bind (("C-c M-a t t" . modus-themes-toggle)))
 #+end_src
 
+Default font size. Needs to be changed to be dynamic based on either DPI or a system-based switch.
+
+#+begin_src emacs-lisp :tangle rf-theme.el
+  (set-face-attribute 'default nil :height 160)
+#+end_src
+
 ** Org
 
 Keeping this simple, for now. My usage of Org always gets away from me. I want it to do everything, because it can.
@@ -266,6 +281,9 @@ This will reinstall all registered grammars. It is not called by default to prev
 	  (mapcar #'car treesit-language-source-alist)))
 #+end_src
 
+For windows, things aren't so simple. Download the latest Windows release of [[https://github.com/emacs-tree-sitter/tree-sitter-langs/releases][tree-sitter-langs]] to
+=.emacs.d/tree-sitter=, extract, and prefix all DLLs with =libtree-sitter-=.
+
 ** Go
 
 Using the new Treesitter mode for now. It's still lagging behind the non-TS mode, but I'd like to keep up with the
@@ -273,6 +291,13 @@ Using the new Treesitter mode for now. It's still lagging behind the non-TS mode
 
 #+begin_src emacs-lisp :tangle rf-langs.el
   (use-package go-ts-mode)
+#+end_src
+
+Hook =dlv= into =gud=. I'd prefer to use =dap-mode=, but it requires the use of =lsp-mode=. I'd prefer =eglot= though, since
+it is now a built-in package.
+
+#+begin_src emacs-lisp :tangle rf-langs.el
+  (use-package go-dlv)
 #+end_src
 
 ** Markdown
@@ -287,12 +312,44 @@ Using the new Treesitter mode for now. It's still lagging behind the non-TS mode
   (load-file (expand-file-name "rf-lsp.el" user-emacs-directory))
 #+end_src
 
+Eglot is built-in and manages connections to LSP servers. It has integrations with other packages that provide
+IDE-like functionality (e.g. autocompletion, syntax error highlighting, etc.).
+
 #+begin_src emacs-lisp :tangle rf-lsp.el
   (use-package eglot
     :hook (go-ts-mode . eglot-ensure)
     :bind (:map eglot-mode-map
-                ("C-c C-r" . eglot-rename)))
+                ("C-c C-r" . eglot-rename)
+                ("C-." . eglot-code-action-quickfix)))
 #+end_src
+
+Auto-completion, powered by =eglot=.
+
+#+begin_src emacs-lisp :tangle rf-lsp.el
+  (use-package company-mode
+    :hook (eglot--managed-mode . company-mode))
+#+end_src
+
+Flymake displays and allows navigation of errors returned from different sources. As configured, it shows errors eglot
+receives from language servers.
+
+#+begin_src emacs-lisp :tangle rf-lsp.el
+  (use-package flymake
+    :hook (go-ts-mode . flymake-mode)
+    :bind (:map flymake-mode-map
+                ("M-n" . flymake-goto-next-error)
+                ("M-p" . flymake-goto-prev-error)))
+#+end_src
+
+Provides a consistent debugging experience across languages.
+
+#+begin_src emacs-lisp :tangle rf-lsp.el
+  (use-package dap-mode
+    :init (setq dap-auto-configure-features t)
+    :config (require 'dap-dlv-go))
+#+end_src
+
+** TODO =dap-mode= show breakpoints in left gutter
 
 * Utilities
 

@@ -1,3 +1,5 @@
+(desktop-save-mode 1)
+
 (setq custom-file (expand-file-name "rf-custom.el" user-emacs-directory))
 (load-file custom-file)
 

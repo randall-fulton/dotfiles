@@ -5,6 +5,8 @@
     :config (load-theme 'modus-operandi))
 ;;    :bind (("C-c M-a t t" . modus-themes-toggle)))
 
+(set-face-attribute 'default nil :height 160)
+
 (setq org-pretty-entities t
       org-hide-leading-star t
       org-hide-emphasis-markers t

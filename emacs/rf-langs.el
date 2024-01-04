@@ -19,4 +19,6 @@ reinstall/recompile of grammars that already exist."
 
 (use-package go-ts-mode)
 
+(use-package go-dlv)
+
 (use-package markdown-mode)
