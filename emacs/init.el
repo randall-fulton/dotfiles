@@ -44,6 +44,8 @@
 (setq backup-directory-alist `(("." . ".saves"))
       auto-save-default nil)
 
+(load-file (expand-file-name "rf-window.el" user-emacs-directory))
+
 (load-file (expand-file-name "rf-dired.el" user-emacs-directory))
 
 (load-file (expand-file-name "rf-magit.el" user-emacs-directory))
