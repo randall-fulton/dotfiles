@@ -22,3 +22,5 @@ reinstall/recompile of grammars that already exist."
 (use-package go-dlv)
 
 (use-package markdown-mode)
+
+(use-package yaml-ts-mode)
