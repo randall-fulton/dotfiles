@@ -83,5 +83,24 @@ return {
 
     -- Install golang specific config
     require('dap-go').setup()
+
+    -- Setup Zig with LLDB
+    dap.adapters.lldb = {
+      type = 'executable',
+      command = 'H:\\Developer\\tools\\LLVM\\bin\\lldb-vscode.exe',
+      name = 'lldb'
+    }
+
+    dap.configurations.zig = {
+      {
+        name = 'Launch',
+        type = 'lldb',
+        request = 'launch',
+        program = '${workspaceFolder}/zig-out/bin/zlox.exe',
+        cwd = '${workspaceFolder}',
+        stopOnEntry = true,
+        args = { 'test.lox' },
+      },
+    }
   end,
 }
