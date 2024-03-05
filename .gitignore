@@ -10,3 +10,5 @@ nvim/plugin
 
 emacs/configuration.el
 emacs/init.el
+
+nushell/history.txt

@@ -223,6 +223,7 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
   'NoahTheDuke/vim-just',
+  'LhKipp/nvim-nu',
 
   {
     -- seamless switch between tmux and neovim splits
