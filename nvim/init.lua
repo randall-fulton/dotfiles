@@ -212,6 +212,14 @@ require('lazy').setup({
         end,
       },
     },
+    opts = {
+      defaults = {
+        layout_strategy = 'center',
+        layout_config = {
+          width = 0.9,
+        },
+      },
+    },
   },
 
   {
