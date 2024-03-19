@@ -140,7 +140,30 @@ let light_theme = {
 # let carapace_completer = {|spans|
 #     carapace $spans.0 nushell ...$spans | from json
 # }
-$env.PATH = "$HOME/.nix-flake/bin:/opt/homebrew/Cellar/coreutils/9.3/libexec/gnubin:/usr/bin:/usr/sbin:/bin:/sbin:/opt/homebrew/bin:/opt/homebrew/opt/postgresql@15/bin/:/usr/local/bin:/usr/local/go/bin:$HOME/.local/bin:$HOME/.local/google-cloud-sdk/bin:$HOME/go/bin:$HOME/.cargo/bin:$HOME/.rd/bin:$HOME/.npm-packages/bin:$HOME/.rbenv/shims:$HOME/.local/janet/bin"
+$env.PATH = ([
+        "~/.nix-flake/bin"
+        "/opt/homebrew/Cellar/coreutils/9.3/libexec/gnubin"
+        "/usr/bin"
+        "/usr/sbin"
+        "/bin"
+        "/sbin"
+        "/opt/homebrew/bin"
+        "/opt/homebrew/opt/postgresql@15/bin/"
+        "/usr/local/bin"
+        "/usr/local/go/bin"
+        "~/.local/bin"
+        "~/.local/google-cloud-sdk/bin"
+        "~/go/bin"
+        "~/.cargo/bin"
+        "~/.rd/bin"
+        "~/.npm-packages/bin"
+        "~/.rbenv/shims"
+        "~/.local/janet/bin"
+        "~/.rd/bin"
+    ] | 
+    each {|it| $it | path expand }
+)
+$env.EDITOR = "nvim"
 
 # The default config record. This is where much of your global configuration is setup.
 $env.config = {
@@ -838,4 +861,12 @@ $env.config = {
             event: { edit: pastecutbufferbefore }
         }
     ]
+}
+
+def env2tbl [] {
+    $in | lines | skip 2 | parse "{var}={val}"
+}
+
+def docker2table [] {
+    $in | lines | split column --regex '\s{2,}' | headers
 }
