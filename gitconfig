@@ -4,3 +4,6 @@
 [user]
 	name = Randall Fulton
 	email = randall@shipt.com
+
+[diff]
+    external = difft

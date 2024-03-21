@@ -164,7 +164,6 @@ $env.PATH = ([
     each {|it| $it | path expand }
 )
 $env.EDITOR = "nvim"
-$env.GIT_EXTERNAL_DIFF = "difft" # difftastic
 
 # The default config record. This is where much of your global configuration is setup.
 $env.config = {
