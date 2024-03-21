@@ -164,6 +164,7 @@ $env.PATH = ([
     each {|it| $it | path expand }
 )
 $env.EDITOR = "nvim"
+$env.GIT_EXTERNAL_DIFF = "difft" # difftastic
 
 # The default config record. This is where much of your global configuration is setup.
 $env.config = {
@@ -265,7 +266,13 @@ $env.config = {
     plugins: {} # Per-plugin configuration. See https://www.nushell.sh/contributor-book/plugins.html#configuration.
 
     hooks: {
-        pre_prompt: [{ null }] # run before the prompt is shown
+        pre_prompt: [{ ||
+          if (which direnv | is-empty) {
+            return
+          }
+
+          direnv export json | from json | default {} | load-env
+        }]
         pre_execution: [{ null }] # run before the repl input is run
         env_change: {
             PWD: [{|before, after| null }] # run if the PWD environment is different since the last repl input
@@ -870,3 +877,47 @@ def env2tbl [] {
 def docker2table [] {
     $in | lines | split column --regex '\s{2,}' | headers
 }
+
+module postman {
+    def parse [] {
+        $in | from json | select item | values | first
+    }
+
+    export def "postman collections" [] {
+        let collections = $in | parse
+        $collections | select name
+    }
+
+    export def "postman collection list" [name] {
+        let collections = $in | parse
+        ($collections |
+         where name == $name |
+         values | skip 1 | first | first |
+         select -i name request.method request.url.raw)
+    }
+
+    export def "postman inspect" [req] {
+        let collections = $in | parse
+
+        let parts = $req | split row '.'
+        let collection_name = $parts | first
+        let request_name = $parts | last
+
+        ($collections |
+         where name == $collection_name |
+         values | skip 1 | first | first |
+         where name == $request_name |
+         select request | values | first)
+    }
+
+    export def main [] {
+        print "Usage: postman [subcommand] [args...]"
+        print ""
+        print "Subcommands:"
+        print "  collections     - List all collections by name"
+        print "  collection list - List all requests in collection by name"
+        print "  inspect         - Display individual request"
+    }
+}
+
+use postman *
