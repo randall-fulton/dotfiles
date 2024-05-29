@@ -12,6 +12,8 @@ export SAVEHIST=10000       # max history saved to file
 setopt HIST_IGNORE_ALL_DUPS # don't save duplicates
 setopt HIST_FIND_NO_DUPS    # don't show duplicates
 
+bindkey -e # needed for Emacs-style keybinds to work on macOS
+
 ### History ###
 
 autoload -U history-search-end
