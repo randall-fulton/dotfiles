@@ -14,7 +14,7 @@ local is_linux = function()
     return wezterm.target_triple:find("linux") ~= nil
 end
 
-config.color_scheme = "Everforest Dark Hard (Gogh)"
+config.color_scheme = "Gruber (base16)"
 config.font = wezterm.font_with_fallback({
     "FiraCode Nerd Font Mono", -- Windows
     "Fira Code",               -- macOS

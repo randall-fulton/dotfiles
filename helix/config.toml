@@ -1,0 +1,10 @@
+theme = "gruber-darker"
+
+[editor]
+line-number = "relative"
+
+[keys.normal]
+C-l = "jump_view_right"
+C-h = "jump_view_left"
+C-j = "jump_view_down"
+C-k = "jump_view_up"
