@@ -23,9 +23,13 @@ config.font_size = 18
 config.window_decorations = "RESIZE"
 
 if is_windows() then
-    config.default_prog = {
-        "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    config.wsl_domains = {
+        {
+            name = "WSL:Ubuntu",
+            distribution = "Ubuntu",
+        }
     }
+    config.default_domain = "WSL:Ubuntu"
 end
 
 return config
