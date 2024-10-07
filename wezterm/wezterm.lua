@@ -1,6 +1,5 @@
 local wezterm = require("wezterm")
-
-local config = wezterm.config_builder()
+local act = wezterm.action
 
 local is_windows = function()
     return wezterm.target_triple:find("windows") ~= nil
@@ -14,6 +13,8 @@ local is_linux = function()
     return wezterm.target_triple:find("linux") ~= nil
 end
 
+local config = wezterm.config_builder()
+
 config.color_scheme = "Gruber (base16)"
 config.font = wezterm.font_with_fallback({
     "FiraCode Nerd Font Mono", -- Windows
@@ -21,6 +22,46 @@ config.font = wezterm.font_with_fallback({
 })
 config.font_size = 18
 config.window_decorations = "RESIZE"
+
+config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
+config.keys = {
+    {
+        key = '|',
+        mods = 'LEADER|SHIFT',
+        action = act.SplitHorizontal { domain = 'CurrentPaneDomain' },
+    },
+    {
+        key = '-',
+        mods = 'LEADER',
+        action = act.SplitVertical { domain = 'CurrentPaneDomain' },
+    },
+    -- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
+    {
+        key = 'a',
+        mods = 'LEADER|CTRL',
+        action = act.SendKey { key = 'a', mods = 'CTRL' },
+    },
+    {
+        key = 'h',
+        mods = 'LEADER',
+        action = act.ActivatePaneDirection 'Left',
+    },
+    {
+        key = 'l',
+        mods = 'LEADER',
+        action = act.ActivatePaneDirection 'Right',
+    },
+    {
+        key = 'k',
+        mods = 'LEADER',
+        action = act.ActivatePaneDirection 'Up',
+    },
+    {
+        key = 'j',
+        mods = 'LEADER',
+        action = act.ActivatePaneDirection 'Down',
+    },
+}
 
 if is_windows() then
     config.wsl_domains = {
