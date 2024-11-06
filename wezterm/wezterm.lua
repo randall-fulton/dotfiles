@@ -61,6 +61,11 @@ config.keys = {
         mods = 'LEADER',
         action = act.ActivatePaneDirection 'Down',
     },
+    {
+        key = 'z',
+        mods = 'LEADER',
+        action = act.TogglePaneZoomState,
+    },
 }
 
 if is_windows() then
