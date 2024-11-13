@@ -55,7 +55,7 @@ fi
 command -v kafkactl>/dev/null && eval "$(kafkactl completion zsh)"
 
 command -v direnv >/dev/null   && eval "$(direnv hook zsh)"
-command -v exa >/dev/null      && alias ls="exa"
+# command -v exa >/dev/null      && alias ls="exa"
 command -v pyenv >/dev/null    && eval "$(pyenv init --path)"
 command -v rbenv >/dev/null    && eval "$(rbenv init - zsh)"
 command -v starship >/dev/null && eval "$(starship init zsh)"
@@ -79,3 +79,16 @@ colors() {
 	done
 	echo ""
 }
+
+shorten_path() {
+	awk -F '/' '{if(NF > 3){print "/…/"$(NF-1)"/"$(NF)}else{print}}' < /dev/stdin
+}
+
+switch() {
+	project=$(ls ~/dev | fzf)
+	cd "$HOME/dev/$project"
+}
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/randall/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
