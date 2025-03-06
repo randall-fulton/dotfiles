@@ -13,6 +13,7 @@ brew "fish"
 brew "starship"
 tap "cmacrae/formulae"
 brew "cmacrae/formulae/spacebar"
+cask "nikitabobko/tap/aerospace"
 
 # dev tools
 brew "jj"
