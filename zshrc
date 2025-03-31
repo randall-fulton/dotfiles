@@ -14,6 +14,15 @@ setopt HIST_FIND_NO_DUPS    # don't show duplicates
 
 bindkey -e # needed for Emacs-style keybinds to work on macOS
 
+### Projects ###
+
+switch-project() {
+	project=$(ls ~/dev | fzf)
+	cd "$HOME/dev/$project"
+}
+zle -N switch-project
+bindkey "^ " switch-project
+
 ### History ###
 
 autoload -U history-search-end
@@ -35,6 +44,7 @@ fpath=($ZSH/plugins/zsh-completions/src $fpath)
 ###############
 
 alias refresh="source $HOME/.zshrc"
+alias lg="lazygit"
 if command -v uname>/dev/null && [ "$(uname)" = "Darwin" ]; then
 	alias restart-skhd="launchctl kickstart -k \"gui/\${UID}/com.koekeishiya.skhd\""
 	alias restart-spacebar="launchctl kickstart -k \"gui/\${UID}/homebrew.mxcl.spacebar\""
@@ -84,11 +94,16 @@ shorten_path() {
 	awk -F '/' '{if(NF > 3){print "/…/"$(NF-1)"/"$(NF)}else{print}}' < /dev/stdin
 }
 
-switch() {
-	project=$(ls ~/dev | fzf)
-	cd "$HOME/dev/$project"
-}
-
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/randall/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/Users/randall/.opam/opam-init/init.zsh' ]] || source '/Users/randall/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration
+source /Users/randall/.config/op/plugins.sh

@@ -1,4 +1,6 @@
 .DS_Store
+.env
+.env.local
 # emacs
 */.saves
 *~
@@ -9,3 +11,4 @@
 *.venv/
 # Rancher
 qemu_*.core
+.idea

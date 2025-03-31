@@ -1,0 +1,18 @@
+font-size = 24
+# `ghostty +list-themes`
+# theme = gruber-darker
+theme = OneHalfLight
+
+initial-command = /opt/homebrew/bin/fish
+
+# keybinds: `ghostty +list-keybinds`
+keybind = ctrl+a>h=goto_split:left
+keybind = ctrl+a>j=goto_split:bottom
+keybind = ctrl+a>k=goto_split:top
+keybind = ctrl+a>l=goto_split:right
+keybind = ctrl+a>shift+h=new_split:left
+keybind = ctrl+a>shift+j=new_split:down
+keybind = ctrl+a>shift+k=new_split:up
+keybind = ctrl+a>shift+l=new_split:right
+keybind = ctrl+a>equal=equalize_splits
+keybind = ctrl+a>z=toggle_split_zoom
