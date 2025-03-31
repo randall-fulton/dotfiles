@@ -11,11 +11,15 @@ cask "okta"
 cask "font-hack-nerd-font"
 brew "fish"
 brew "starship"
+
 tap "cmacrae/formulae"
 brew "cmacrae/formulae/spacebar"
+
+tap "nikitabobko/tap"
 cask "nikitabobko/tap/aerospace"
 
 # dev tools
+brew "duckdb"
 brew "jj"
 brew "lazygit"
 brew "coreutils"
@@ -45,3 +49,7 @@ brew "wget"
 cask "1password"
 cask "1password-cli"
 cask "gimp"
+
+# docker
+brew install colima
+brew install qemu
