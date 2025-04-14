@@ -1,7 +1,7 @@
-font-size = 24
+font-size = 18
 # `ghostty +list-themes`
-# theme = gruber-darker
-theme = OneHalfLight
+theme = gruber-darker
+# theme = OneHalfLight
 
 initial-command = /opt/homebrew/bin/fish
 

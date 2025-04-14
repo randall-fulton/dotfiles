@@ -12,3 +12,4 @@
 # Rancher
 qemu_*.core
 .idea
+.env.fish
