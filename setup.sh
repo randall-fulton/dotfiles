@@ -1,23 +1,37 @@
 #!/usr/bin/env bash
 
 # configuration
-mkdir -p $HOME/.config/alacritty \
-		 $HOME/.config/git
-ln -sf $(pwd)/alacritty.yml $HOME/.config/alacritty/alacritty.yml
-ln -sf $(pwd)/gitconfig		$HOME/.config/git/config
-ln -sf $(pwd)/gitignore		$HOME/.config/git/ignore
-ln -sf $(pwd)/nvim			$HOME/.config/nvim
-ln -sf $(pwd)/zshrc			$HOME/.zshrc
-ln -sf $(pwd)/tmux.conf		$HOME/.tmux.conf
+mkdir -p \
+	$HOME/.config/aerospace \
+	$HOME/.config/fish \
+	$HOME/.config/git
 
-# utilities
-sudo apt install \
-	alacritty \
-	git \
-	tmux
+ln -sf $(pwd)/aerospace.toml	$HOME/.config/aerospace
+ln -sf $(pwd)/gitconfig			$HOME/.config/git/config
+ln -sf $(pwd)/gitignore			$HOME/.config/git/ignore
+ln -sf $(pwd)/fish				$HOME/.config/fish
+ln -sf $(pwd)/wezterm			$HOME/.config/wezterm
+
+if [ ! -d "$HOME/.config/nvim" ]; then
+	git clone git@github.com:randall-fulton/.nvim.git \
+		$HOME/.config/nvim
+fi
+
+if [[ "$(uname -s)" -eq "Darwin" ]]; then
+	brew bundle install --file Brewfile
+	if ! [ $(grep "fish" /etc/shells) ]; then
+		echo "Adding fish as a standard shell"
+		sudo bash -c "echo $(which fish) >> /etc/shells"
+	fi
+	if ! [ "$SHELL" -eq "$(which fish)" ]; then
+		chsh -s $(which fish)
+	fi
+else
+	sudo apt install git
+fi
 
 # unified prompt
-if ! [ -f /usr/local/bin/starship ]; then
+if ! command -v starship ; then
 	curl -sS https://starship.rs/install.sh | sh
 fi
 
