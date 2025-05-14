@@ -1,6 +1,3 @@
-tap "homebrew/bundle"
-tap "homebrew/services"
-
 tap "deviceinsight/packages"
 brew "deviceinsight/packages/kafkactl"
 
@@ -8,6 +5,7 @@ tap "oktadeveloper/tap"
 cask "okta"
 
 # basic system customization
+cask "font-fira-code-nerd-font"
 cask "font-hack-nerd-font"
 brew "fish"
 brew "starship"
@@ -19,37 +17,36 @@ tap "nikitabobko/tap"
 cask "nikitabobko/tap/aerospace"
 
 # dev tools
-brew "duckdb"
-brew "jj"
-brew "lazygit"
 brew "coreutils"
-brew "git"
 brew "difftastic"
-brew "openssl@3"
-brew "gnutls"
-brew "readline"
+brew "duckdb"
+brew "fzf"
+brew "git"
 brew "gnupg"
+brew "gnutls"
 brew "go@1.20"
 brew "golang-migrate"
 brew "gopls"
+brew "gotestsum"
+brew "jj"
 brew "jq"
+brew "lazygit"
 brew "librdkafka"
-brew "python@3.12"
 brew "neovim"
-brew "openssl@1.1"
+brew "openssl@3"
+brew "poetry"
 brew "postgresql@15"
 brew "protobuf"
 brew "pyright"
-brew "python@3.11"
-brew "python@3.9"
+brew "python@3.12"
+brew "readline"
 brew "redis"
 brew "ripgrep"
 brew "wget"
 
+cask "podman-desktop"
+
 cask "1password"
 cask "1password-cli"
 cask "gimp"
-
-# docker
-brew install colima
-brew install qemu
+cask "hoppscotch"
