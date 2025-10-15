@@ -16,11 +16,11 @@ end
 local config = wezterm.config_builder()
 config.color_scheme = "One Light (base16)"
 -- config.color_scheme = "Gruber (base16)"
-config.font = wezterm.font_with_fallback({
-    "FiraCode Nerd Font Mono", -- Windows
-    "Fira Code",               -- macOS
-})
-config.font_size = 18
+-- config.font = wezterm.font_with_fallback({
+--     "FiraCode Nerd Font Mono", -- Windows
+--     "Fira Code",               -- macOS
+-- })
+config.font_size = 14
 config.window_decorations = "RESIZE"
 
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
@@ -77,5 +77,8 @@ if is_windows() then
     }
     config.default_domain = "WSL:Ubuntu"
 end
+
+local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
+bar.apply_to_config(config)
 
 return config
