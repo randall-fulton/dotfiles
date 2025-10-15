@@ -1,7 +1,3 @@
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-set --export --prepend PATH "/Users/randall/.rd/bin"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
 set -gx GOPRIVATE "github.com/shipt"
 set -gx EDITOR nvim
 if echo $DOCKER_OPTS | grep -v artifactory
@@ -38,15 +34,14 @@ fish_add_path /sbin
 fish_add_path /opt/homebrew/opt/postgresql@15/bin/ 
 fish_add_path /usr/local/bin
 fish_add_path /usr/local/go/bin
-fish_add_path /Applications/Ghostty.app/Contents/MacOS
 fish_add_path /Applications/WezTerm.app/Contents/MacOS
 fish_add_path $HOME/.shipt
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/go/bin
 fish_add_path $HOME/.cargo/bin
-fish_add_path $HOME/.rd/bin 
 fish_add_path $HOME/dev/janet/janet-v1.38.0-macos/bin
 
+jj util completion fish | source
 starship init fish | source
 
 function gh-token
@@ -68,6 +63,10 @@ end
 
 function switch-project
     set project (ls ~/dev | fzf)
+    if test -z "$project"
+        return
+    end
+
     cd "$HOME/dev/$project"
     commandline -f repaint
 end

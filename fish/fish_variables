@@ -29,4 +29,4 @@ SETUVAR fish_pager_color_description:yellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/Users/randall/\x2eshipt\x1e/Users/randall/dev/janet/janet\x2dv1\x2e38\x2e0\x2dmacos/bin\x1e/Users/randall/dev/janet\x2dv1\x2e38\x2e0\x2dmacos/bin\x1e/Users/randall/go/bin\x1e/usr/local/go/bin\x1e/Applications/WezTerm\x2eapp/Contents/MacOS\x1e/usr/local/bin\x1e/opt/homebrew/opt/postgresql\x4015/bin\x1e/sbin\x1e/bin\x1e/usr/sbin\x1e/usr/bin\x1e/opt/homebrew/bin
+SETUVAR fish_user_paths:/Applications/Zed\x2eapp/Contents/MacOS\x1e/Users/randall/\x2eshipt\x1e/Users/randall/dev/janet/janet\x2dv1\x2e38\x2e0\x2dmacos/bin\x1e/Users/randall/dev/janet\x2dv1\x2e38\x2e0\x2dmacos/bin\x1e/Users/randall/go/bin\x1e/usr/local/go/bin\x1e/Applications/WezTerm\x2eapp/Contents/MacOS\x1e/usr/local/bin\x1e/opt/homebrew/opt/postgresql\x4015/bin\x1e/sbin\x1e/bin\x1e/usr/sbin\x1e/usr/bin\x1e/opt/homebrew/bin
