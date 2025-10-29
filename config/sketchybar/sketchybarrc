@@ -1,87 +1,66 @@
-#!/bin/bash
+#!/usr/bin/env lua
 
-source ./theme.sh
+function table.inspect(t)
+  local s = "{ "
+  for k, v in pairs(t) do
+    if type(v) == "table" then
+      s = s .. k .. " = " .. table.inspect(v) .. ", "
+    else
+      s = s .. k .. " = " .. tostring(v) .. ", "
+    end
+  end
+  s = s .. " }"
+  return s
+end
 
-function icon() {
-    # https://www.nerdfonts.com/cheat-sheet
-    case $1 in
-        "Firefox") echo "" ;;
-        "Logseq")  echo "" ;;
-        "Slack")   echo "" ;;
-        "WezTerm") echo "" ;;
-        "zoom.us") echo "" ;;
-        "*")       echo "" ;;
-    esac
-}
+function string.split(s, sep)
+  sep = sep or "\n"
 
-sketchybar --bar position=top     \
-                 margin=5         \
-                 y_offset=5       \
-                 height=32        \
-                 corner_radius=10 \
-                 blur_radius=30   \
-                 color=$BG  \
-                 border_color=$ACCENT \
-                 border_width=1
+  local t = {}
+  for str in string.gmatch(s, "([^"..sep.."]+)") do
+    table.insert(t, str)
+  end
+  return t
+end
 
-default=(
-  padding_left=3
-  padding_right=3
-  icon.font="Hack Nerd Font:Bold:16.0"
-  label.font="SF Pro:Bold:12.0"
-  icon.color=$FG
-  label.color=$FG
-  updates=on
-)
-sketchybar --default "${default[@]}"
+sbar = require("sketchybar")
 
-sketchybar --add event aerospace_workspace_change
+sbar.begin_config()
 
-for sid in $(aerospace list-workspaces --all); do
-    # Skip unused workspaces
-    if [[ 0 -eq $(aerospace list-windows --workspace "$sid" | wc -l) ]]; then
-        continue
-    fi
+local colors = require("colors")
 
-    sketchybar --add item space.$sid.label left \
-               --subscribe space.$sid.label aerospace_workspace_change \
-               --set space.$sid.label \
-                     label="$sid" \
-                     click_script="aerospace workspace $sid" \
-                     script="$CONFIG_DIR/plugins/aerospace.sh $sid"
-    windows=$(aerospace list-windows --workspace "$sid" \
-              | cut -d'|' -f2 \
-              | tr -d ' ')
-    for win in $windows; do
-        sketchybar --add item space.$sid.$win left \
-                   --subscribe space.$sid.$win aerospace_workspace_change \
-                   --set space.$sid.$win \
-                         icon="$(icon $win)" \
-                         script="$CONFIG_DIR/plugins/aerospace.sh $sid"
-    done
+sbar.bar({
+  position = "top",
+  margin = 8,
+  y_offset = 5,
+  height = 28,
+  corner_radius = 14,
+  blur_radius=30,
+  color = colors.bar.bg,
+  border_color = colors.bar.accent,
+  border_width = 1,
+  shadow = false,
+  sticky = true,
+})
 
-    sketchybar --add bracket space.$sid "/space.$sid\..*/" \
-        --subscribe space.$sid aerospace_workspace_change \
-        --set space.$sid \
-              background.color=$ACCENT \
-              background.corner_radius=0 \
-              background.height=8 \
-              background.y_offset=16 \
-              background.drawing=off \
-              label="$sid" \
-              click_script="aerospace workspace $sid" \
-              script="$CONFIG_DIR/plugins/aerospace.sh $sid"
-done
+sbar.default({
+  padding_left=3,
+  padding_right=3,
+  icon = {
+    color=colors.bar.fg,
+    font="Hack Nerd Font:Bold:16.0",
+  },
+  label = {
+    color=colors.bar.fg,
+    font="SF Pro:Bold:12.0",
+  },
+  updates="on",
+})
 
-sketchybar --add item clock right \
-           --set clock \
-                 label="$(date +"%H:%M")" \
-                 update_freq=60 \
-                 script="$CONFIG_DIR/plugins/clock.sh"
-sketchybar --add item date right \
-           --set date \
-                 label="$(date +"%Y-%m-%d")" \
-                 label.font.style="Bold" \
-                 update_freq=3600 
+require("aerospace")
+require("clock")
 
-sketchybar --update
+sbar.hotload(true)
+sbar.end_config()
+
+sbar.event_loop()

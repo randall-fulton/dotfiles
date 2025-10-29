@@ -19,6 +19,7 @@
   # environment.
   home.packages = [
     pkgs.aerospace
+    pkgs.lua
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -55,12 +56,12 @@
           "sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE"
         ];
         gaps = {
-          inner.horizontal = 5;
-          inner.vertical = 5;
-          outer.left = 5;
-          outer.right = 5;
-          outer.bottom = 5;
-          outer.top = 20;
+          inner.horizontal = 8;
+          inner.vertical = 8;
+          outer.left = 8;
+          outer.right = 8;
+          outer.bottom = 8;
+          outer.top = 8;
         };
         mode.main.binding = {
           # Workspace switching
@@ -112,12 +113,18 @@
 
     sketchybar = {
       enable = true;
+      configType = "lua";
       config = {
         source = ./config/sketchybar;
         recursive = true;
+      };
+      service = {
+        outLogFile = "/Users/randall/.config/sketchybar/sketchybar.log";
+        errorLogFile = "/Users/randall/.config/sketchybar/sketchybar.log";
       };
     };
   };
 
   # TODO: launchctl setenv PATH "/usr/local/bin:/usr/bin:/bin:/Users/randall/.nix-profile/bin"
+  # TODO: launchctl setenv LUA_PATH /Users/randall/.config/sketchybar/?.lua
 }
