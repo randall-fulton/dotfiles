@@ -20,6 +20,7 @@
   home.packages = [
     pkgs.aerospace
     pkgs.lua
+    pkgs.yarn
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
