@@ -61,7 +61,10 @@
           outer.left = 8;
           outer.right = 8;
           outer.bottom = 8;
-          outer.top = 8;
+          outer.top = [
+            { monitor."^built-in retina display$" = 8; }
+            36
+          ];
         };
         mode.main.binding = {
           # Workspace switching
