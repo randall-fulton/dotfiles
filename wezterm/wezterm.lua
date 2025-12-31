@@ -17,8 +17,8 @@ local is_linux = function()
 end
 
 local config = wezterm.config_builder()
-config.color_scheme = "One Light (base16)"
--- config.color_scheme = "Gruber (base16)"
+-- config.color_scheme = "One Light (base16)"
+config.color_scheme = "Gruber (base16)"
 -- config.font = wezterm.font_with_fallback({
 --     "FiraCode Nerd Font Mono", -- Windows
 --     "Fira Code",               -- macOS
@@ -97,3 +97,5 @@ config.ssh_domains = {
 
 local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
 bar.apply_to_config(config)
+
+return config

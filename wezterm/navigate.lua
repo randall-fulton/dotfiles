@@ -1,11 +1,18 @@
 local wezterm = require('wezterm')
 local act = wezterm.action
 
+-- @Hack On windows, nvim launches other processes that appear as the foreground.
+local patterns = { 'n?vim', 'node', 'zig', 'zls', 'gopls' }
+
 local function isViProcess(pane) 
     local name = pane:get_foreground_process_name()
     local title = pane:get_title()
-    -- @Hack On windows, nvim launches node, seemingly for TreeSitter...
-    return name:find('n?vim') or name:find('node') or title:find('n?vim') or title:find('node')
+    for _, pattern in ipairs(patterns) do
+        if name:find(pattern) or title:find(pattern) then
+            return true
+        end
+    end
+    return false
 end
 
 local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
