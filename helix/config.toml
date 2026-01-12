@@ -3,6 +3,14 @@ theme = "gruber-darker"
 [editor]
 line-number = "relative"
 
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
 [keys.normal]
 C-l = "jump_view_right"
 C-h = "jump_view_left"
