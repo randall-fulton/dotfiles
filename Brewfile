@@ -1,6 +1,3 @@
-tap "deviceinsight/packages"
-brew "deviceinsight/packages/kafkactl"
-
 tap "oktadeveloper/tap"
 cask "okta"
 
@@ -10,16 +7,10 @@ cask "font-hack-nerd-font"
 brew "fish"
 brew "starship"
 
-tap "cmacrae/formulae"
-brew "cmacrae/formulae/spacebar"
-
-tap "nikitabobko/tap"
-cask "nikitabobko/tap/aerospace"
-
 # dev tools
+brew "copilot-cli"
 brew "coreutils"
 brew "difftastic"
-brew "duckdb"
 brew "fzf"
 brew "git"
 brew "gnupg"
@@ -36,11 +27,9 @@ brew "neovim"
 brew "openssl@3"
 brew "poetry"
 brew "postgresql@15"
-brew "protobuf"
 brew "pyright"
 brew "python@3.12"
 brew "readline"
-brew "redis"
 brew "ripgrep"
 brew "wget"
 

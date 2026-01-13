@@ -3,6 +3,7 @@ set -gx EDITOR nvim
 if echo $DOCKER_OPTS | grep -v artifactory
     set -gx DOCKER_OPTS "$DOCKER_OPTS --insecure-registry artifactory.gcp.shipttech.com"
 end
+set -gx COPILOT_MODEL "claude-opus-4.5"
 
 alias docker=podman
 
@@ -22,16 +23,16 @@ abbr --add dcp docker compose ps
 abbr --add dcr docker compose restart
 abbr --add dcs docker compose stop
 abbr --add dcu docker compose up -d
-abbr --add gt  gotestsum
+abbr --add gt gotestsum
 abbr --add gtw gotestsum --watch
 
 fish_add_path /opt/homebrew/bin
-fish_add_path /opt/homebrew/Cellar/coreutils/9.3/libexec/gnubin 
+fish_add_path /opt/homebrew/Cellar/coreutils/9.3/libexec/gnubin
 fish_add_path /usr/bin
 fish_add_path /usr/sbin
 fish_add_path /bin
-fish_add_path /sbin 
-fish_add_path /opt/homebrew/opt/postgresql@15/bin/ 
+fish_add_path /sbin
+fish_add_path /opt/homebrew/opt/postgresql@15/bin/
 fish_add_path /usr/local/bin
 fish_add_path /usr/local/go/bin
 fish_add_path /Applications/WezTerm.app/Contents/MacOS
