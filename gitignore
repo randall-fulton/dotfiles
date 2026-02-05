@@ -13,3 +13,4 @@
 qemu_*.core
 .idea
 .env.fish
+AGENTS.md

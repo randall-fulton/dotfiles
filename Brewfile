@@ -10,7 +10,6 @@ brew "starship"
 # dev tools
 brew "copilot-cli"
 brew "coreutils"
-brew "difftastic"
 brew "fzf"
 brew "git"
 brew "gnupg"

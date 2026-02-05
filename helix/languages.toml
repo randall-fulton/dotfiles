@@ -1,0 +1,3 @@
+[[language]]
+name = "yaml"
+language-servers = ["yaml-language-server"]
