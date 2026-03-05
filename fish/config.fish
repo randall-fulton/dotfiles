@@ -3,7 +3,7 @@ set -gx EDITOR nvim
 if echo $DOCKER_OPTS | grep -v artifactory
     set -gx DOCKER_OPTS "$DOCKER_OPTS --insecure-registry artifactory.gcp.shipttech.com"
 end
-set -gx COPILOT_MODEL "claude-opus-4.5"
+set -gx COPILOT_MODEL "claude-sonnect-4.6"
 
 alias docker=podman
 

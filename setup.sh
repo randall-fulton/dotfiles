@@ -4,13 +4,15 @@
 mkdir -p \
 	$HOME/.config/aerospace \
 	$HOME/.config/fish \
-	$HOME/.config/git
+	$HOME/.config/git \
+    $HOME/.copilot
 
-ln -sf $(pwd)/aerospace.toml	$HOME/.config/aerospace
-ln -sf $(pwd)/gitconfig			$HOME/.config/git/config
-ln -sf $(pwd)/gitignore			$HOME/.config/git/ignore
-ln -sf $(pwd)/fish				$HOME/.config/fish
-ln -sf $(pwd)/wezterm			$HOME/.config/wezterm
+ln -sf $(pwd)/copilot-instructions.md $HOME/.copilot/copilot-instructions.md
+ln -sf $(pwd)/aerospace.toml          $HOME/.config/aerospace
+ln -sf $(pwd)/gitconfig               $HOME/.config/git/config
+ln -sf $(pwd)/gitignore               $HOME/.config/git/ignore
+ln -sf $(pwd)/fish                    $HOME/.config/fish
+ln -sf $(pwd)/wezterm                 $HOME/.config/wezterm
 
 if [ ! -d "$HOME/.config/nvim" ]; then
 	git clone git@github.com:randall-fulton/.nvim.git \
