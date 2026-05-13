@@ -74,3 +74,6 @@ end
 bind ctrl-space switch-project
 
 emit poststart
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/randall/Downloads/google-cloud-sdk 2/path.fish.inc' ]; . '/Users/randall/Downloads/google-cloud-sdk 2/path.fish.inc'; end

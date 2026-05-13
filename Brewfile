@@ -8,7 +8,6 @@ brew "fish"
 brew "starship"
 
 # dev tools
-brew "copilot-cli"
 brew "coreutils"
 brew "fzf"
 brew "git"
@@ -31,6 +30,10 @@ brew "python@3.12"
 brew "readline"
 brew "ripgrep"
 brew "wget"
+
+# AI
+brew "copilot-cli"
+brew "rtk"
 
 cask "podman-desktop"
 
